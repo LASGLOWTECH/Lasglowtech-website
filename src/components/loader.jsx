@@ -25,7 +25,7 @@ const SiteLoader = () => {
 
   return (
    <div
-  className={`fixed inset-0 bg-gradient-to-r from-bgcolor2 to-bgcolor2 z-50 transition-opacity duration-500 ${
+  className={`fixed inset-0 bg-bgcolor z-50 transition-opacity duration-500 ${
     fadeOut ? "opacity-0" : "opacity-100"
   }`}
 >
