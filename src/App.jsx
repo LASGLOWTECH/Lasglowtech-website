@@ -1,7 +1,5 @@
-import {
-  Routes,
-  Route,
-} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Portfolio from "./pages/portfolio";
@@ -24,11 +22,23 @@ import Update from './pages/dashboard/updateblog';
 import AdminLayout from './pages/dashboard';
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading delay (you can replace this with real data fetching)
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <SiteLoader />;
+  }
+
   return (
     <>
-      {/* Loader appears first */}
-      <SiteLoader />
-
       <Navbar />
 
       <Routes>
@@ -40,12 +50,10 @@ function App() {
         <Route path="/services/:slug" element={<SingleService />} />
         <Route path="*" element={<NotFound />} />
 
-
         <Route path="/dashboard" element={<AdminLayout />}>
           <Route index element={<DashboardHome />} />
           <Route path="updateblog" element={<Update />} />
           <Route path="createblog" element={<Create />} />
-       
           <Route path="subscriptions" element={<Subscriptions />} />
           <Route path="bloglist" element={<BlogList />} />
         </Route>
@@ -56,7 +64,7 @@ function App() {
 
       <Footer />
       <ScrollTop />
-         <ToastContainer />
+      <ToastContainer />
     </>
   );
 }

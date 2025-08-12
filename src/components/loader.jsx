@@ -24,11 +24,11 @@ const SiteLoader = () => {
   if (!loading) return null;
 
   return (
-    <div
-      className={`fixed inset-0  z-50 transition-opacity duration-500 ${
-        fadeOut ? "opacity-0" : "opacity-100"
-      }`}
-    >
+   <div
+  className={`fixed inset-0 bg-gradient-to-r from-bgcolor2 to-bgcolor2 z-50 transition-opacity duration-500 ${
+    fadeOut ? "opacity-0" : "opacity-100"
+  }`}
+>
       {/* Centered Logo */}
       <div className="absolute inset-0 flex items-center justify-center">
         <img
