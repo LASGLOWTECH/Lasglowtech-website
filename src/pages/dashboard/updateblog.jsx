@@ -54,7 +54,7 @@ const Update = () => {
         });
         toast.success('Blog created successfully!');
       }
-      navigate("/blog");
+      navigate("/blogs");
     } catch (error) {
       if (error.response?.status === 400) {
         toast.error(error.response.data.error);
