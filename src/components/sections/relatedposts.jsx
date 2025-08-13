@@ -44,7 +44,7 @@ const RelatedPosts = ({ currentPostId }) => {
               src={
                 window.location.hostname === "localhost"
                   ? `/upload/images/${post.cover}`
-                  : `https://nodeserver.phoenixstech.com/uploads/images/${post.cover}`
+                  : `https://lasglowserver.phoenixstech.com/uploads/images/${post.cover}`
               } alt={post.title} className="w-full h-[400px]  object-cover" />
             <div className="p-4">
               <h4 className="text-xl font-bold text-gray-800">{post.title}</h4>

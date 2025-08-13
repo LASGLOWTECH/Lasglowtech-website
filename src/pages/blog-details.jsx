@@ -107,7 +107,7 @@ const BlogDetails = () => {
               src={
                 window.location.hostname === "localhost"
                   ? `/upload/images/${encodeURIComponent(post.cover)}`
-                  : `https://nodeserver.phoenixstech.com/uploads/images/${encodeURIComponent(post.cover)}`
+                  : `https://lasglowserver.phoenixstech.com/uploads/images/${encodeURIComponent(post.cover)}`
               }
               alt="blog"
             />

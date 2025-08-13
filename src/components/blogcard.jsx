@@ -102,7 +102,7 @@ const Blogcard = () => {
                                 src={
                                     window.location.hostname === "localhost"
                                         ? `/upload/images/${blog.cover}`
-                                        : `https://nodeserver.phoenixstech.com/uploads/images/${blog.cover}`
+                                        : `https://lasglowserver.phoenixstech.com/uploads/images/${blog.cover}`
                                 }
                                 alt="blog"
                                 className="w-full h-fit md:h-auto lg:h-fit xl:h-64 object-cover rounded-md"
