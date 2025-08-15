@@ -27,7 +27,7 @@ export default function Portfolio() {
 
       <div className="relative z-10 bg-gradient-to-r  ">
 <div
-        className="inset-0 bg-cover bg-center opacity-5 absolute amimate-pulse min-h-screen  z-[-1] "
+        className="inset-0 bg-cover bg-center opacity-10 md:opacity-5 absolute amimate-pulse min-h-screen  z-[-1] "
         style={{ backgroundImage: `url(${HeroImage})` }}
       >
 
@@ -36,12 +36,6 @@ export default function Portfolio() {
       </div>
 
 
-            {/* <div
-                className="absolute amimate-pulse inset-0 bg-cover min-h-screen  z-[-1] bg-center"
-                style={{ backgroundImage: `url(${Gradient})` }}
-            >
-                <div className="absolute bg-center bg-cover inset-0 bg-bgcolor/80" />
-            </div> */}
 
 
 
@@ -70,12 +64,12 @@ export default function Portfolio() {
                     className="max-w-3xl mx-auto text-center"
                 >
                     <h2 className="text-3xl  md:text-5xl  font-medium text-textcolor2 max-w-5xl leading-tight   mb-4 ">
-                  Discover Who we have <br></br>  
+                  Discover Who we have 
                         <span className="">
                             <Typewriter
                                 words={[
-                                    "rendered Creative Services to ",
-                                    "Worked For",
+                                    "  rendered Creative Services to ",
+                                    " Worked For",
 
                                 ]}
                                 loop={true}
