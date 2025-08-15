@@ -1,6 +1,5 @@
 {
   "name": "lasglowtech",
-  
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -14,6 +13,8 @@
     "node": ">=20"
   },
   "dependencies": {
+    "@react-three/drei": "^9.56.26",
+    "@react-three/fiber": "^8.13.7",
     "aos": "^2.3.4",
     "axios": "^1.11.0",
     "framer-motion": "^10.16.4",
@@ -31,7 +32,8 @@
     "react-simple-typewriter": "^5.0.1",
     "react-spinners": "^0.17.0",
     "react-toastify": "^11.0.5",
-    "swiper": "^11.2.10"
+    "swiper": "^11.2.10",
+    "three": "^0.152.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
