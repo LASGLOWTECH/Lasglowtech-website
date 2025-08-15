@@ -5,7 +5,7 @@ import useAOS from "../hooks/useAos";
 import Subscription from "../components/sections/subscription";
 import { Link } from 'react-router-dom';
 import { Typewriter } from "react-simple-typewriter";
-import { Gradient, Land1, Land2, Slide1, Graphic1, Graphic2, Web1, Mobile1 } from "../components/images";
+import { Gradient, Land1, Land2, Slide1, Graphic1, Graphic2, Web1, Mobile1,HeroImage } from "../components/images";
 import PortfolioTabs from "../components/sections/portfoliotabs";
 import CompanySlider from "../utils/slideshow";
 
@@ -24,12 +24,24 @@ export default function Portfolio() {
 
             />
 
-            <div
+
+      <div className="relative z-10 bg-gradient-to-r  ">
+<div
+        className="inset-0 bg-cover bg-center opacity-5 absolute amimate-pulse min-h-screen  z-[-1] "
+        style={{ backgroundImage: `url(${HeroImage})` }}
+      >
+
+
+      </div>
+      </div>
+
+
+            {/* <div
                 className="absolute amimate-pulse inset-0 bg-cover min-h-screen  z-[-1] bg-center"
                 style={{ backgroundImage: `url(${Gradient})` }}
             >
                 <div className="absolute bg-center bg-cover inset-0 bg-bgcolor/80" />
-            </div>
+            </div> */}
 
 
 
@@ -77,8 +89,8 @@ export default function Portfolio() {
 
                     </h2>
 
-                    <p className="text-lg sm:text-lg md:text-xl text-textcolor2  mx-auto px-5 md:px-0 max-w-2xl md:max-w-sm py-6 mb-8">
-                        We delivered and was sleek
+                    <p className="text-lg sm:text-lg md:text-xl text-textcolor2  mx-auto px-5 md:px-0  md:max-w-sm py-6 mb-8">
+                      We’ve delivered results with style, precision, and a touch of sleek innovation.
                     </p>
 
                     <div>

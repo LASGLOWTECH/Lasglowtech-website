@@ -63,7 +63,7 @@ const About = () => {
           >
            <img
               src={Aboutimg}
-              className="w-full h-full md:max-w-[600px] rounded-tl-[10%] rounded-br-[10%] shadow-Primarycolor shadow-md" data-aos='fadeup'
+              className="w-full h-full md:max-w-[600px] rounded-tl-[5%] rounded-[10%] shadow-Primarycolor shadow-md" data-aos='fadeup'
             />
           </div>
 

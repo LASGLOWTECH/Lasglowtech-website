@@ -68,14 +68,18 @@ const Contact = () => {
       {/* Contact Section */}
       <div className="relative z-10 bg-gradient-to-r from-bgcolor2 to-bgcolor2  px-4 py-6 md:px-20">
 <div
-        className="inset-0 bg-cover bg-center opacity-10 z-0"
+        className="inset-0 bg-cover bg-center opacity-5 absolute amimate-pulse min-h-screen  z-[-1] "
         style={{ backgroundImage: `url(${HeroImage})` }}
-      ></div>
+      >
+
+
+      
+      </div>
 
 
         {/* Header */}
-      <section className="flex flex-col  items-center justify-center py-16   mx-auto shadow-sm">
-        <h1 className="text-6xl text-textcolor2 font-semibold" data-aos="fade-up">Contact Us</h1>
+      <section className="flex flex-col  items-center justify-center pt-12  pb-6  mx-auto shadow-sm">
+        <h1 className="md:text-6xl text-4xl text-textcolor2 font-semibold" data-aos="fade-up">Contact Us</h1>
 
 
 <div className="mt-4  border border-gray-200 p-3 rounded-full text-textcolor2">
@@ -96,7 +100,7 @@ const Contact = () => {
           {/* Contact Info */}
           <div className="p-8 rounded-lg ">
             <h2 className="text-3xl text-Secondarycolor font-semibold mb-4">Get In Touch</h2>
-            <p className="text-textcolor2 max-w-xl  mb-6">We’d love to hear from you! on any of our services, need support, or want to discuss a new project, our team is here to help.</p>
+            <p className="text-textcolor2 max-w-xl  text-normal mb-6">We’d love to hear from you! on any of our services, need support, or want to discuss a new project, our team is here to help.</p>
 
             <div className="space-y-4 text-sm">
 
