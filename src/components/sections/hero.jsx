@@ -120,7 +120,7 @@ export default function Hero() {
           transition={{ duration: 1 }}
           className="max-w-4xl mx-auto text-center"
         >
-          <h1 className="text-[40px] font-bold px-2 pt-24 md:pt-0 md:text-[70px] md:font-semibold text-textcolor2 leading-[40px] md:leading-[70px] mb-6">
+          <h1 className="text-[40px] font-bold px-2 pt-0 md:pt-0 md:text-[70px] md:font-semibold text-textcolor2 leading-[40px] md:leading-[70px] mb-6">
             We Enhance Your Business with our <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-Secondarycolor to-Secondarycolor">
               <Typewriter
@@ -135,7 +135,7 @@ export default function Hero() {
             </span>
           </h1>
 
-          <p className="text-lg md:text-xl text-textcolor2 max-w-2xl mx-auto py-6 mb-8">
+          <p className="text-lg md:text-xl text-textcolor2 px-4 md:px-0max-w-2xl mx-auto py-6 mb-8">
             Purpose-driven digital experiences tailored to your brand.
           </p>
 
