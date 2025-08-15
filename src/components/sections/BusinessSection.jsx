@@ -10,7 +10,7 @@ const StatsSection = () => {
     { value: 20, suffix: '+', label: 'Clients worked for' },
     { value: 7, suffix: 'years+', label: 'Work Experience' },
     { value: 2500, suffix: '+', label: 'Designed creatives' },
-    { value: 2, suffix: 'M+', label: 'Leads generated' },
+    { value: 15, suffix: '+', label: 'websites built' },
   ];
 
   return (
