@@ -27,7 +27,7 @@ export default function Portfolio() {
 
       <div className="relative z-10 bg-gradient-to-r  ">
 <div
-        className="inset-0 bg-cover bg-center opacity-10 md:opacity-5 absolute amimate-pulse min-h-screen  z-[-1] "
+        className="inset-0 bg-cover bg-center opacity-20 md:opacity-5 absolute amimate-pulse min-h-screen  z-[-1] "
         style={{ backgroundImage: `url(${HeroImage})` }}
       >
 
@@ -83,7 +83,7 @@ export default function Portfolio() {
 
                     </h2>
 
-                    <p className="text-lg sm:text-lg md:text-xl text-textcolor2  mx-auto px-5 md:px-0  md:max-w-sm py-6 mb-8">
+                    <p className="text-lg sm:text-lg md:text-xl text-textcolor2  mx-auto px-5 md:px-0  md:max-w-lg py-6 mb-8">
                       We’ve delivered results with style, precision, and a touch of sleek innovation.
                     </p>
 

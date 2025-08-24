@@ -55,7 +55,7 @@ const CoreValues = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
-              className="hover:shadow-lg transition duration-300 rounded-xl p-8 text-left shadow-md shadow-Primarycolor2"
+              className="hover:shadow-lg transition duration-300 rounded-xl p-4 text-left shadow-md shadow-Primarycolor2"
             >
               <div className="flex bg-Primarycolor items-center justify-center p-4 h-16 w-16 rounded-full">
                 <span className="text-white">{value.icon}</span>

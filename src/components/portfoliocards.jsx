@@ -9,7 +9,7 @@ const PortfolioCard = ({ image, alt, description, link, delay = 0 }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut', delay }}
     >
-      <img src={image} alt={alt} className="w-full h-[400px] object-cover" />
+      <img src={image} alt={alt} className="w-full h-[300px]  md:h-[400px] object-cover" />
 
       <div className="p-4">
         <p className="text-sm mb-3">{description}</p>

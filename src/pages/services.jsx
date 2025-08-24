@@ -75,7 +75,7 @@ export default function Services() {
       <div className=" relative z-10  overflow-hidden">
 
         <section className="flex flex-col  items-center justify-center py-16  mx-auto shadow-sm">
-          <h1 className="text-6xl text-textcolor2 pt-8 font-semibold" data-aos="zoom-up"> Services</h1>
+          <h1 className="text-4xl md:text-5xl text-textcolor2 pt-8 font-semibold" data-aos="zoom-up"> Services</h1>
 
 
           <div className="mt-8 border border-gray-200 p-3 rounded-full text-textcolor2">
@@ -145,7 +145,7 @@ export default function Services() {
                   <img
                     src={services[active].image}
                     alt={services[active].title}
-                    className=" w-full h-full md:max-w-[600px] rounded-2xl shadow-Primarycolor shadow-md" data-aos='fadeup'
+                    className=" w-full h-[250px] md:h-[auto] md:max-w-[600px] rounded-xl shadow-Primarycolor shadow-md" data-aos='fadeup'
                   />
                 </motion.div>
               </AnimatePresence>

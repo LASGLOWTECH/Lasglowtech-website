@@ -26,21 +26,21 @@ const QuickContact = () => {
         </p>
       </div> */}
 
-      <div className="rounded-xl p-6 md:p-10 z-1 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="rounded-xl p-4  z-1 flex flex-col md:flex-row items-center justify-between gap-6">
       
 
 
-        <div className="mx-auto grid grid-cols-1 md:grid-cols-2 gap-10  items-center">
-          <div className="rounded-md border border-purple-600">
+        <div className="mx-auto grid grid-cols-1 md:grid-cols-2 gap-10  md:items-center">
+          <div className="border border-purple-600 rounded-lg">
             {/* Placeholder for image/logo */}
             <img
               src={Slide2}
               alt="Avatar"
-              className="w-full max-w-md md:max-w-2xl rounded-md  object-cover"
+              className=" md:max-w-2xl object-cover  w-full h-[250px]  md:h-[400px]  rounded-lg"
             />
           </div>
-          <div className=" flex flex-col justify-center items-start" data-aos="fade-up">
-                     <h2 className="text-2xl md:text-4xl font-semibold text-textcolor2 mb-2">Why Choose Lasglowtech?</h2>
+          <div className=" flex flex-col  items-start" data-aos="fade-up">
+                     <h2 className="text-2xl md:text-4xl font-semibold text-textcolor2 mb-6">Why Choose Lasglowtech?</h2>
                      <p className="text-base mb-2 text-gray-400  text-left font-medium tracking-tighr">At Lasglowtech we don't  just build web apps or sleek designs, but build  digital experiences that works and converts.
                       Looking for a Specific Service? We've got creative solutions tailored to your needs, take a glance at our list of services and contact us . </p>
                    <Link to="/services">

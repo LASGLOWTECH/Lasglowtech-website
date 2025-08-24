@@ -79,10 +79,10 @@ const Contact = () => {
 
         {/* Header */}
       <section className="flex flex-col  items-center justify-center pt-12  pb-6  mx-auto shadow-sm">
-        <h1 className="md:text-6xl text-4xl text-textcolor2 font-semibold" data-aos="fade-up">Contact Us</h1>
+        <h1 className="md:text-5xl text-4xl text-textcolor2  p-6 font-semibold" data-aos="fade-up">Contact Us</h1>
 
 
-<div className="mt-4  border border-gray-200 p-3 rounded-full text-textcolor2">
+<div className="my-6  border border-gray-200 p-3 rounded-full text-textcolor2">
   <div className="text-base text-violet-600 cursor-pointer z">
     <span className="font-semibold"></span> <Link to="/" className="hover:underline">Home</Link>  / <Link to="/contact" className="hover:underline">Contact Us</Link>
   </div>
@@ -92,21 +92,18 @@ const Contact = () => {
       </section>
 
       {/* Contact Info Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 md:p-12 max-w-7xl mx-auto">
       
-   
-      </div>
-        <div className=" border border-Primarycolor shadow-lg rounded-xl p-6 md:p-10 grid md:grid-cols-2 gap-10">
+        <div className=" md:border md:border-Primarycolor shadow-lg rounded-xl p-4 md:p-10 grid  my-5md:grid-cols-2 gap-10">
           {/* Contact Info */}
           <div className="p-8 rounded-lg ">
             <h2 className="text-3xl text-Secondarycolor font-semibold mb-4">Get In Touch</h2>
             <p className="text-textcolor2 max-w-xl  text-normal mb-6">We’d love to hear from you! on any of our services, need support, or want to discuss a new project, our team is here to help.</p>
 
-            <div className="space-y-4 text-sm">
+            <div className=" grid  grid-cols-1 md:grid-cols-3 py-6  items-center justify-center mx-auto space-y-4 text-sm">
 
-              <div className="flex items-start gap-3">
+              <div className="flex  items-start gap-3">
 
-                < div className='flex items-center  rounded-md bg-[#F6F5FA] justify-center p-3 gap-3'>
+                < div className='flex items-center  rounded-md bg-textcolor justify-center p-3 gap-3'>
                   <FaEnvelope className="text-Primarycolor text-lg mt-1" />
                 </div>
 
@@ -146,10 +143,10 @@ const Contact = () => {
               <div className="flex gap-4 text-Secondarycolor text-xl">
                
                
-                <a href="#"><FaLinkedin className='' /></a>
-                <a href="#"><FaInstagram className='' /></a>
-                <a href="#"><FaFacebookF className='' /></a>
-                <a href="#"><FaTwitter className='' /></a>
+                <a href="https://linkedin.com/in/austinosaz"><FaLinkedin className='' /></a>
+                <a href="https://www.instagram.com/lasglowtech"><FaInstagram className='' /></a>
+                <a href="https://m.facebook.com/omozemoje.augustineoisasoje"><FaFacebookF className='' /></a>
+                <a href="https://twitter.com/OmozemojeAugus1"><FaTwitter className='' /></a>
               </div>
             </div>
           </div>

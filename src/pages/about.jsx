@@ -34,7 +34,7 @@ const About = () => {
       <div className="relative z-10">
         <section className="flex flex-col items-center justify-center py-16  mx-auto text-center">
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl text-textcolor2 py-3 font-semibold"
+            className="text-3xl sm:text-3xl md:text-5xl text-textcolor2 py-4 font-semibold"
             data-aos="zoom-up"
           >
             About Us
@@ -63,7 +63,7 @@ const About = () => {
           >
            <img
               src={Aboutimg}
-              className="w-full h-full md:max-w-[600px] rounded-tl-[5%] rounded-[10%] shadow-Primarycolor shadow-md" data-aos='fadeup'
+              className="w-full h-auto md:h-full  md:max-w-[600px]  rounded-[3%] shadow-Primarycolor shadow-md" data-aos='zoom-in'
             />
           </div>
 
@@ -72,7 +72,7 @@ const About = () => {
             className="flex flex-col  justify-center items-center md:items-start text-center md:text-left"
             data-aos="slide-up"
           >
-            <div className="flex items-center gap-2 text-sm text-orange-500 font-medium mb-2">
+            <div className="flex items-center gap-2 text-sm text-orange-500 font-medium my-3">
               <FaCircle className="text-[6px]" />
               <span>About Us</span>
             </div>
