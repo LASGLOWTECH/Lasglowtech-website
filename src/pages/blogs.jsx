@@ -90,11 +90,11 @@ const Blogs = () => {
             <div className="rounded-full bg-gradient-to-r from-Primarycolor  to-Primarycolor1 w-[10px] h-[10px] mr-2"></div>
             <p className="text-sm text-Primarycolor ">Featured Posts</p>
           </div>
-          <h3 className="text-3xl md:text-left md:text-6xl lg:text-5xl font-semibold mb-2  md:max-w-2xl" >
+          <h3 className="text-3xl md:text-6xl leading-tight md:text-left drop-shadow-lg text-center font-semibold mb-2  md:max-w-2xl" >
            Tech News to Keep You Updated
           </h3>
           <p className="text-sm md:text-base lg:text-lg py-1  g md:text-left md:max-w-xl" >
-           Read and stay updated on the latest news, resources, guides, and announcements from
+           Read and stay updated on the latest news, resources, guides, and announcements from Lasglowtech
           </p>
 
 

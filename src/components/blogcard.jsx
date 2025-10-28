@@ -89,7 +89,7 @@ const Blogcard = () => {
 
     return (
         <div className="py-16">
-            <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-3 gap-8 px-6 md:px-20">
+            <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-3 gap-8 px-6 md:px-20"  lazy-load="true">
                 {currentBlogs.map((blog, index) => (
                     <div
                         key={index}
@@ -105,6 +105,7 @@ const Blogcard = () => {
                                         : `https://lasglowserver.phoenixstech.com/uploads/images/${blog.cover}`
                                 }
                                 alt="blog"
+                                loading="lazy"
                                 className="w-full h-fit md:h-auto lg:h-fit xl:h-64 object-cover rounded-md"
                             />
                             <h4 className="md:text-2xl text-[#F5F7FA] font-semibold py-4">

@@ -132,6 +132,7 @@ const BlogDetails = () => {
                       post.cover
                     )}`
               }
+                loading="lazy"
               alt="Blog cover"
               className="w-full object-cover max-h-[480px]"
             />
