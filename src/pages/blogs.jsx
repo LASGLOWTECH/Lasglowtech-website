@@ -102,7 +102,7 @@ const Blogs = () => {
  <Link
               to={
                 posts.length > 0 && posts[0].slug
-                  ? `/blog/${posts[0].slug}`
+                  ? `/blog/${posts[1].slug}`
                   : "#"
               }
               onClick={(e) => {

@@ -6,6 +6,7 @@ import RelatedPosts from "../components/sections/relatedposts";
 import Subscription from "../components/sections/subscription";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoShareSocialSharp } from "react-icons/io5";
+import { Link } from "react-router-dom";
 import moment from "moment";
 
 const BlogDetails = () => {
@@ -113,13 +114,7 @@ const BlogDetails = () => {
     <div className="bg-bgcolor text-white py-16">
       <div className="max-w-5xl mx-auto px-6 lg:px-0">
         {/* Back link */}
-        <div
-          onClick={() => navigate(-1)}
-          className="mb-6 flex items-center gap-2 text-Primarycolor cursor-pointer hover:text-Primarycolor1 transition-all"
-        >
-          <FaArrowLeftLong size={18} />
-          <span className="font-medium text-sm">Back</span>
-        </div>
+        <div className="p-3 border-b border-gray-200"> <Link onClick={() => navigate(-1)} className="flex items-center text-violet-700 hover:text-textcolor2 text-lg font-semibold"> <FaArrowLeftLong className="mr-2" size={20} /> Back </Link> </div>
 
         {/* Title */}
         <h1 className="text-3xl md:text-5xl font-bold leading-snug text-textcolor2 mb-6">
