@@ -22,20 +22,28 @@ import Update from './pages/dashboard/updateblog';
 import AdminLayout from './pages/dashboard';
 
 function App() {
-  const [loading, setLoading] = useState(true);
+   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading delay (you can replace this with real data fetching)
-    const timer = setTimeout(() => {
+    const handlePageLoad = () => {
       setLoading(false);
-    }, 1500);
+    };
 
-    return () => clearTimeout(timer);
+    // If the page has already loaded (e.g., cache), stop loading immediately
+    if (document.readyState === "complete") {
+      handlePageLoad();
+    } else {
+      // Wait for full load
+      window.addEventListener("load", handlePageLoad);
+    }
+
+    return () => window.removeEventListener("load", handlePageLoad);
   }, []);
 
   if (loading) {
     return <SiteLoader />;
   }
+
 
   return (
     <>
