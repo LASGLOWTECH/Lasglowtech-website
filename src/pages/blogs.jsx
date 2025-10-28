@@ -2,6 +2,7 @@ import React from 'react'
 import Blogcard from '../components/blogcard';
 import instance from '../config/axios.config';
 import SEO from '../utils/seo';
+import { motion } from "framer-motion";
 import useAOS from '../hooks/useAos';
 import Subscription from '../components/sections/subscription';
 // import { posts } from "../components/blogdata";
@@ -96,15 +97,31 @@ const Blogs = () => {
             Have questions or ready to start a project? Our team is here to assist you.
           </p>
 
-          <Link to={posts.length > 0 ? `/blog/${posts[0].id}` : "#"} className="inline-block" onClick={(e) => {
-  if (posts.length === 0) e.preventDefault();
-}}>
-            <button
-              className="bg-gradient-to-r from-Primarycolor to-Primarycolor1 hover:from-Secondarycolor hover:to-Secondarycolor shadow-md text-white font-semibold py-3 px-5  mt-3 rounded-full transition-all duration-300"
+
+
+ <Link
+              to={
+                posts.length > 0 && posts[0].slug
+                  ? `/blog/${posts[0].slug}`
+                  : "#"
+              }
+              onClick={(e) => {
+                if (posts.length === 0) e.preventDefault();
+              }}
             >
-          View Blog
-            </button>
-          </Link>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                className="bg-gradient-to-r from-Primarycolor to-Primarycolor1 hover:from-Secondarycolor hover:to-Secondarycolor shadow-md text-white font-semibold py-3 px-5  mt-3 rounded-full transition-all duration-300"
+            >
+              
+                View Blog
+              </motion.button>
+            </Link>
+
+
+
+
         </div>
       </div>
 
