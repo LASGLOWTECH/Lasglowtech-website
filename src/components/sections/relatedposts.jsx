@@ -26,7 +26,7 @@ const RelatedPosts = ({ currentPostId }) => {
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto h-[480px] px-4 py-8">
       <h3 className="text-3xl font-semibold text-textcolor2 mb-6">Related Posts</h3>
       <div className="grid md:grid-cols-3 gap-6">
         {relatedPosts.map((post) => (
@@ -45,7 +45,7 @@ const RelatedPosts = ({ currentPostId }) => {
                 window.location.hostname === "localhost"
                   ? `/upload/images/${post.cover}`
                   : `https://lasglowserver.phoenixstech.com/uploads/images/${post.cover}`
-              } alt={post.title} className="w-full h-[400px]  object-cover" />
+              } alt={post.title} className="w-full h-[200px]  object-cover" />
             <div className="p-4">
               <h4 className="text-xl font-bold text-gray-800">{post.title}</h4>
               <p className="text-sm text-gray-500 mt-2">

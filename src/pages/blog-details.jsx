@@ -1,34 +1,34 @@
-import { useParams, useLocation, useNavigate } from "react-router-dom";
-import { Osaz } from "../components/images";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import instance from "../config/axios.config";
 import RelatedPosts from "../components/sections/relatedposts";
 import Subscription from "../components/sections/subscription";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoShareSocialSharp } from "react-icons/io5";
-import { Link } from "react-router-dom";
 import moment from "moment";
+import { Osaz } from "../components/images";
 
 const BlogDetails = () => {
+  const { slug } = useParams();
+  const decodedSlug = decodeURIComponent(slug);
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [post, setPost] = useState(null);
   const [shares, setShares] = useState({});
-  const { slug } = useParams();
-  const navigate = useNavigate();
 
-  // Fetch single post by slug (fallback to ID if not found)
+  // ✅ Fetch post by slug (fallback to ID)
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Try fetching by slug first
-        const res = await instance.get(`/posts/slug/${slug}`);
+        const res = await instance.get(`/posts/slug/${decodedSlug}`);
         setPost(res.data);
       } catch (error) {
-        // If 404, fallback to fetching by ID
-        if (error.response && error.response.status === 404 && !isNaN(slug)) {
+        // fallback to ID if slug fetch fails
+        if (error.response && error.response.status === 404 && !isNaN(decodedSlug)) {
           try {
-            const res = await instance.get(`/posts/${slug}`);
+            const res = await instance.get(`/posts/${decodedSlug}`);
             setPost(res.data);
           } catch (innerError) {
             setError("Failed to fetch the post.");
@@ -44,9 +44,9 @@ const BlogDetails = () => {
     };
 
     fetchData();
-  }, [slug]);
+  }, [decodedSlug]);
 
-  // Track shares when post is loaded
+  // ✅ Track shares when post loads
   useEffect(() => {
     if (post && post.slug) {
       setShares((prev) => ({
@@ -56,7 +56,7 @@ const BlogDetails = () => {
     }
   }, [post]);
 
-  // Handle delete post
+  // ✅ Handle delete
   const handleDelete = async () => {
     try {
       await instance.delete(`/posts/${post.id}`);
@@ -67,14 +67,14 @@ const BlogDetails = () => {
     }
   };
 
-  // Handle share action
+  // ✅ Handle share or copy link
   const handleShare = (slug) => {
     const baseUrl =
       window.location.hostname === "localhost"
         ? "http://localhost:5173"
         : "https://lasglowtech.com";
 
-    const shareUrl = `${baseUrl}/blog/${slug}`;
+    const shareUrl = `${baseUrl}/blog/${encodeURIComponent(slug)}`;
 
     if (navigator.share) {
       navigator
@@ -96,25 +96,25 @@ const BlogDetails = () => {
     }
   };
 
-  // Loading state
-  if (loading)
-    return <div className="text-black text-center mt-20">Loading...</div>;
-
-  // Error state
+  // ✅ Loading & error states
+  if (loading) return <div className="text-black text-center mt-20">Loading...</div>;
   if (error) return <div className="text-black text-center mt-20">{error}</div>;
+  if (!post) return <div className="text-center py-10 text-gray-600">Blog not found</div>;
 
-  if (!post)
-
-
-    return (
-      <div className="text-center py-10 text-gray-600">Blog not found</div>
-    );
-
+  // ✅ Main content
   return (
     <div className="bg-bgcolor text-white py-16">
       <div className="max-w-5xl mx-auto px-6 lg:px-0">
-        {/* Back link */}
-        <div className="p-3 border-b border-gray-200"> <Link onClick={() => navigate(-1)} className="flex items-center text-violet-700 hover:text-textcolor2 text-lg font-semibold"> <FaArrowLeftLong className="mr-2" size={20} /> Back </Link> </div>
+
+        {/* Back Link */}
+        <div className="p-3 border-b border-gray-200">
+          <Link
+            onClick={() => navigate(-1)}
+            className="flex items-center text-violet-700 hover:text-textcolor2 text-lg font-semibold"
+          >
+            <FaArrowLeftLong className="mr-2" size={20} /> Back
+          </Link>
+        </div>
 
         {/* Title */}
         <h1 className="text-3xl md:text-5xl font-bold leading-snug text-textcolor2 mb-6">
@@ -142,11 +142,7 @@ const BlogDetails = () => {
         <div className="flex flex-wrap items-center justify-between text-sm text-gray-400 mb-10">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
-              <img
-                src={Osaz}
-                alt="author"
-                className="w-8 h-8 rounded-full"
-              />
+              <img src={Osaz} alt="author" className="w-8 h-8 rounded-full" />
               <span className="font-medium text-gray-300">Lasglowtech</span>
             </div>
             <span className="text-gray-500">
@@ -154,15 +150,12 @@ const BlogDetails = () => {
             </span>
           </div>
 
-
-
-<button
+          <button
             className="flex items-center gap-2 text-sm bg-gradient-to-r from-Primarycolor to-Primarycolor1 hover:from-Secondarycolor hover:to-Secondarycolor text-white px-4 py-2 rounded-md shadow-md transition-all"
             onClick={() => handleShare(post.slug || post.id)}
           >
             Share <IoShareSocialSharp className="text-lg" />
           </button>
-        
         </div>
 
         {/* Blog Content */}
@@ -173,10 +166,10 @@ const BlogDetails = () => {
 
         {/* Related Posts */}
         <div className="mt-16 border-t border-gray-800 pt-10">
-      <RelatedPosts currentPostId={post.id} />
+          <RelatedPosts currentPostId={post.id} />
         </div>
 
-        {/* Subscription */}
+        {/* Subscription Section */}
         <div className="mt-20">
           <Subscription />
         </div>
