@@ -57,13 +57,13 @@ const About = () => {
         </section>
 
         {/* Main Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 justify-center items-center">
+        <div className="max-w-5xl mx-auto px-6 lg:px-0">
           {/* Image Section */}
           <div className="w-full" data-aos="zoom-in">
             <img
               src={Aboutimg}
               alt="About Lasglowtech"
-              className="w-full h-auto md:h-full md:max-w-[550px] rounded-[5%] shadow-primarycolor shadow-md"
+              className=" rounded-2xl w-full object-cover max-h-[480px] rounded-5%"
             />
           </div>
 
@@ -77,7 +77,7 @@ const About = () => {
               <span>About Us</span>
             </div>
 
-            <h2 className="text-2xl md:text-4xl font-semibold text-textcolor2 leading-tight mb-4">
+            <h2 className="text-3xl md:text-5xl font-bold leading-snug text-textcolor2 mb-6">
               The Vision of Lasglowtech
             </h2>
 

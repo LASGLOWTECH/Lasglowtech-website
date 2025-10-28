@@ -6,7 +6,7 @@ import { PiArrowCircleUpRightFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
 
 const Blogcard = () => {
-    const blogsPerPage = 3;
+    const blogsPerPage = 6;
     const [currentPage, setCurrentPage] = useState(1);
 
 
@@ -93,7 +93,7 @@ const Blogcard = () => {
                 {currentBlogs.map((blog, index) => (
                     <div
                         key={index}
-                        className="block bg-[#F5F7FA] hover:bg-white p-5 rounded-lg shadow-md shadow-Primarycolor text-left transition-colors duration-300"
+                        className="block  bg-gradient-to-t from-bgcolor to-bgcolor2 hover:shadow-none  p-5 rounded-lg shadow-md shadow-Primarycolor text-left transition-colors duration-300"
                     >
 
                         <Link to={`/blog/${blog.id}`} key={blog.id} className="block">
@@ -107,7 +107,7 @@ const Blogcard = () => {
                                 alt="blog"
                                 className="w-full h-fit md:h-auto lg:h-fit xl:h-64 object-cover rounded-md"
                             />
-                            <h4 className="md:text-2xl text-grey-600 font-semibold py-4">
+                            <h4 className="md:text-2xl text-[#F5F7FA] font-semibold py-4">
                                 {blog.title}
                             </h4>
                         </Link>
@@ -120,7 +120,7 @@ const Blogcard = () => {
                                 onClick={() => handleShare(blog.blogid)}
                                 className="cursor-pointer"
                             >
-                                <IoShareSocialSharp fill="grayBlack" className="text-2xl" />
+                                <IoShareSocialSharp fill="white" className="text-2xl" />
                             </div>
                           
                         </div>
@@ -132,11 +132,11 @@ const Blogcard = () => {
                         <Link to={`/blog/${blog.id}`}>
 
                             <div className="flex items-center pt-6 group cursor-pointer transition-all duration-500">
-                                <p className="ml-2 text-Primarycolor2 font-medium transition-all duration-500">
+                                <p className="ml-2 text-[#F5F7FA] font-medium transition-all duration-500">
                                     Read Article
                                 </p>
                                 <span className="transition-transform duration-500 ease-in-out">
-                                    <PiArrowCircleUpRightFill className="w-8 h-8 fill-Primarycolor" />
+                                    <PiArrowCircleUpRightFill className="w-8 h-8 fill-Secondarycolor" />
                                 </span>
                             </div>
                         </Link>

@@ -53,7 +53,7 @@ const Blogs = () => {
               />
 
  <section className="flex flex-col  items-center justify-center py-12 mx-auto shadow-sm">
-                    <h1 className="text-6xl text-textcolor2 pt-8 font-semibold" data-aos="zoom-up"> Blogs</h1>
+                    <h1 className="text-6xl text-textcolor2 pt-8 font-semibold" data-aos="zoom-up"> Lasglow Blogs</h1>
 
 
                     <div className="mt-8 border border-gray-200 p-3 rounded-full text-textcolor2">
@@ -94,7 +94,7 @@ const Blogs = () => {
            Tech News to Keep You Updated
           </h3>
           <p className="text-sm md:text-base lg:text-lg py-1  g md:text-left md:max-w-xl" >
-            Have questions or ready to start a project? Our team is here to assist you.
+           Read and stay updated on the latest news, resources, guides, and announcements from
           </p>
 
 

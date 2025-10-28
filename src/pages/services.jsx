@@ -13,38 +13,45 @@ const services = [
     title: "Web Development Solutions",
     subtitle: "Web Development",
     description:
-      "We build responsive, secure, and high-performance websites using the latest web technologies. From simple landing pages to complex platforms, our solutions are tailored to help your business grow online.",
+      "We build responsive, secure, and high-performance websites using the latest web technologies.",
     image: Web1,
+    link: "/services/web-development",
   },
   {
     title: "Creative Graphic Design",
     subtitle: "Graphic Design",
     description:
-      "Our design team delivers visually compelling graphics that communicate your brand identity effectively. From social media assets to complete branding kits, we help your business stand out with professional, modern design.",
+      "Our design team delivers visually compelling graphics that communicate your brand identity effectively.",
     image: Graphic1,
+    link: "/services/graphic-design",
   },
   {
     title: "Mobile App Development",
     subtitle: "Mobile Applications",
     description:
-      "We design and develop custom mobile applications that offer seamless performance across devices. Whether you're launching an MVP or scaling an existing app, we provide user-focused solutions for Android and iOS.",
+      "We design and develop custom mobile applications that offer seamless performance across devices.",
     image: Mobile1,
+    link: "/services/mobile-development",
   },
   {
     title: "User-Centered Web Design",
     subtitle: "UI/UX Design",
     description:
-      "We believe in doing more with less and doing it better. At Lasglowtech, we value smart automation that cuts the busywork and tools that help you scale without breaking the bank. Whether it's streamlining your workflow, speeding up project delivery, or helping your team stay focused on what really matters, we're all about efficient growth with zero compromise on quality. We create clean, intuitive, and user-friendly interfaces that enhance digital experiences. Our UI/UX design approach combines functionality with visual appeal to keep users engaged and satisfied.",
+      "We create clean, intuitive, and user-friendly interfaces that enhance digital experiences.",
     image: Graphic2,
+    link: "/services/ui-ux-design",
   },
   {
     title: "Maintenance & Optimization",
     subtitle: "Website Support & SEO",
     description:
-      "Improve your website’s visibility and ranking on search engines with our expert SEO services, ongoing website updates, security monitoring, and technical support for peace of mind. From regular updates and security monitoring to performance tuning and SEO optimization, we offer ongoing support to keep your website secure, visible, and running at peak performance.",
+      "Improve your website’s visibility and ranking on search engines with our expert SEO services.",
     image: Graphic2,
+    link: "/services/seo-optimization",
   },
 ];
+
+
 
 export default function Services() {
   const aos = useAOS()
@@ -129,6 +136,11 @@ export default function Services() {
                   <p className="text-base text-gray-400 leading-relaxed">
                     {services[active].description}
                   </p>
+
+<Link to={services[active].link} className="inline-block mt-6 text-violet-600 font-semibold hover:text-Secondarycolor1">
+  Learn More →
+</Link>
+
                 </motion.div>
               </AnimatePresence>
 
