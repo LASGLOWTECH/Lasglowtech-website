@@ -80,5 +80,10 @@ Aboutimg,
 Ur9, Phoenixs, Qlogo, Fgroup, Dtech, Pelifts, Smiggle, NMI,
 
 // team
+
 Osaz, Chimex, James, Precious,Izu
 };
+
+
+
+
