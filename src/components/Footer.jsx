@@ -58,7 +58,7 @@ export default function Footer () {
 
           
 
-          <p className='font-normal text-base pt-3 '> W firmly believe in the principle that any endeavor worth undertaking deserves to be executed with utmost dedication and precision.</p>
+          <p className='font-normal text-base pt-3 '> We firmly believe in the principle that any endeavor worth undertaking deserves to be executed with utmost dedication and precision.</p>
 
 
 
