@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { FaDiscord } from "react-icons/fa6";
  import { Link } from 'react-router-dom';
 
-import { FaMapMarkerAlt, FaPhoneAlt,  FaEnvelope,  FaFacebookF, FaInstagram, FaDribbble, FaPinterest   } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaPhoneAlt,  FaEnvelope,  FaFacebookF, FaInstagram, FaDribbble, FaPinterest, FaBehance   } from 'react-icons/fa';
 
 import { BsTwitter, BsLinkedin } from "react-icons/bs";
 import {} from "react-icons/fa"
@@ -154,6 +154,7 @@ export default function Footer () {
           <span className="rounded-[100%] my-5  mx-2  text-darkBlue  text-3xl"><a href="https://m.facebook.com/omozemoje.augustineoisasoje" target="_blank"><FaFacebookF className="p-1" /></a></span>
           <span className=" rounded-[100%] my-5 mx-2 text-darkBlue  bg-orangeRed text-3xl"><a href="https://www.instagram.com/lasglowtech"><FaInstagram className="p-1" /></a></span>
           <span className=" rounded-[100%] my-5 mx-2 text-darkBlue  bg-orangeRed text-3xl"><a href="https://dribbble.com/Austinosaz"><FaDribbble className="p-1" /></a></span>
+                    <span className=" rounded-[100%] my-5 mx-2 text-darkBlue  bg-orangeRed text-3xl"><a href="https://www.behance.net/omozemoaugusti"><FaBehance className="p-1" /></a></span>
           <span className=" rounded-[100%] my-5 mx-2 text-darkBlue  bg-orangeRed text-3xl"><a href="https://pin.it/6TdQiKnZP"><FaPinterest className="p-1" /></a></span>
           <span className=" rounded-[100%] my-5 mx-2 text-darkBlue  bg-orangeRed text-3xl"><a href="https://discord.com/channels/@lasglowtech"><FaDiscord  className="p-1" /></a></span>
  

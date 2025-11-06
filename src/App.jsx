@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Portfolio from "./pages/portfolio";
@@ -11,29 +11,29 @@ import NotFound from "./pages/not-found";
 import SingleService from "./pages/singleservice";
 import ScrollTop from "./components/scroll";
 import SiteLoader from "./components/loader";
-import Blogs from './pages/blogs';
-import BlogDetails from './pages/blog-details';
-import { ToastContainer } from 'react-toastify';
-import DashboardHome from './pages/dashboard/DashboardHome';
-import Create from './pages/dashboard/createblog';
-import Subscriptions from './pages/dashboard/subscriptions';
-import BlogList from './pages/dashboard/bloglist';
-import Update from './pages/dashboard/updateblog';
-import AdminLayout from './pages/dashboard';
+import Blogs from "./pages/blogs";
+import BlogDetails from "./pages/blog-details";
+import { ToastContainer } from "react-toastify";
+import DashboardHome from "./pages/dashboard/DashboardHome";
+import Create from "./pages/dashboard/createblog";
+import Subscriptions from "./pages/dashboard/subscriptions";
+import BlogList from "./pages/dashboard/bloglist";
+import Update from "./pages/dashboard/updateblog";
+import AdminLayout from "./pages/dashboard";
+import Links from "./pages/bio";
 
 function App() {
-   const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const location = useLocation(); // Get current route
 
   useEffect(() => {
     const handlePageLoad = () => {
       setLoading(false);
     };
 
-    // If the page has already loaded (e.g., cache), stop loading immediately
     if (document.readyState === "complete") {
       handlePageLoad();
     } else {
-      // Wait for full load
       window.addEventListener("load", handlePageLoad);
     }
 
@@ -44,10 +44,12 @@ function App() {
     return <SiteLoader />;
   }
 
+  // Hide Navbar and Footer on /bio route
+  const hideLayout = location.pathname === "/bio";
 
   return (
     <>
-      <Navbar />
+      {!hideLayout && <Navbar />}
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -67,11 +69,12 @@ function App() {
         </Route>
 
         <Route path="/blogs" element={<Blogs />} />
-        
-           <Route path="/blog/:slug" element={<BlogDetails />} />
+        <Route path="/blog/:slug" element={<BlogDetails />} />
+        <Route path="/bio" element={<Links />} />
       </Routes>
 
-      <Footer />
+      {!hideLayout && <Footer />}
+
       <ScrollTop />
       <ToastContainer />
     </>
