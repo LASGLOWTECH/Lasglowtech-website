@@ -148,15 +148,15 @@ export default function Footer () {
 
 
         <div className='Email  flex  justify-start'>
-          <span className=" rounded-[100%] my-5 mx-2 text-darkBlue  bg-orangeRed text-3xl"><a href="https://linkedin.com/in/austinosaz"><BsLinkedin className="p-1" /></a></span>
+          <span className=" rounded-[100%] my-5 md:mx-2 text-darkBlue  bg-orangeRed text-3xl"><a href="https://linkedin.com/in/austinosaz"><BsLinkedin className="p-1" /></a></span>
 
-          <span className=" rounded-[100%]   my-5 me-2 text-darkBlue bg-orangeRed  text-3xl"><a href="https://twitter.com/OmozemojeAugus1" target="_blank"><BsTwitter className="p-1" /></a></span>
-          <span className="rounded-[100%] my-5  mx-2  text-darkBlue  text-3xl"><a href="https://m.facebook.com/omozemoje.augustineoisasoje" target="_blank"><FaFacebookF className="p-1" /></a></span>
-          <span className=" rounded-[100%] my-5 mx-2 text-darkBlue  bg-orangeRed text-3xl"><a href="https://www.instagram.com/lasglowtech"><FaInstagram className="p-1" /></a></span>
-          <span className=" rounded-[100%] my-5 mx-2 text-darkBlue  bg-orangeRed text-3xl"><a href="https://dribbble.com/Austinosaz"><FaDribbble className="p-1" /></a></span>
-                    <span className=" rounded-[100%] my-5 mx-2 text-darkBlue  bg-orangeRed text-3xl"><a href="https://www.behance.net/omozemoaugusti"><FaBehance className="p-1" /></a></span>
-          <span className=" rounded-[100%] my-5 mx-2 text-darkBlue  bg-orangeRed text-3xl"><a href="https://pin.it/6TdQiKnZP"><FaPinterest className="p-1" /></a></span>
-          <span className=" rounded-[100%] my-5 mx-2 text-darkBlue  bg-orangeRed text-3xl"><a href="https://discord.com/channels/@lasglowtech"><FaDiscord  className="p-1" /></a></span>
+          <span className=" rounded-[100%]  md:mx-2   my-5 text-darkBlue bg-orangeRed  text-3xl"><a href="https://twitter.com/OmozemojeAugus1" target="_blank"><BsTwitter className="p-1" /></a></span>
+          <span className="rounded-[100%] my-5  text-darkBlue  text-3xl"><a href="https://m.facebook.com/omozemoje.augustineoisasoje" target="_blank"><FaFacebookF className="p-1" /></a></span>
+          <span className=" rounded-[100%]md:mx-2   my-5  text-darkBlue  bg-orangeRed text-3xl"><a href="https://www.instagram.com/lasglowtech"><FaInstagram className="p-1" /></a></span>
+          <span className=" rounded-[100%] md:mx-2  my-5 text-darkBlue  bg-orangeRed text-3xl"><a href="https://dribbble.com/Austinosaz"><FaDribbble className="p-1" /></a></span>
+                    <span className=" rounded-[100%] md:mx-2  my-5  text-darkBlue  bg-orangeRed text-3xl"><a href="https://www.behance.net/omozemoaugusti"><FaBehance className="p-1" /></a></span>
+          <span className=" rounded-[100%] my-5 md:mx-2   text-darkBlue  bg-orangeRed text-3xl"><a href="https://pin.it/6TdQiKnZP"><FaPinterest className="p-1" /></a></span>
+          <span className=" rounded-[100%] my-5 md:mx-2  text-darkBlue  bg-orangeRed text-3xl"><a href="https://discord.com/channels/@lasglowtech"><FaDiscord  className="p-1" /></a></span>
  
         </div>
 

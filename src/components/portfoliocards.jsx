@@ -1,25 +1,65 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { motion } from "framer-motion";
 
-const PortfolioCard = ({ image, alt, description, link, delay = 0 }) => {
+const PortfolioCard = ({ image, alt, title, description, price, link, delay = 0 }) => {
   return (
     <motion.div
-      className="rounded-xl  w-100  overflow-hidden shadow-lg border border-Primarycolor bg-white dark:bg-bgcolor text-black dark:text-textcolor2"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: 'easeOut', delay }}
+      transition={{ duration: 0.6, ease: "easeOut", delay }}
+      className="
+        rounded-2xl overflow-hidden 
+        border border-Primarycolor 
+        bg-bgcolor
+         dark:bg-bgcolor
+        text-black dark:text-textcolor2 
+        shadow-md hover:shadow-xl 
+        transition-shadow duration-300
+      "
     >
-      <img src={image} alt={alt} className="w-full h-[300px]  md:h-[400px] object-cover" />
+      {/* Thumbnail */}
+      <div className="w-full">
+        <img
+          src={image}
+          alt={alt}
+          className="w-full h-[260px] md:h-[340px] object-cover"
+        />
+      </div>
 
-      <div className="p-4">
-        <p className="text-sm mb-3">{description}</p>
+      {/* Content */}
+      <div className="p-5 space-y-3">
+        {title && (
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-textcolor2">
+            {title}
+          </h3>
+        )}
+
+        {description && (
+          <p className="text-sm text-gray-600 dark:text-textcolor2">
+            {description}
+          </p>
+        )}
+
+        {/* Price Section */}
+        {price && (
+          <p className="text-md font-bold text-Primarycolor">{price}</p>
+        )}
+
+        {/* Button */}
         <a
           href={link}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block px-4 py-2 text-sm font-medium bg-Primarycolor  text-textcolor2 rounded-md hover:bg-Secondarycolor transition"
+          className="
+            inline-block w-full text-center 
+        py-2 rounded-md 
+            font-medium text-sm
+            bg-Primarycolor hover:bg-Secondarycolor 
+            text-textcolor2 
+            transition-all
+          "
         >
-          View Project
+          View Demo
         </a>
       </div>
     </motion.div>

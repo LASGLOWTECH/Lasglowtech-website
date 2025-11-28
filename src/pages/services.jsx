@@ -100,7 +100,7 @@ export default function Services() {
          
                     <h2 className="text-3xl  t md:text-5xl  font-medium text-textcolor2  text-center leading-tight   mb-6 ">Digital Solutions</h2>
           <p className="mx-auto text-gray-400  md: max-w-lg text-center mb-12">
-            We offer a wide range of services to help your business succeed online. use ther buttons to navigate our variious services
+            We offer a wide range of services to help your business succeed online. use the buttons to navigate our variious services
           </p>
 
 

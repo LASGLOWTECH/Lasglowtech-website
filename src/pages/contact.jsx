@@ -96,7 +96,7 @@ const Contact = () => {
         <div className=" md:border md:border-Primarycolor shadow-lg rounded-xl p-4 md:p-10 grid  my-5md:grid-cols-2 gap-10">
           {/* Contact Info */}
           <div className="p-8 rounded-lg ">
-            <h2 className="text-3xl text-Secondarycolor font-semibold mb-4">Get In Touch</h2>
+            <h2 className="text-3xl text-Secondarycolor font-semibold mb-5">Get In Touch</h2>
             <p className="text-textcolor2 max-w-xl  text-normal mb-6">We’d love to hear from you! on any of our services, need support, or want to discuss a new project, our team is here to help.</p>
 
             <div className=" grid  grid-cols-1 md:grid-cols-3 py-6  items-center justify-center mx-auto space-y-4 text-sm">
