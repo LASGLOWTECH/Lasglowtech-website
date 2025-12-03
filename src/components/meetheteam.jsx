@@ -1,31 +1,37 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Osaz,Chimex, James, Precious, Izu } from "./images";
+import { Link } from "react-router-dom";
 const teamMembers = [
     {
         name: "Omozemoje A. Oisasoje",
         role: "Full Stack Developer/Founder",
         image: Osaz, // Replace with actual image path
+        url:'https://lasglowtech.com.ng/bio'
     },
     {
         name: "Onuoha Chimezie",
         role: "Full-stack  Developer",
         image: Chimex,
+         url:'/'
     },
     {
         name: "Precious Emmanuel",
         role: "Web UI/UX Designer",
         image: Precious,
+         url:'/'
     },
     {
         name: "Solomon  James",
         role: "Video Editor/Photographer",
         image: James,
+         url:'/'
     },
     {
         name: "Isaiah Izuchukwu ",
         role: "Product Designer",
         image: Izu,
+         url:'/'
     }
 ];
 
@@ -90,9 +96,10 @@ const MeetTheTeam = () => {
 
                             <div className="h-[1px] w-full bg-Primarycolor my-4" />
 
-                            <button className="bg-Primarycolor text-sm px-4 py-2 rounded-full font-medium hover:bg-Secondarycolor transition-all">
+                          <a href={member.url} ><button className="bg-Primarycolor text-sm px-4 py-2 rounded-full font-medium hover:bg-Secondarycolor transition-all">
                                 {member.role.toUpperCase()}
                             </button>
+                            </a> 
                         </div>
                     </motion.div>
                 ))}

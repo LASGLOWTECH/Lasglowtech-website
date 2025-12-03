@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaCircle } from "react-icons/fa";
 
-import { CEO, Gradient, Contactimg, Aboutimg } from "../components/images";
+import { CEO, Gradient, Contactimg, Aboutimg2 } from "../components/images";
 import Subscription from "../components/sections/subscription";
 import MeetTheTeam from "../components/meetheteam";
 import CoreValues from "../components/sections/corevalues";
@@ -57,13 +57,13 @@ const About = () => {
         </section>
 
         {/* Main Section */}
-        <div className="max-w-5xl mx-auto px-6 lg:px-0">
+        <div className="max-w-5xl mx-auto md:px-6 lg:px-0">
           {/* Image Section */}
           <div className="w-full" data-aos="zoom-in">
             <img
-              src={Aboutimg}
+              src={Aboutimg2}
               alt="About Lasglowtech"
-              className=" rounded-2xl w-full object-cover max-h-[480px] rounded-5%"
+              className=" rounded-2xl w-[1080px] object-cover md:max-h-[639px] rounded-5%"
             />
           </div>
 
@@ -72,7 +72,7 @@ const About = () => {
             className="flex flex-col justify-center items-center md:items-start text-center md:text-left"
             data-aos="slide-up"
           >
-            <div className="flex items-center gap-2 text-sm text-orange-500 font-medium my-3">
+            <div className="flex items-center gap-2 text-sm text-orange-500 pt-6 font-medium my-3">
               <FaCircle className="text-[6px]" />
               <span>About Us</span>
             </div>

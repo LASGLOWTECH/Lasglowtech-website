@@ -20,9 +20,12 @@ const PortfolioCard = ({ image, alt, title, description, price, link, delay = 0 
       {/* Thumbnail */}
       <div className="w-full">
         <img
+        width={500}
+          height={300}
           src={image}
           alt={alt}
-          className="w-full h-[260px] md:h-[340px] object-cover"
+          className="w-full  object-cover"
+          loading="lazy"
         />
       </div>
 
@@ -59,7 +62,7 @@ const PortfolioCard = ({ image, alt, title, description, price, link, delay = 0 
             transition-all
           "
         >
-          View Demo
+          View Project
         </a>
       </div>
     </motion.div>

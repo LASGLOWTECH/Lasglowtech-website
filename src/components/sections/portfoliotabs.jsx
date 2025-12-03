@@ -16,17 +16,39 @@ const portfolioData = {
       description: 'UR9 Group',
       link: 'https://ur9group.com',
     },
+
+     {
+      image: Austinport,
+      description: 'Brand Website',
+      link: 'https://lasglowtech.com.ng',
+    },
+
+    
+     {
+      image: Austinport,
+      description: 'Company website Wordpress',
+      link: 'https://greatnationluxuryhomes.com/',
+    },
+     {
+      image: Austinport,
+      description: 'Restaurant Website, Next JS ',
+      link: 'https://pantherarestlounge.com',
+    },
     {
       image: Phoenixcover,
-      description: 'Phoenixs Tech, Poland',
+      description: 'Phoenixs Tech, Poland- React/Vite',
       link: 'https://phoenixstech.com',
     },
     {
       image: Austinport,
-      description: 'Personal Portfolio',
+      description: 'Personal Portfolio, Next js',
       link: 'https://austinosaz.vercel.app',
     },
-
+{
+      image: Austinport,
+      description: 'Jobs pro clone, Vite-react',
+      link: 'https://jobspro-clone-zeta.vercel.app/',
+    },
 
     {
       image: RWA,

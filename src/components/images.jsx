@@ -36,6 +36,7 @@ import pelifts  from '../assets/images/pelifts.jpg';
 import Phoenixcover   from '../assets/images/phoenixcover.jpg';
 import ur9group  from '../assets/images/ur9website.jpg';
 import Aboutimg  from '../assets/images/Aboutimg.jpg';
+import Aboutimg2  from '../assets/images/Aboutimg2.jpg';
 // Team images
 import Osaz from '../assets/images/Austinosaz.jpg';
 import Chimex from '../assets/images/Chimex.jpg';
@@ -45,7 +46,7 @@ import Izu from '../assets/images/Izu.jpg';
 import Austinport from '../assets/images/portfolio.jpg';
 import Sures1 from '../assets/images/SSW01.jpg';
 import Sures2 from '../assets/images/SSW02.jpg';
-import RWA from '../assets/images/Rwacover.png';
+import RWA from '../assets/images/Rwacover.jpg';
 import DECOT from '../assets/images/Decotechcover.png';
 import ur9graph from '../assets/images/ur9graph.jpg';
 export {
@@ -76,7 +77,7 @@ Phoenixcover,ur9group,Smiggle1,Smiggle2,Smiggle3,Smiggle4,Sures1,Sures2,RWA,DECO
 // ABOUT Us
 
 // Partners
-Aboutimg,
+Aboutimg,Aboutimg2  ,
 Ur9, Phoenixs, Qlogo, Fgroup, Dtech, Pelifts, Smiggle, NMI,
 
 // team
