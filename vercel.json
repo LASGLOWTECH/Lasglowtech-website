@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/Austinosaz",
-      "destination": "https://austinosaz.vercel.app"
+      "source": "/Austinosaz/:path*",
+      "destination": "https://austinosaz.vercel.app/:path*"
     }
   ]
 }

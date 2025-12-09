@@ -58,6 +58,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/services/:slug" element={<SingleService />} />
+          <Route path="/Austinosaz/*" element={<div></div>} />
         <Route path="*" element={<NotFound />} />
 
         <Route path="/dashboard" element={<AdminLayout />}>
