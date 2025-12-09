@@ -1,7 +1,11 @@
 {
   "rewrites": [
     {
-      "source": "/Austinosaz/:path*",
+      "source": "/Ausinosaz",
+      "destination": "https://austinosaz.vercel.app"
+    },
+    {
+      "source": "/Ausinosaz/:path*",
       "destination": "https://austinosaz.vercel.app/:path*"
     }
   ]
