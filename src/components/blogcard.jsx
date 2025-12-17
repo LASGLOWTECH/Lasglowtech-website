@@ -65,27 +65,26 @@ const Blogcard = () => {
     };
 
     // Function to handle sharing and updating the share count
-    const handleShare = (blogid) => {
-        if (navigator.share) {
-            navigator
-                .share({
-                    title: "Check this blog!",
-                    text: "Hey, look at this interesting blog!",
-                    url: window.location.href,
-                })
-                .then(() => {
-                    // Increment the share count for the blog
-                    setShares((prevShares) => ({
-                        ...prevShares,
-                        [blogid]: prevShares[blogid] + 1,
-                    }));
-                    console.log("Shared successfully");
-                })
-                .catch((error) => console.error("Error sharing:", error));
-        } else {
-            alert("Sharing is not supported on this device.");
-        }
-    };
+    const handleShare = (blog) => {
+  if (navigator.share) {
+    navigator
+      .share({
+        title: blog.title,
+        text: "Hey, check out this article!",
+        url: `${window.location.origin}/blog/${blog.slug}`,
+      })
+      .then(() => {
+        setShares((prevShares) => ({
+          ...prevShares,
+          [blog.id]: (prevShares[blog.id] || 0) + 1,
+        }));
+      })
+      .catch((error) => console.error("Error sharing:", error));
+  } else {
+    alert("Sharing is not supported on this device.");
+  }
+};
+
 
     return (
         <div className="py-16">
@@ -96,7 +95,7 @@ const Blogcard = () => {
                         className="block  bg-gradient-to-t from-bgcolor to-bgcolor2 hover:shadow-none  p-5 rounded-lg shadow-md shadow-Primarycolor text-left transition-colors duration-300"
                     >
 
-                        <Link to={`/blog/${blog.id}`} key={blog.id} className="block">
+                        <Link to={`/blog/${blog.slug}`} key={blog.id} className="block">
 
                             <img
                                 src={
@@ -118,7 +117,8 @@ const Blogcard = () => {
                                 {blog.date}
                             </p>
                             <div
-                                onClick={() => handleShare(blog.blogid)}
+                               onClick={() => handleShare(blog)}
+
                                 className="cursor-pointer"
                             >
                                 <IoShareSocialSharp fill="white" className="text-2xl" />
@@ -130,7 +130,8 @@ const Blogcard = () => {
                         <p className="text-grey-100 text-base my-4 line-clamp-3" dangerouslySetInnerHTML={{ __html: blog.content }}  >{blog.content}</p>
 
 
-                        <Link to={`/blog/${blog.id}`}>
+                        <Link to={`/blog/${blog.slug}`}>
+
 
                             <div className="flex items-center pt-6 group cursor-pointer transition-all duration-500">
                                 <p className="ml-2 text-[#F5F7FA] font-medium transition-all duration-500">

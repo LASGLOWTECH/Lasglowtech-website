@@ -16,161 +16,120 @@ const BlogDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [post, setPost] = useState(null);
-  const [shares, setShares] = useState({});
 
-  // ✅ Fetch post by slug (fallback to ID)
+  // ✅ Fetch blog by SLUG
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchPost = async () => {
       try {
-        const res = await instance.get(`/posts/slug/${decodedSlug}`);
+        const res = await instance.get(`/posts/${decodedSlug}`);
         setPost(res.data);
-      } catch (error) {
-        // fallback to ID if slug fetch fails
-        if (error.response && error.response.status === 404 && !isNaN(decodedSlug)) {
-          try {
-            const res = await instance.get(`/posts/${decodedSlug}`);
-            setPost(res.data);
-          } catch (innerError) {
-            setError("Failed to fetch the post.");
-            console.error(innerError);
-          }
-        } else {
-          setError("Failed to fetch the post.");
-          console.error(error);
-        }
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setError("Failed to fetch the blog post.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    fetchPost();
   }, [decodedSlug]);
 
-  // ✅ Track shares when post loads
-  useEffect(() => {
-    if (post && post.slug) {
-      setShares((prev) => ({
-        ...prev,
-        [post.slug]: prev[post.slug] || 0,
-      }));
-    }
-  }, [post]);
-
-  // ✅ Handle delete
-  const handleDelete = async () => {
-    try {
-      await instance.delete(`/posts/${post.id}`);
-      navigate("/blog");
-    } catch (error) {
-      setError("Can't delete post");
-      console.error("Delete error:", error);
-    }
-  };
-
-  // ✅ Handle share or copy link
-  const handleShare = (slug) => {
+  // ✅ Share handler (slug-based)
+  const handleShare = () => {
     const baseUrl =
       window.location.hostname === "localhost"
         ? "http://localhost:5173"
-        : "https://lasglowtech.com";
+        : "https://lasglowtech.com.ng";
 
-    const shareUrl = `${baseUrl}/blog/${encodeURIComponent(slug)}`;
+    const shareUrl = `${baseUrl}/blog/${post.slug}`;
 
     if (navigator.share) {
       navigator
         .share({
           title: post.title,
-          text: "Check out this blog!",
+          text: "Check out this article!",
           url: shareUrl,
         })
-        .then(() => {
-          setShares((prev) => ({
-            ...prev,
-            [slug]: (prev[slug] || 0) + 1,
-          }));
-        })
-        .catch((error) => console.error("Error sharing:", error));
+        .catch((err) => console.error("Share error:", err));
     } else {
       navigator.clipboard.writeText(shareUrl);
-      alert("Link copied: " + shareUrl);
+      alert("Link copied to clipboard!");
     }
   };
 
-  // ✅ Loading & error states
-  if (loading) return <div className="text-black text-center mt-20">Loading...</div>;
-  if (error) return <div className="text-black text-center mt-20">{error}</div>;
-  if (!post) return <div className="text-center py-10 text-gray-600">Blog not found</div>;
+  // ✅ UI states
+  if (loading) {
+    return <div className="text-center py-20 text-gray-400">Loading...</div>;
+  }
 
-  // ✅ Main content
+  if (error) {
+    return <div className="text-center py-20 text-red-500">{error}</div>;
+  }
+
+  if (!post) {
+    return <div className="text-center py-20 text-gray-400">Blog not found</div>;
+  }
+
   return (
     <div className="bg-bgcolor text-white py-16">
       <div className="max-w-5xl mx-auto px-6 lg:px-0">
 
-        {/* Back Link */}
-        <div className="p-3 border-b border-gray-200">
-          <Link
+        {/* Back */}
+        <div className="mb-6">
+          <button
             onClick={() => navigate(-1)}
-            className="flex items-center text-violet-700 hover:text-textcolor2 text-lg font-semibold"
+            className="flex items-center text-violet-500 hover:text-violet-400 font-semibold"
           >
-            <FaArrowLeftLong className="mr-2" size={20} /> Back
-          </Link>
+            <FaArrowLeftLong className="mr-2" /> Back
+          </button>
         </div>
 
         {/* Title */}
-        <h1 className="text-3xl md:text-5xl font-bold leading-snug text-textcolor2 mb-6">
+        <h1 className="text-3xl md:text-5xl font-bold text-textcolor2 mb-6">
           {post.title}
         </h1>
 
-        {/* Cover Image */}
+        {/* Cover */}
         {post.cover && (
-          <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-700 mb-8">
+          <div className="rounded-xl overflow-hidden mb-8 border border-gray-700">
             <img
               src={
                 window.location.hostname === "localhost"
-                  ? `/upload/images/${encodeURIComponent(post.cover)}`
-                  : `https://lasglowserver.phoenixstech.com/uploads/images/${encodeURIComponent(
-                      post.cover
-                    )}`
+                  ? `/upload/images/${post.cover}`
+                  : `https://lasglowserver.phoenixstech.com/uploads/images/${post.cover}`
               }
-                loading="lazy"
-              alt="Blog cover"
-              className="w-full object-cover max-h-[480px]"
+              alt={post.title}
+              loading="lazy"
+              className="w-full max-h-[480px] object-cover"
             />
           </div>
         )}
 
-        {/* Meta Info */}
-        <div className="flex flex-wrap items-center justify-between text-sm text-gray-400 mb-10">
+        {/* Meta */}
+        <div className="flex flex-wrap justify-between items-center text-sm text-gray-400 mb-10">
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
-              <img src={Osaz} alt="author" className="w-8 h-8 rounded-full" />
-              <span className="font-medium text-gray-300">Lasglowtech</span>
-            </div>
-            <span className="text-gray-500">
-              • {moment(post.timestamp).format("MMMM D, YYYY")}
-            </span>
+            <img src={Osaz} alt="author" className="w-8 h-8 rounded-full" />
+            <span className="font-medium text-gray-300">Lasglowtech</span>
+            <span>• {moment(post.timestamp).format("MMMM D, YYYY")}</span>
           </div>
 
           <button
-            className="flex items-center gap-2 text-sm bg-gradient-to-r from-Primarycolor to-Primarycolor1 hover:from-Secondarycolor hover:to-Secondarycolor text-white px-4 py-2 rounded-md shadow-md transition-all"
-            onClick={() => handleShare(post.slug || post.id)}
+            onClick={handleShare}
+            className="flex items-center gap-2 bg-gradient-to-r from-Primarycolor to-Primarycolor1 hover:from-Secondarycolor hover:to-Secondarycolor px-4 py-2 rounded-md shadow"
           >
-            Share <IoShareSocialSharp className="text-lg" />
+            Share <IoShareSocialSharp />
           </button>
         </div>
 
-        {/* Blog Content */}
-        <div
-          className="prose prose-invert prose-lg max-w-none text-gray-300 leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
+        {/* Content */}
+        <div className="prose prose-invert prose-lg max-w-none text-gray-300 leading-relaxed" dangerouslySetInnerHTML={{ __html: post.content }} />
 
-        {/* Related Posts */}
+        {/* Related */}
         <div className="mt-16 border-t border-gray-800 pt-10">
           <RelatedPosts currentPostId={post.id} />
         </div>
 
-        {/* Subscription Section */}
+        {/* Subscription */}
         <div className="mt-20">
           <Subscription />
         </div>
