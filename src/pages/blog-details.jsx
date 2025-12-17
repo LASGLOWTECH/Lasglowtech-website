@@ -57,7 +57,7 @@ const BlogDetails = () => {
     }
   };
 
-  // ✅ UI states
+  
   if (loading) {
     return <div className="text-center py-20 text-gray-400">Loading...</div>;
   }
