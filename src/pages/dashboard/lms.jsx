@@ -26,6 +26,7 @@ const defaultCourse = {
   imageUrl: "",
   isFeatured: false,
   isPublished: true,
+  issueCertificateOnCompletion: true,
 };
 
 const defaultModule = {
@@ -49,6 +50,24 @@ const LmsAdmin = () => {
   const [courseForm, setCourseForm] = useState(defaultCourse);
   const [moduleForm, setModuleForm] = useState(defaultModule);
   const [loading, setLoading] = useState(false);
+  const [enrollments, setEnrollments] = useState([]);
+  const [enrollmentsLoading, setEnrollmentsLoading] = useState(false);
+  const [enrollmentCourseFilter, setEnrollmentCourseFilter] = useState("");
+  const [issuingId, setIssuingId] = useState(null);
+  const [issueCertEnrollment, setIssueCertEnrollment] = useState(null);
+  const [issueCertForm, setIssueCertForm] = useState({
+    recipientFullName: "",
+    bodyMessage: "",
+    signedDate: new Date().toISOString().slice(0, 10),
+    signatureLabel: "Authorized Signatory",
+  });
+  const [certBgUploading, setCertBgUploading] = useState(false);
+  const [certLogoUploading, setCertLogoUploading] = useState(false);
+  const [certificateSettings, setCertificateSettings] = useState({
+    defaultMessage: "",
+    defaultSignatureLabel: "Authorized Signatory",
+  });
+  const [certSettingsSaving, setCertSettingsSaving] = useState(false);
   const selectedModuleCourseId = moduleForm.courseId || "";
 
   const loadCourses = async () => {
@@ -65,6 +84,22 @@ const LmsAdmin = () => {
 
   useEffect(() => {
     loadCourses();
+  }, [headers]);
+
+  const loadCertificateSettings = async () => {
+    try {
+      const res = await instance.get("/admin/certificate-settings", { headers });
+      setCertificateSettings({
+        defaultMessage: res.data?.defaultMessage ?? "",
+        defaultSignatureLabel: res.data?.defaultSignatureLabel ?? "Authorized Signatory",
+      });
+    } catch (_) {
+      // optional
+    }
+  };
+
+  useEffect(() => {
+    loadCertificateSettings();
   }, [headers]);
 
   const loadModulesForCourse = async (courseId) => {
@@ -174,9 +209,187 @@ const LmsAdmin = () => {
     }
   };
 
+  const loadEnrollments = async () => {
+    setEnrollmentsLoading(true);
+    try {
+      const params = enrollmentCourseFilter ? { courseId: enrollmentCourseFilter } : {};
+      const res = await instance.get("/lms/admin/enrollments", { headers, params });
+      setEnrollments(res.data || []);
+    } catch (error) {
+      toast.error("Unable to load enrollments.");
+      setEnrollments([]);
+    } finally {
+      setEnrollmentsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadEnrollments();
+  }, [enrollmentCourseFilter]);
+
+  const previewCertificate = async (enrollmentId) => {
+    try {
+      const res = await instance.get(`/lms/admin/enrollments/${enrollmentId}/certificate`, {
+        headers,
+        responseType: "text",
+      });
+      const w = window.open("", "_blank");
+      if (w) {
+        w.document.write(res.data);
+        w.document.close();
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.error || "Could not load certificate.");
+    }
+  };
+
+  const uploadCertificateBackground = async (e) => {
+    const file = e?.target?.files?.[0];
+    if (!file) return;
+    if (!/^image\/(png|jpeg|jpg)$/.test(file.type)) {
+      toast.error("Please choose a PNG or JPEG image.");
+      return;
+    }
+    setCertBgUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      await instance.post("/admin/upload/certificate-background", formData, {
+        headers: { ...headers, "Content-Type": undefined },
+      });
+      toast.success("Certificate background updated. New certificates will use it.");
+    } catch (err) {
+      toast.error(err.response?.data?.error || "Upload failed.");
+    } finally {
+      setCertBgUploading(false);
+      e.target.value = "";
+    }
+  };
+
+  const uploadCertificateLogo = async (e) => {
+    const file = e?.target?.files?.[0];
+    if (!file) return;
+    if (!/^image\/(png|jpeg|jpg)$/.test(file.type)) {
+      toast.error("Please choose a PNG or JPEG image.");
+      return;
+    }
+    setCertLogoUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      await instance.post("/admin/upload/certificate-logo", formData, {
+        headers: { ...headers, "Content-Type": undefined },
+      });
+      toast.success("Certificate logo updated.");
+    } catch (err) {
+      toast.error(err.response?.data?.error || "Upload failed.");
+    } finally {
+      setCertLogoUploading(false);
+      e.target.value = "";
+    }
+  };
+
+  const saveCertificateSettings = async (e) => {
+    e?.preventDefault?.();
+    setCertSettingsSaving(true);
+    try {
+      await instance.put(
+        "/admin/certificate-settings",
+        {
+          defaultMessage: certificateSettings.defaultMessage,
+          defaultSignatureLabel: certificateSettings.defaultSignatureLabel,
+        },
+        { headers }
+      );
+      toast.success("Certificate defaults saved.");
+    } catch (err) {
+      toast.error(err.response?.data?.error || "Save failed.");
+    } finally {
+      setCertSettingsSaving(false);
+    }
+  };
+
+  const openIssueModal = (en) => {
+    setIssueCertEnrollment(en);
+    setIssueCertForm({
+      recipientFullName: en.learnerName || "",
+      bodyMessage: certificateSettings.defaultMessage || "",
+      signedDate: new Date().toISOString().slice(0, 10),
+      signatureLabel: certificateSettings.defaultSignatureLabel || "Authorized Signatory",
+    });
+  };
+
+  const issueCertificate = async () => {
+    if (!issueCertEnrollment) return;
+    const enrollmentId = issueCertEnrollment.enrollmentId;
+    setIssuingId(enrollmentId);
+    try {
+      await instance.post(
+        `/lms/admin/enrollments/${enrollmentId}/issue-certificate`,
+        {
+          recipientFullName: issueCertForm.recipientFullName.trim() || issueCertEnrollment.learnerName,
+          bodyMessage: issueCertForm.bodyMessage.trim() || undefined,
+          signedDate: issueCertForm.signedDate || undefined,
+          signatureLabel: issueCertForm.signatureLabel.trim() || undefined,
+        },
+        { headers }
+      );
+      toast.success("Certificate issued and email sent. Learner can download only after this acknowledgment.");
+      setIssueCertEnrollment(null);
+      loadEnrollments();
+    } catch (error) {
+      toast.error(error.response?.data?.error || "Failed to issue certificate.");
+    } finally {
+      setIssuingId(null);
+    }
+  };
+
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const lmsNav = [
+    { id: "lms-create-course", label: "Create course" },
+    { id: "lms-modules", label: "Add module" },
+    { id: "lms-certificate", label: "Certificate" },
+    { id: "lms-enrollments", label: "Enrollments" },
+    { id: "lms-courses-list", label: "Courses list" },
+  ];
+
   return (
-    <div className="space-y-8">
-      <section className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden">
+    <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+      <aside className="lg:w-52 flex-shrink-0">
+        <nav className="hidden lg:block sticky top-24 rounded-xl border border-Primarycolor/20 bg-bgcolor2/60 p-3 space-y-1">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-2 py-1.5">Jump to</p>
+          {lmsNav.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => scrollToSection(item.id)}
+              className="w-full text-left px-3 py-2 rounded-lg text-sm text-gray-300 hover:bg-Primarycolor/20 hover:text-textcolor2 transition-colors"
+            >
+              {item.label}
+            </button>
+          ))}
+        </nav>
+        <div className="lg:hidden mb-4 flex flex-wrap gap-2">
+          <select
+            defaultValue=""
+            onChange={(e) => { const v = e.target.value; if (v) scrollToSection(v); e.target.value = ""; }}
+            className="text-sm rounded-lg border border-Primarycolor/30 bg-bgcolor2/80 text-textcolor2 px-3 py-2"
+            aria-label="Jump to section"
+          >
+            <option value="">Jump to section…</option>
+            {lmsNav.map((item) => (
+              <option key={item.id} value={item.id}>{item.label}</option>
+            ))}
+          </select>
+        </div>
+      </aside>
+
+      <main className="flex-1 min-w-0 space-y-8">
+      <section id="lms-create-course" className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden scroll-mt-6">
         <div className="px-6 py-5 border-b border-Primarycolor/20 bg-bgcolor/30">
           <h2 className="text-xl font-semibold text-textcolor2">LMS manager</h2>
           <p className="text-sm text-gray-500 mt-0.5">Create learning courses and structured modules.</p>
@@ -243,6 +456,14 @@ const LmsAdmin = () => {
             />
             Published
           </label>
+          <label className="flex items-center gap-2 text-sm text-gray-300">
+            <input
+              type="checkbox"
+              checked={courseForm.issueCertificateOnCompletion !== false}
+              onChange={(e) => setCourseForm((p) => ({ ...p, issueCertificateOnCompletion: e.target.checked }))}
+            />
+            Issue certificate on completion
+          </label>
           <div className="md:col-span-2 flex gap-3">
             <button
               type="submit"
@@ -264,7 +485,7 @@ const LmsAdmin = () => {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden">
+      <section id="lms-modules" className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden scroll-mt-6">
         <div className="px-6 py-5 border-b border-Primarycolor/20 bg-bgcolor/30">
           <h3 className="text-xl font-semibold text-textcolor2">Add module</h3>
           <p className="text-sm text-gray-500 mt-0.5">Create or edit course modules with notes and resources.</p>
@@ -429,7 +650,168 @@ const LmsAdmin = () => {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden">
+      <section id="lms-certificate" className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden scroll-mt-6">
+        <div className="px-6 py-5 border-b border-Primarycolor/20 bg-bgcolor/30">
+          <h3 className="text-xl font-semibold text-textcolor2">Certificate design & defaults</h3>
+          <p className="text-sm text-gray-500 mt-0.5">
+            Upload logo and background, and set default text used when issuing certificates.
+          </p>
+        </div>
+        <div className="p-6 space-y-6">
+          <div className="flex flex-wrap gap-4 items-start">
+            <div>
+              <p className="text-sm font-medium text-textcolor2 mb-2">Certificate logo</p>
+              <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-Primarycolor/50 text-textcolor2 text-sm cursor-pointer hover:bg-Primarycolor/10 transition-colors">
+                <input
+                  type="file"
+                  accept="image/png,image/jpeg,image/jpg"
+                  onChange={uploadCertificateLogo}
+                  disabled={certLogoUploading}
+                  className="sr-only"
+                />
+                {certLogoUploading ? "Uploading…" : "Upload logo"}
+              </label>
+              <p className="text-xs text-gray-500 mt-1">PNG/JPEG. Shown on certificates (replaces site logo if set).</p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-textcolor2 mb-2">Certificate background</p>
+              <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-Primarycolor/50 text-textcolor2 text-sm cursor-pointer hover:bg-Primarycolor/10 transition-colors">
+                <input
+                  type="file"
+                  accept="image/png,image/jpeg,image/jpg"
+                  onChange={uploadCertificateBackground}
+                  disabled={certBgUploading}
+                  className="sr-only"
+                />
+                {certBgUploading ? "Uploading…" : "Upload custom design"}
+              </label>
+              <p className="text-xs text-gray-500 mt-1">Landscape image; name, course, date and code are overlaid.</p>
+            </div>
+          </div>
+
+          <div className="border-t border-Primarycolor/20 pt-6">
+            <p className="text-sm font-medium text-textcolor2 mb-3">Default certificate text</p>
+            <p className="text-xs text-gray-500 mb-3">These pre-fill when you issue a certificate; you can still edit per certificate.</p>
+            <form onSubmit={saveCertificateSettings} className="space-y-4 max-w-xl">
+              <div>
+                <label className="block text-xs text-gray-400 mb-1">Default message on certificate</label>
+                <textarea
+                  value={certificateSettings.defaultMessage}
+                  onChange={(e) => setCertificateSettings((p) => ({ ...p, defaultMessage: e.target.value }))}
+                  placeholder="e.g. has successfully completed the programme. Completion and payment verified."
+                  rows={3}
+                  className="w-full p-2.5 rounded-md bg-[#f6f5fa] text-black text-sm resize-none border border-Primarycolor/20"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-400 mb-1">Default signature label</label>
+                <input
+                  type="text"
+                  value={certificateSettings.defaultSignatureLabel}
+                  onChange={(e) => setCertificateSettings((p) => ({ ...p, defaultSignatureLabel: e.target.value }))}
+                  placeholder="Authorized Signatory"
+                  className="w-full p-2.5 rounded-md bg-[#f6f5fa] text-black text-sm border border-Primarycolor/20"
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={certSettingsSaving}
+                className="px-4 py-2 rounded-lg bg-Primarycolor text-white text-sm font-medium hover:bg-Primarycolor/90 disabled:opacity-50"
+              >
+                {certSettingsSaving ? "Saving…" : "Save defaults"}
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section id="lms-enrollments" className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden scroll-mt-6">
+        <div className="px-6 py-5 border-b border-Primarycolor/20 bg-bgcolor/30">
+          <h3 className="text-xl font-semibold text-textcolor2">Enrollments & certificates</h3>
+          <p className="text-sm text-gray-500 mt-0.5">View enrollments and issue or preview certificates.</p>
+        </div>
+        <div className="p-6">
+          <div className="flex flex-wrap items-center gap-3 mb-4">
+            <label className="text-sm text-gray-300">Filter by course:</label>
+            <select
+              value={enrollmentCourseFilter}
+              onChange={(e) => setEnrollmentCourseFilter(e.target.value)}
+              className="p-2 rounded-md bg-[#f6f5fa] text-black text-sm min-w-[200px]"
+            >
+              <option value="">All courses</option>
+              {courses.map((c) => (
+                <option key={c.id} value={c.id}>{c.title}</option>
+              ))}
+            </select>
+            <button
+              type="button"
+              onClick={loadEnrollments}
+              className="px-3 py-2 rounded-md border border-Primarycolor/50 text-textcolor2 text-sm"
+            >
+              Refresh
+            </button>
+          </div>
+          {enrollmentsLoading && <p className="text-gray-400 text-sm">Loading enrollments…</p>}
+          {!enrollmentsLoading && enrollments.length === 0 && (
+            <p className="text-gray-400 text-sm">No enrollments found.</p>
+          )}
+          {!enrollmentsLoading && enrollments.length > 0 && (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-left">
+                <thead>
+                  <tr className="border-b border-Primarycolor/20 text-gray-300">
+                    <th className="py-2 pr-4 font-semibold">Learner</th>
+                    <th className="py-2 pr-4 font-semibold">Course</th>
+                    <th className="py-2 pr-4 font-semibold">Progress</th>
+                    <th className="py-2 pr-4 font-semibold">Status</th>
+                    <th className="py-2 pr-4 font-semibold">Certificate</th>
+                    <th className="py-2 font-semibold">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {enrollments.map((en) => (
+                    <tr key={en.enrollmentId} className="border-b border-Primarycolor/10 text-gray-200">
+                      <td className="py-2 pr-4">
+                        <span className="font-medium">{en.learnerName}</span>
+                        <span className="block text-xs text-gray-500">{en.learnerEmail}</span>
+                      </td>
+                      <td className="py-2 pr-4">{en.courseTitle}</td>
+                      <td className="py-2 pr-4">{en.progressPercent}%</td>
+                      <td className="py-2 pr-4 capitalize">{en.status}</td>
+                      <td className="py-2 pr-4">
+                        {en.certificateSentAt
+                          ? <span className="text-green-400 text-xs">Issued</span>
+                          : <span className="text-gray-500 text-xs">—</span>}
+                      </td>
+                      <td className="py-2 flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          onClick={() => previewCertificate(en.enrollmentId)}
+                          className="px-2 py-1 rounded border border-Primarycolor/50 text-textcolor2 text-xs hover:bg-Primarycolor/10"
+                        >
+                          Preview
+                        </button>
+                        {!en.certificateSentAt && (
+                          <button
+                            type="button"
+                            onClick={() => openIssueModal(en)}
+                            disabled={issuingId === en.enrollmentId}
+                            className="px-2 py-1 rounded bg-Secondarycolor/80 text-white text-xs hover:bg-Secondarycolor disabled:opacity-50"
+                          >
+                            Issue certificate
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section id="lms-courses-list" className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden scroll-mt-6">
         <div className="px-6 py-5 border-b border-Primarycolor/20 bg-bgcolor/30">
           <h3 className="text-xl font-semibold text-textcolor2">Courses</h3>
           <p className="text-sm text-gray-500 mt-0.5">All LMS courses and their modules.</p>
@@ -463,6 +845,7 @@ const LmsAdmin = () => {
                           imageUrl: course.imageUrl || "",
                           isFeatured: Boolean(course.isFeatured),
                           isPublished: Boolean(course.isPublished),
+                          issueCertificateOnCompletion: course.issueCertificateOnCompletion !== false,
                         })
                       }
                       className="px-4 py-2 rounded-md border border-Primarycolor/60 text-textcolor2"
@@ -485,6 +868,79 @@ const LmsAdmin = () => {
         )}
         </div>
       </section>
+
+      {issueCertEnrollment && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60" onClick={() => !issuingId && setIssueCertEnrollment(null)}>
+          <div className="bg-bgcolor2 border border-Primarycolor/30 rounded-xl max-w-md w-full p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <h4 className="text-lg font-semibold text-textcolor2 mb-2">Issue certificate</h4>
+            <p className="text-sm text-gray-400 mb-4">
+              Acknowledge completion and payment for <strong>{issueCertEnrollment.learnerName}</strong> ({issueCertEnrollment.courseTitle}). The learner can download the certificate only after you issue it.
+            </p>
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs text-gray-400 mb-1">Recipient full name</label>
+                <input
+                  type="text"
+                  value={issueCertForm.recipientFullName}
+                  onChange={(e) => setIssueCertForm((p) => ({ ...p, recipientFullName: e.target.value }))}
+                  placeholder="Name as on certificate"
+                  className="w-full p-2.5 rounded-md bg-[#f6f5fa] text-black text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-400 mb-1">Message on certificate (optional)</label>
+                <textarea
+                  value={issueCertForm.bodyMessage}
+                  onChange={(e) => setIssueCertForm((p) => ({ ...p, bodyMessage: e.target.value }))}
+                  placeholder="e.g. has successfully completed the programme. Completion and payment verified."
+                  rows={3}
+                  className="w-full p-2.5 rounded-md bg-[#f6f5fa] text-black text-sm resize-none"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs text-gray-400 mb-1">Date</label>
+                  <input
+                    type="date"
+                    value={issueCertForm.signedDate}
+                    onChange={(e) => setIssueCertForm((p) => ({ ...p, signedDate: e.target.value }))}
+                    className="w-full p-2.5 rounded-md bg-[#f6f5fa] text-black text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-400 mb-1">Signature label</label>
+                  <input
+                    type="text"
+                    value={issueCertForm.signatureLabel}
+                    onChange={(e) => setIssueCertForm((p) => ({ ...p, signatureLabel: e.target.value }))}
+                    placeholder="Authorized Signatory"
+                    className="w-full p-2.5 rounded-md bg-[#f6f5fa] text-black text-sm"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-2 mt-5">
+              <button
+                type="button"
+                onClick={() => setIssueCertEnrollment(null)}
+                disabled={!!issuingId}
+                className="flex-1 py-2.5 rounded-md border border-white/20 text-gray-300 text-sm"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={issueCertificate}
+                disabled={!!issuingId}
+                className="flex-1 py-2.5 rounded-md bg-Secondarycolor text-white text-sm font-medium disabled:opacity-50"
+              >
+                {issuingId ? "Issuing…" : "Issue certificate"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      </main>
     </div>
   );
 };

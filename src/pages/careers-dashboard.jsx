@@ -259,13 +259,18 @@ const CareersDashboard = () => {
     }
   };
 
+  /** Certificate is issued only when all modules are completed (100% progress). */
+  const fetchCertificateHtml = async (enrollmentId) => {
+    const res = await instance.get(`/lms/my/enrollments/${enrollmentId}/certificate`, {
+      headers: { Authorization: `Bearer ${token}` },
+      responseType: "blob",
+    });
+    return new Blob([res.data], { type: "text/html;charset=utf-8" });
+  };
+
   const downloadCertificate = async (enrollmentId, courseTitle) => {
     try {
-      const res = await instance.get(`/lms/my/enrollments/${enrollmentId}/certificate`, {
-        headers: { Authorization: `Bearer ${token}` },
-        responseType: "blob",
-      });
-      const blob = new Blob([res.data], { type: "text/html;charset=utf-8" });
+      const blob = await fetchCertificateHtml(enrollmentId);
       const href = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = href;
@@ -274,6 +279,21 @@ const CareersDashboard = () => {
       link.click();
       link.remove();
       URL.revokeObjectURL(href);
+    } catch (err) {
+      toast.error(err.response?.data?.error || "Certificate not available yet.");
+    }
+  };
+
+  const previewCertificate = async (enrollmentId) => {
+    try {
+      const blob = await fetchCertificateHtml(enrollmentId);
+      const href = URL.createObjectURL(blob);
+      const w = window.open(href, "_blank", "noopener,noreferrer");
+      if (w) setTimeout(() => URL.revokeObjectURL(href), 10000);
+      else {
+        URL.revokeObjectURL(href);
+        toast.info("Popup blocked? Try Download Certificate instead.");
+      }
     } catch (err) {
       toast.error(err.response?.data?.error || "Certificate not available yet.");
     }
@@ -537,14 +557,38 @@ const CareersDashboard = () => {
                             style={{ width: `${en.progressPercent}%` }}
                           />
                         </div>
-                        {Number(en.progressPercent) >= 100 && (
-                          <button
-                            type="button"
-                            onClick={() => downloadCertificate(en.enrollmentId, en.course.title)}
-                            className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/10 text-sm transition-colors"
-                          >
-                            <FaDownload /> Download Certificate
-                          </button>
+                        {Number(en.progressPercent) >= 100 ? (
+                          <div className="mt-4 flex flex-wrap gap-2">
+                            {!(latest?.payment_status === "paid" || latest?.payment_status === "waived") ? (
+                              <p className="text-xs text-amber-400/90 w-full">
+                                Certificate download is available only after your programme payment is verified. Please ensure your fee is marked as paid.
+                              </p>
+                            ) : (
+                              <>
+                                <p className="text-xs text-gray-500 w-full mb-1">
+                                  Download is available after Lasglowtech verifies programme completion and issues your certificate.
+                                </p>
+                                <button
+                                  type="button"
+                                  onClick={() => previewCertificate(en.enrollmentId)}
+                                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-Primarycolor/40 text-Primarycolor hover:bg-Primarycolor/10 text-sm transition-colors"
+                                >
+                                  <FaExternalLinkAlt /> Preview Certificate
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => downloadCertificate(en.enrollmentId, en.course.title)}
+                                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/10 text-sm transition-colors"
+                                >
+                                  <FaDownload /> Download Certificate
+                                </button>
+                              </>
+                            )}
+                          </div>
+                        ) : (
+                          <p className="text-xs text-gray-500 mt-3">
+                            Complete all {en.totalModules} modules to unlock your certificate.
+                          </p>
                         )}
                       </article>
                     ))}

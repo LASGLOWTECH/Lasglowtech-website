@@ -88,8 +88,46 @@ const CareersAdmin = () => {
     }
   };
 
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const careerNav = [{ id: "career-applications", label: "Applications" }];
+
   return (
-    <section className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden">
+    <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+      <aside className="lg:w-52 flex-shrink-0">
+        <nav className="hidden lg:block sticky top-24 rounded-xl border border-Primarycolor/20 bg-bgcolor2/60 p-3 space-y-1">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-2 py-1.5">Jump to</p>
+          {careerNav.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => scrollToSection(item.id)}
+              className="w-full text-left px-3 py-2 rounded-lg text-sm text-gray-300 hover:bg-Primarycolor/20 hover:text-textcolor2 transition-colors"
+            >
+              {item.label}
+            </button>
+          ))}
+        </nav>
+        <div className="lg:hidden mb-4">
+          <select
+            defaultValue=""
+            onChange={(e) => { const v = e.target.value; if (v) scrollToSection(v); e.target.value = ""; }}
+            className="text-sm rounded-lg border border-Primarycolor/30 bg-bgcolor2/80 text-textcolor2 px-3 py-2"
+            aria-label="Jump to section"
+          >
+            <option value="">Jump to section…</option>
+            {careerNav.map((item) => (
+              <option key={item.id} value={item.id}>{item.label}</option>
+            ))}
+          </select>
+        </div>
+      </aside>
+
+      <main className="flex-1 min-w-0">
+    <section id="career-applications" className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden scroll-mt-6">
       <div className="px-6 py-5 border-b border-Primarycolor/20 bg-bgcolor/30">
         <h2 className="text-xl font-semibold text-textcolor2">Career applications</h2>
         <p className="text-sm text-gray-500 mt-0.5">
@@ -316,6 +354,8 @@ const CareersAdmin = () => {
         )}
       </div>
     </section>
+      </main>
+    </div>
   );
 };
 
