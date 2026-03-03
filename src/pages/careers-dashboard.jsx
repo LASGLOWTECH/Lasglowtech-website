@@ -90,6 +90,19 @@ const resolveAssetUrl = (url = "") => {
   return `${instance.defaults.baseURL}/${url}`;
 };
 
+/** Extract YouTube video ID for embed. Supports watch?v=, youtu.be/, embed/ */
+const getYouTubeVideoId = (url = "") => {
+  if (!url || typeof url !== "string") return null;
+  const u = url.trim();
+  const watchMatch = u.match(/(?:youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/i);
+  if (watchMatch) return watchMatch[1];
+  const shortMatch = u.match(/(?:youtu\.be\/)([a-zA-Z0-9_-]{11})/i);
+  if (shortMatch) return shortMatch[1];
+  const embedMatch = u.match(/(?:youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/i);
+  if (embedMatch) return embedMatch[1];
+  return null;
+};
+
 const SIDEBAR_SECTIONS = [
   { id: "overview", label: "Overview", icon: FaChartLine },
   { id: "applications", label: "Applications", icon: FaFileAlt },
@@ -709,19 +722,35 @@ const CareersDashboard = () => {
                               )}
                             </div>
 
-                            {!!selectedModule.videoUrl && (
-                              <div className="rounded-xl border border-Primarycolor/20 bg-bgcolor2/40 p-4">
-                                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Video</p>
-                                <a
-                                  href={resolveAssetUrl(selectedModule.videoUrl)}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="inline-flex items-center gap-2 text-Secondarycolor hover:underline text-sm font-medium"
-                                >
-                                  <FaPlay /> Watch lesson video
-                                </a>
-                              </div>
-                            )}
+                            {!!selectedModule.videoUrl && (() => {
+                              const videoUrl = selectedModule.videoUrl;
+                              const ytId = getYouTubeVideoId(videoUrl);
+                              return (
+                                <div className="rounded-xl border border-Primarycolor/20 bg-bgcolor2/40 p-4">
+                                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Video</p>
+                                  {ytId ? (
+                                    <div className="w-full rounded-lg overflow-hidden bg-black aspect-video">
+                                      <iframe
+                                        src={`https://www.youtube.com/embed/${ytId}`}
+                                        title="Lesson video"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowFullScreen
+                                        className="w-full h-full"
+                                      />
+                                    </div>
+                                  ) : (
+                                    <a
+                                      href={resolveAssetUrl(videoUrl)}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className="inline-flex items-center gap-2 text-Secondarycolor hover:underline text-sm font-medium"
+                                    >
+                                      <FaPlay /> Watch lesson video (opens in new tab)
+                                    </a>
+                                  )}
+                                </div>
+                              );
+                            })()}
 
                             {!!selectedModule.referenceLinks?.length && (
                               <div className="rounded-xl border border-Primarycolor/20 bg-bgcolor2/40 p-4">
