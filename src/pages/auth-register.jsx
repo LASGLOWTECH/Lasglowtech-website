@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaArrowLeft } from "react-icons/fa";
 import { toast } from "react-toastify";
 import instance from "../config/axios.config";
 import { getRoleHomePath, saveSession } from "../utils/auth";
@@ -71,20 +71,27 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-bgcolor flex items-center justify-center px-4 py-10 md:py-16">
-      <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 rounded-2xl border border-Primarycolor/25 bg-bgcolor2/60 overflow-hidden shadow-xl">
+    <div className="h-screen overflow-hidden flex items-center justify-center bg-bgcolor px-4 py-4">
+      <div className="w-full max-w-5xl h-full max-h-[calc(100vh-2rem)] grid grid-cols-1 lg:grid-cols-2 rounded-xl border border-Primarycolor/25 bg-bgcolor2/60 overflow-hidden shadow-xl">
         {/* Form side */}
-        <div className="p-8 md:p-10 lg:p-12 flex flex-col justify-center">
-          <div className="mb-8">
-            <h1 className="text-2xl md:text-3xl font-bold text-textcolor2">Create account</h1>
-            <p className="text-gray-400 mt-1 text-sm">
-              Choose your role to get the right dashboard—client, learner, or talent.
+        <div className="p-4 md:p-6 flex flex-col justify-center min-h-0 overflow-auto">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-gray-400 hover:text-Secondarycolor transition-colors mb-3 text-sm"
+          >
+            <FaArrowLeft className="w-4 h-4" />
+            Back to Home
+          </Link>
+          <div className="mb-4">
+            <h1 className="text-xl md:text-2xl font-bold text-textcolor2">Create account</h1>
+            <p className="text-gray-400 mt-0.5 text-xs md:text-sm">
+              Choose your role—client, learner, or talent.
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-3">
             <div>
-              <label htmlFor="reg-username" className={labelClass}>
+              <label htmlFor="reg-username" className="block text-xs font-medium text-gray-300 mb-1">
                 Full name
               </label>
               <input
@@ -94,12 +101,12 @@ const RegisterPage = () => {
                 value={formData.username}
                 onChange={handleChange}
                 placeholder="Your name"
-                className={inputClass}
+                className="w-full px-3 py-2 rounded-lg border border-Primarycolor/30 bg-bgcolor/80 text-textcolor2 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-Primarycolor/50"
                 required
               />
             </div>
             <div>
-              <label htmlFor="reg-email" className={labelClass}>
+              <label htmlFor="reg-email" className="block text-xs font-medium text-gray-300 mb-1">
                 Email address
               </label>
               <input
@@ -109,12 +116,12 @@ const RegisterPage = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="you@example.com"
-                className={inputClass}
+                className="w-full px-3 py-2 rounded-lg border border-Primarycolor/30 bg-bgcolor/80 text-textcolor2 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-Primarycolor/50"
                 required
               />
             </div>
             <div>
-              <label htmlFor="reg-role" className={labelClass}>
+              <label htmlFor="reg-role" className="block text-xs font-medium text-gray-300 mb-1">
                 I want to
               </label>
               <select
@@ -122,7 +129,7 @@ const RegisterPage = () => {
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
-                className={`${inputClass} cursor-pointer`}
+                className="w-full px-3 py-2 rounded-lg border border-Primarycolor/30 bg-bgcolor/80 text-textcolor2 text-sm focus:outline-none focus:ring-2 focus:ring-Primarycolor/50 cursor-pointer"
               >
                 <option value="client">Use services & catalogue (Client)</option>
                 <option value="learner">Learn skills (Learner)</option>
@@ -131,7 +138,7 @@ const RegisterPage = () => {
               </select>
             </div>
             <div>
-              <label htmlFor="reg-password" className={labelClass}>
+              <label htmlFor="reg-password" className="block text-xs font-medium text-gray-300 mb-1">
                 Password (min 6 characters)
               </label>
               <div className="relative">
@@ -143,29 +150,29 @@ const RegisterPage = () => {
                   onChange={handleChange}
                   placeholder="••••••••"
                   minLength={6}
-                  className={`${inputClass} pr-12`}
+                  className="w-full px-3 py-2 pr-10 rounded-lg border border-Primarycolor/30 bg-bgcolor/80 text-textcolor2 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-Primarycolor/50"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-Secondarycolor transition-colors p-1"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-Secondarycolor transition-colors p-1"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  {showPassword ? <FaEyeSlash className="w-5 h-5" /> : <FaEye className="w-5 h-5" />}
+                  {showPassword ? <FaEyeSlash className="w-4 h-4" /> : <FaEye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 rounded-xl bg-Primarycolor hover:bg-Primarycolor/90 text-white font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full py-2.5 text-sm rounded-lg bg-Primarycolor hover:bg-Primarycolor/90 text-white font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {loading ? "Creating account…" : "Create account"}
             </button>
           </form>
 
-          <p className="text-sm text-gray-400 mt-6">
+          <p className="text-xs text-gray-400 mt-4">
             Already have an account?{" "}
             <Link
               to="/auth/login"
@@ -178,7 +185,7 @@ const RegisterPage = () => {
         </div>
 
         {/* Slides side */}
-        <aside className="hidden lg:block relative min-h-[520px] overflow-hidden bg-bgcolor/50">
+        <aside className="hidden lg:block relative min-h-0 flex-1 overflow-hidden bg-bgcolor/50">
           <div
             className="absolute inset-0 flex transition-transform duration-700 ease-in-out"
             style={{ transform: `translateX(-${slideIndex * 100}%)` }}
@@ -191,21 +198,21 @@ const RegisterPage = () => {
                   className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-bgcolor/95 via-bgcolor/50 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <h3 className="text-xl font-semibold text-textcolor2">{slide.title}</h3>
-                  <p className="text-sm text-gray-400 mt-2">{slide.text}</p>
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
+                  <h3 className="text-base md:text-lg font-semibold text-textcolor2">{slide.title}</h3>
+                  <p className="text-xs md:text-sm text-gray-400 mt-1">{slide.text}</p>
                 </div>
               </div>
             ))}
           </div>
-          <div className="absolute bottom-6 left-8 flex gap-2">
+          <div className="absolute bottom-3 left-4 md:left-6 flex gap-2">
             {registerSlides.map((_, index) => (
               <button
                 key={index}
                 type="button"
                 onClick={() => setSlideIndex(index)}
-                className={`h-2 rounded-full transition-all ${
-                  slideIndex === index ? "w-8 bg-Secondarycolor" : "w-2 bg-white/40 hover:bg-white/60"
+                className={`h-1.5 rounded-full transition-all ${
+                  slideIndex === index ? "w-6 bg-Secondarycolor" : "w-1.5 bg-white/40 hover:bg-white/60"
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />

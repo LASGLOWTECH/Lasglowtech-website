@@ -125,10 +125,10 @@ const Contact = () => {
         <div className="bg-gradient-to-r from-bgcolor2 to-bgcolor2 px-4 py-6 md:px-20">
           {/* Header & Breadcrumb */}
           <header className="flex flex-col items-center justify-center pt-12 pb-6 mx-auto">
-            <h1 className="md:text-5xl text-4xl text-textcolor2 p-6 font-semibold text-center" data-aos="fade-up">
+            <h1 className="md:text-3xl text-2xl text-textcolor2 p-4 font-semibold text-center" data-aos="fade-up">
               Contact Us
             </h1>
-            <p className="text-textcolor2/80 text-center max-w-xl mx-auto -mt-2 px-4">
+            <p className="text-textcolor2/80 text-sm text-center max-w-xl mx-auto -mt-2 px-4">
               Have a project in mind or need support? We’d love to hear from you.
             </p>
             <nav aria-label="Breadcrumb" className="my-6 border border-gray-200 p-3 rounded-full text-textcolor2">
@@ -152,11 +152,11 @@ const Contact = () => {
             aria-labelledby="get-in-touch-heading"
           >
             {/* Contact info */}
-            <div className="p-6 md:p-8 rounded-lg">
-              <h2 id="get-in-touch-heading" className="text-3xl text-Secondarycolor font-semibold mb-5">
+            <div className="p-4 md:p-6 rounded-lg">
+              <h2 id="get-in-touch-heading" className="text-xl text-Secondarycolor font-semibold mb-4">
                 Get In Touch
               </h2>
-              <p className="text-textcolor2 max-w-xl text-normal mb-6">
+              <p className="text-textcolor2 text-sm max-w-xl mb-4">
                 Whether you need support, want to discuss a new project, or have questions about our
                 services—web development, mobile apps, UI/UX design, or IT training—our team in Abuja
                 is here to help.
@@ -168,7 +168,7 @@ const Contact = () => {
                     <FaEnvelope className="text-Primarycolor text-lg" />
                   </span>
                   <div>
-                    <p className="font-semibold text-base text-textcolor2">Email</p>
+                    <p className="font-semibold text-sm text-textcolor2">Email</p>
                     <a
                       href="mailto:lasglowtech@gmail.com"
                       className="text-textcolor2 hover:text-Secondarycolor hover:underline transition-colors"
@@ -182,7 +182,7 @@ const Contact = () => {
                     <FaPhoneAlt className="text-Primarycolor text-lg" />
                   </span>
                   <div>
-                    <p className="font-semibold text-base text-textcolor2">Phone</p>
+                    <p className="font-semibold text-sm text-textcolor2">Phone</p>
                     <a
                       href="tel:+2349031821590"
                       className="text-textcolor2 hover:text-Secondarycolor hover:underline transition-colors"
@@ -196,7 +196,7 @@ const Contact = () => {
                     <FaMapMarkerAlt className="text-Primarycolor text-lg" />
                   </span>
                   <div>
-                    <p className="font-semibold text-base text-textcolor2">Address</p>
+                    <p className="font-semibold text-sm text-textcolor2">Address</p>
                     <p className="text-textcolor2">Gwarinpa, FCT Abuja, Nigeria</p>
                   </div>
                 </li>

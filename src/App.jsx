@@ -65,11 +65,15 @@ function App() {
     return <SiteLoader />;
   }
 
-  // Hide Navbar and Footer on /bio route
+  // Hide Navbar and Footer on auth, bio, dashboard, admin login
   const hideLayout =
     location.pathname === "/bio" ||
     location.pathname.startsWith("/dashboard") ||
-    location.pathname === "/admin/login";
+    location.pathname === "/admin/login" ||
+    location.pathname === "/auth/login" ||
+    location.pathname === "/auth/register" ||
+    location.pathname === "/auth/forgot-password" ||
+    location.pathname.startsWith("/auth/reset-password");
 
   return (
     <>

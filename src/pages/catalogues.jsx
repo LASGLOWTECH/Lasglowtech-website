@@ -10,14 +10,14 @@ const formatNaira = (amount) =>
   new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN" }).format(Number(amount || 0));
 
 const catalogueFallbacks = [
-  "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200",
-  "https://images.unsplash.com/photo-1559028006-448665bd7c7f?w=1200",
-  "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200",
-  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200",
-  "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200",
-  "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200",
-  "https://images.unsplash.com/photo-1518773553398-650c184e0bb3?w=1200",
-  "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1200",
+  "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600",
+  "https://images.unsplash.com/photo-1559028006-448665bd7c7f?w=600",
+  "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600",
+  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600",
+  "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=600",
+  "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600",
+  "https://images.unsplash.com/photo-1518773553398-650c184e0bb3?w=600",
+  "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600",
 ];
 
 const cardImage = (item, index) => item.imageUrl || catalogueFallbacks[index % catalogueFallbacks.length];
@@ -129,46 +129,46 @@ const Catalogues = () => {
   };
 
   return (
-    <div className="min-h-screen px-6 md:px-20 py-16 bg-gradient-to-b from-bgcolor2 via-bgcolor2 to-bgcolor text-textcolor2">
+    <div className="min-h-screen px-4 md:px-12 lg:px-20 py-10 md:py-14 bg-gradient-to-b from-bgcolor2 via-bgcolor2 to-bgcolor text-textcolor2">
       <SEO
         title="Service Catalogue | Buy Digital Services Online with Instant Checkout | Lasglowtech"
         description="Browse Lasglowtech service packages—web, mobile, design—and checkout instantly online. Fixed-price packages, secure payment, no lengthy quotes. Nigeria's digital service catalogue."
         keywords="Lasglowtech catalogue, buy services online Nigeria, instant checkout, service packages, web development package, digital agency Nigeria"
         url="https://www.lasglowtech.com.ng/catalogues"
       />
-      <section className="max-w-7xl mx-auto mb-12">
+      <section className="max-w-7xl mx-auto mb-8 md:mb-10">
         <div className="flex flex-wrap items-start justify-between gap-4">
-          <div className="max-w-3xl">
-            <p className="text-sm tracking-[0.2em] text-Secondarycolor uppercase">Client Marketplace</p>
-            <h1 className="text-4xl md:text-5xl font-semibold mt-2">Service Catalogues</h1>
-            <p className="text-gray-400 mt-4">
+          <div className="max-w-2xl">
+            <p className="text-[0.875rem] tracking-[0.15em] text-Secondarycolor uppercase font-semibold">Client Marketplace</p>
+            <h1 className="text-xl md:text-2xl font-bold mt-3 text-textcolor2">Service Catalogues</h1>
+            <p className="text-gray-400 text-[0.875rem] mt-3 leading-relaxed">
               Pick a package, pay online, and get started. <strong className="text-gray-300">Instant checkout</strong>—no lengthy quotes. Browse options, open any item for details, then Buy Now or Add to Cart.
             </p>
           </div>
           <Link
             to="/cart"
-            className="inline-flex items-center gap-3 rounded-full border border-Primarycolor/40 px-5 py-3 hover:bg-Primarycolor/20 transition"
+            className="inline-flex items-center gap-2.5 rounded-full border border-Primarycolor/40 px-4 py-2.5 hover:bg-Primarycolor/20 transition text-[0.875rem] font-medium"
             aria-label="Open cart"
           >
             <span className="relative">
-              <FaShoppingCart />
+              <FaShoppingCart className="w-4 h-4" />
               {cartItems.length > 0 && (
-                <span className="absolute -top-3 -right-3 h-5 min-w-[20px] px-1 rounded-full bg-Secondarycolor text-bgcolor2 text-xs font-semibold flex items-center justify-center">
+                <span className="absolute -top-2.5 -right-2.5 h-4 min-w-[18px] px-1 rounded-full bg-Secondarycolor text-bgcolor2 text-[0.75rem] font-semibold flex items-center justify-center">
                   {cartItems.length}
                 </span>
               )}
             </span>
-            <span className="text-sm font-medium">Cart</span>
+            Cart
           </Link>
         </div>
       </section>
 
-      {loading && <p className="text-center text-gray-300">Loading catalogues...</p>}
+      {loading && <p className="text-center text-gray-400 text-[0.875rem] py-8">Loading catalogues...</p>}
 
       {!loading && (
         <div className="max-w-7xl mx-auto">
           {items.length > 0 && (
-            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row gap-3 mb-6">
               <div className="relative flex-1">
                 <input
                   type="text"
@@ -178,9 +178,9 @@ const Catalogues = () => {
                     setCurrentPage(1);
                   }}
                   placeholder="Search by title, summary, or description…"
-                  className="w-full pl-4 pr-10 py-3 rounded-xl border border-Primarycolor/30 bg-bgcolor/80 text-textcolor2 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-Primarycolor/50 focus:border-transparent"
+                  className="w-full pl-4 pr-10 py-2.5 rounded-lg border border-Primarycolor/25 bg-bgcolor/80 text-textcolor2 text-[0.875rem] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-Primarycolor/40 focus:border-transparent"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" aria-hidden>
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none text-sm" aria-hidden>
                   ⌕
                 </span>
               </div>
@@ -190,7 +190,7 @@ const Catalogues = () => {
                   setCategoryFilter(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="px-4 py-3 rounded-xl border border-Primarycolor/30 bg-bgcolor/80 text-textcolor2 focus:outline-none focus:ring-2 focus:ring-Primarycolor/50 min-w-[200px]"
+                className="px-4 py-2.5 rounded-lg border border-Primarycolor/25 bg-bgcolor/80 text-textcolor2 text-[0.875rem] focus:outline-none focus:ring-2 focus:ring-Primarycolor/40 min-w-[180px]"
               >
                 {CATEGORY_OPTIONS.map((opt) => (
                   <option key={opt.value || "all"} value={opt.value}>
@@ -200,7 +200,7 @@ const Catalogues = () => {
               </select>
             </div>
           )}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
             {pagedItems.map((item, index) => (
               <article
                 key={item.id}
@@ -213,17 +213,17 @@ const Catalogues = () => {
                     openDetails(item);
                   }
                 }}
-                className={`rounded-2xl overflow-hidden border bg-bgcolor shadow-lg transition-all duration-300 ${
+                className={`rounded-xl overflow-hidden border bg-bgcolor/95 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer ${
                   item.isPopular
-                    ? "border-Secondarycolor/60 shadow-Secondarycolor/20"
-                    : "border-Primarycolor/30 hover:shadow-Primarycolor/30"
+                    ? "border-Secondarycolor/50 shadow-Secondarycolor/10"
+                    : "border-Primarycolor/25 hover:border-Primarycolor/40 hover:shadow-Primarycolor/10"
                 }`}
               >
-                <div className="relative h-40 overflow-hidden">
+                <div className="relative h-36 overflow-hidden">
                   <img
                     src={cardImage(item, (currentPage - 1) * PAGE_SIZE + index)}
                     alt={item.title}
-                    className="w-full h-full object-cover scale-105 hover:scale-110 transition duration-500"
+                    className="w-full h-full object-cover max-h-40 scale-[1.02] hover:scale-105 transition duration-300"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-bgcolor via-transparent to-transparent" />
                   <span className="absolute top-4 left-4 text-xs px-3 py-1 rounded-full bg-bgcolor2/80 border border-Primarycolor/40 text-textcolor2">
@@ -236,43 +236,42 @@ const Catalogues = () => {
                   )}
                 </div>
 
-                <div className="p-5">
-                  <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
-                  <p className="text-gray-400 text-sm leading-relaxed">
+                <div className="p-4">
+                  <h2 className="text-[1rem] font-semibold mb-2 text-textcolor2">{item.title}</h2>
+                  <p className="text-gray-400 text-[0.875rem] leading-relaxed">
                     {item.summary?.slice(0, 105)}
                     {item.summary?.length > 105 ? "..." : ""}
                   </p>
-                  <p className="text-gray-500 text-xs leading-relaxed mt-2">
+                  <p className="text-gray-500 text-[0.8125rem] leading-relaxed mt-1.5">
                     {item.description?.slice(0, 110)}
                     {item.description?.length > 110 ? "..." : ""}
                   </p>
                   {!!item.features?.length && (
-                    <ul className="mt-3 space-y-1">
+                    <ul className="mt-2.5 space-y-0.5">
                       {item.features.slice(0, 2).map((feature) => (
-                        <li key={feature} className="text-xs text-gray-300">
-                          - {feature}
+                        <li key={feature} className="text-[0.8125rem] text-gray-400">
+                          • {feature}
                         </li>
                       ))}
                     </ul>
                   )}
 
-                  {item.isPaymentEnabled ? (
-                    <div className="mt-4 p-3 rounded-lg border border-Secondarycolor/40 bg-Secondarycolor/10">
-                      <p className="text-sm text-gray-300">
-                        {item.paymentType === "deposit" ? "Deposit" : "Full payment"}:
-                      </p>
-                      <p className="text-xl font-semibold text-Secondarycolor">{formatNaira(item.price)}</p>
-                    </div>
-                  ) : (
-                    <div className="mt-4 p-3 rounded-lg border border-Primarycolor/25 bg-bgcolor2/50">
-                      <p className="text-sm text-gray-300">Quote-based service. Consultation required.</p>
-                    </div>
-                  )}
-
-                  <div className="mt-5">
+                  <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                    {item.isPaymentEnabled ? (
+                      <div className="p-2.5 rounded-lg border border-Secondarycolor/40 bg-Secondarycolor/10">
+                        <p className="text-[0.8125rem] text-gray-400">
+                          {item.paymentType === "deposit" ? "Deposit" : "Full payment"}:
+                        </p>
+                        <p className="text-[1rem] md:text-lg font-semibold text-Secondarycolor">{formatNaira(item.price)}</p>
+                      </div>
+                    ) : (
+                      <div className="p-2.5 rounded-lg border border-Primarycolor/25 bg-bgcolor2/50">
+                        <p className="text-[0.875rem] text-gray-400">Quote-based. Consultation required.</p>
+                      </div>
+                    )}
                     <button
                       type="button"
-                      className="px-4 py-2 rounded-full border border-Primarycolor/60 text-Primarycolor hover:bg-Primarycolor hover:text-white transition text-sm"
+                      className="flex-shrink-0 px-3.5 py-2 rounded-full border border-Primarycolor/50 text-Primarycolor hover:bg-Primarycolor hover:text-white transition text-[0.875rem] font-medium"
                     >
                       View Options
                     </button>
@@ -281,19 +280,19 @@ const Catalogues = () => {
               </article>
             ))}
             {!filteredItems.length && (
-              <p className="text-gray-300 text-center col-span-full py-12">
+              <p className="text-gray-400 text-center col-span-full py-12 text-[0.875rem]">
                 {items.length ? "No items match your search or filter." : "No catalogue items yet."}
               </p>
             )}
           </div>
 
           {filteredItems.length > PAGE_SIZE && (
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
               <button
                 type="button"
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="px-3 py-2 rounded-md border border-Primarycolor/40 text-sm disabled:opacity-50 hover:bg-Primarycolor/20"
+                className="px-3 py-2 rounded-lg border border-Primarycolor/30 text-[0.875rem] disabled:opacity-50 hover:bg-Primarycolor/15 transition"
               >
                 Prev
               </button>
@@ -305,10 +304,10 @@ const Catalogues = () => {
                     key={page}
                     type="button"
                     onClick={() => setCurrentPage(page)}
-                    className={`min-w-[36px] px-3 py-2 rounded-md text-sm border transition ${
+                    className={`min-w-[34px] px-2.5 py-2 rounded-lg text-[0.875rem] border transition ${
                       active
-                        ? "border-Secondarycolor bg-Secondarycolor/20 text-Secondarycolor"
-                        : "border-Primarycolor/40 hover:bg-Primarycolor/20"
+                        ? "border-Secondarycolor bg-Secondarycolor/20 text-Secondarycolor font-semibold"
+                        : "border-Primarycolor/30 hover:bg-Primarycolor/15"
                     }`}
                   >
                     {page}
@@ -319,7 +318,7 @@ const Catalogues = () => {
                 type="button"
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className="px-3 py-2 rounded-md border border-Primarycolor/40 text-sm disabled:opacity-50 hover:bg-Primarycolor/20"
+                className="px-3 py-2 rounded-lg border border-Primarycolor/30 text-[0.875rem] disabled:opacity-50 hover:bg-Primarycolor/15 transition"
               >
                 Next
               </button>
@@ -335,7 +334,7 @@ const Catalogues = () => {
           role="presentation"
         >
           <div
-            className="w-full max-w-lg rounded-2xl border border-Primarycolor/40 bg-bgcolor2 p-6"
+            className="w-full max-w-lg rounded-xl border border-Primarycolor/40 bg-bgcolor2 p-5"
             onClick={(event) => event.stopPropagation()}
             role="dialog"
             aria-modal="true"
@@ -343,30 +342,30 @@ const Catalogues = () => {
           >
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h2 className="text-2xl font-semibold">{selectedItem.title}</h2>
-                <p className="text-sm text-gray-400 mt-2">{selectedItem.summary || "No summary available."}</p>
+                <h2 className="text-[1rem] md:text-lg font-semibold text-textcolor2">{selectedItem.title}</h2>
+                <p className="text-[0.875rem] text-gray-400 mt-2">{selectedItem.summary || "No summary available."}</p>
               </div>
               <button
                 type="button"
                 onClick={closeDetails}
-                className="text-gray-300 hover:text-white"
+                className="text-gray-400 hover:text-white p-1"
                 aria-label="Close"
               >
-                <FaTimes />
+                <FaTimes className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="mt-5 border border-Primarycolor/30 rounded-lg p-4">
-              <p className="text-sm text-gray-400">Price</p>
-              <p className="text-xl font-semibold text-Secondarycolor">{formatNaira(selectedItem.price)}</p>
-              <p className="text-sm text-gray-400 mt-1">Payment: {selectedItem.paymentType || "full"}</p>
+            <div className="mt-4 border border-Primarycolor/25 rounded-lg p-4">
+              <p className="text-[0.875rem] text-gray-400">Price</p>
+              <p className="text-lg font-semibold text-Secondarycolor mt-0.5">{formatNaira(selectedItem.price)}</p>
+              <p className="text-[0.875rem] text-gray-400 mt-1">Payment: {selectedItem.paymentType || "full"}</p>
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-5 flex flex-wrap gap-2">
               {selectedItem.isPaymentEnabled ? (
                 <Link
                   to={`/checkout/${selectedItem.slug}`}
-                  className="px-4 py-2 rounded-full bg-gradient-to-r from-Primarycolor to-Primarycolor1 hover:from-Secondarycolor hover:to-Secondarycolor text-white transition text-sm"
+                  className="px-4 py-2 rounded-full bg-gradient-to-r from-Primarycolor to-Primarycolor1 hover:from-Secondarycolor hover:to-Secondarycolor text-white transition text-[0.875rem] font-medium"
                   onClick={closeDetails}
                 >
                   Buy Now
@@ -374,7 +373,7 @@ const Catalogues = () => {
               ) : (
                 <Link
                   to={`/contact?service=${selectedItem.slug}`}
-                  className="px-4 py-2 rounded-full bg-gradient-to-r from-Primarycolor to-Primarycolor1 hover:from-Secondarycolor hover:to-Secondarycolor text-white transition text-sm"
+                  className="px-4 py-2 rounded-full bg-gradient-to-r from-Primarycolor to-Primarycolor1 hover:from-Secondarycolor hover:to-Secondarycolor text-white transition text-[0.875rem] font-medium"
                   onClick={closeDetails}
                 >
                   Ask for Quote
@@ -385,7 +384,7 @@ const Catalogues = () => {
                 <button
                   type="button"
                   onClick={() => handleRemoveFromCart(selectedItem.slug)}
-                  className="px-4 py-2 rounded-full border border-red-400 text-red-300 hover:bg-red-500/10 transition text-sm"
+                  className="px-4 py-2 rounded-full border border-red-400 text-red-300 hover:bg-red-500/10 transition text-[0.875rem]"
                 >
                   Remove from Cart
                 </button>
@@ -395,14 +394,14 @@ const Catalogues = () => {
                   onClick={() =>
                     handleAddToCart(selectedItem, items.findIndex((item) => item.slug === selectedItem.slug))
                   }
-                  className="px-4 py-2 rounded-full border border-Primarycolor text-Primarycolor hover:bg-Primarycolor hover:text-white transition text-sm"
+                  className="px-4 py-2 rounded-full border border-Primarycolor text-Primarycolor hover:bg-Primarycolor hover:text-white transition text-[0.875rem] font-medium"
                 >
                   Add to Cart
                 </button>
               )}
             </div>
 
-            <p className="text-xs text-gray-500 mt-4">
+            <p className="text-[0.8125rem] text-gray-500 mt-4">
               If you are not signed in, checkout will first redirect you to login or register before payment.
             </p>
           </div>

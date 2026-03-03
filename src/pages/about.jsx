@@ -65,12 +65,12 @@ const About = () => {
             About us
           </p>
           <h1
-            className="text-4xl md:text-5xl font-bold text-textcolor2 tracking-tight max-w-3xl mx-auto"
+            className="text-2xl md:text-3xl font-bold text-textcolor2 tracking-tight max-w-3xl mx-auto"
             data-aos="zoom-up"
           >
             We build digital products that drive growth
           </h1>
-          <p className="mt-4 text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed" data-aos="fade-up">
+          <p className="mt-4 text-gray-400 text-sm max-w-2xl mx-auto leading-relaxed" data-aos="fade-up">
             From strategy and design to development and launch—we help brands compete confidently in a digital-first world with solutions that are useful, reliable, and built to scale.
           </p>
           <nav
@@ -89,11 +89,11 @@ const About = () => {
       {/* Who we are */}
       <section className="max-w-6xl mx-auto px-6 md:px-12 py-16 md:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div className="rounded-2xl overflow-hidden border border-Primarycolor/20 shadow-xl" data-aos="fade-right">
+          <div className="rounded-xl overflow-hidden border border-Primarycolor/20 shadow-md" data-aos="fade-right">
             <img
               src={ABOUT_SECTION_IMAGE}
               alt="Lasglowtech team and workspace"
-              className="w-full h-[320px] md:h-[400px] object-cover"
+              className="w-full h-52 md:h-64 object-cover max-h-80"
             />
           </div>
           <div data-aos="fade-left">
@@ -101,21 +101,21 @@ const About = () => {
               <FaCircle className="text-[6px]" />
               Who we are
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-textcolor2 leading-tight mb-6">
+            <h2 className="text-xl md:text-2xl font-bold text-textcolor2 leading-tight mb-4">
               A creative technology partner for modern brands
             </h2>
-            <p className="text-gray-300 leading-relaxed mb-4">
+            <p className="text-gray-300 text-sm leading-relaxed mb-3">
               Lasglowtech began as a vision in 2020 and launched in 2021 with a clear mission: help businesses
               compete confidently in a digital-first world. We combine design, engineering, and strategy to deliver
               solutions that are not only beautiful, but useful, reliable, and growth-ready.
             </p>
-            <p className="text-gray-300 leading-relaxed mb-4">
+            <p className="text-gray-300 text-sm leading-relaxed mb-3">
               We work with startups, founders, and established teams that want better digital products, stronger
               brand communication, and measurable business outcomes. Whether you need a new website, an app, a
               design system, or a full product from idea to launch, we bring the same focus: clarity in process,
               quality in delivery, and a long-term view so your investment pays off.
             </p>
-            <p className="text-gray-300 leading-relaxed">
+            <p className="text-gray-300 text-sm leading-relaxed">
               Our team blends creative and technical skills—so you get one partner who can think in both design and
               code, communicate in plain language, and keep projects on track. That’s how we’ve built lasting
               relationships with clients across industries and continue to grow with them.
@@ -128,10 +128,10 @@ const About = () => {
       <section className="max-w-6xl mx-auto px-6 md:px-12 py-12 md:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <article
-            className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/50 p-6 md:p-8 hover:border-Primarycolor/40 transition-colors"
+            className="rounded-xl border border-Primarycolor/25 bg-bgcolor2/50 p-4 md:p-5 hover:border-Primarycolor/40 transition-colors"
             data-aos="fade-up"
           >
-            <h3 className="text-xl font-semibold text-textcolor2 mb-3">What we deliver</h3>
+            <h3 className="text-base font-semibold text-textcolor2 mb-2">What we deliver</h3>
             <p className="text-gray-400 text-sm leading-relaxed mb-5">
               We focus on the disciplines that move the needle for brands: strategy-backed design, solid engineering, and clear communication. Here’s where we add the most value.
             </p>
@@ -146,10 +146,10 @@ const About = () => {
           </article>
 
           <article
-            className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/50 p-6 md:p-8 hover:border-Primarycolor/40 transition-colors"
+            className="rounded-xl border border-Primarycolor/25 bg-bgcolor2/50 p-4 md:p-5 hover:border-Primarycolor/40 transition-colors"
             data-aos="fade-up"
           >
-            <h3 className="text-xl font-semibold text-textcolor2 mb-3">How we work</h3>
+            <h3 className="text-base font-semibold text-textcolor2 mb-2">How we work</h3>
             <p className="text-gray-400 text-sm leading-relaxed mb-5">
               We follow a structured but flexible process so you always know where things stand and can influence direction at the right moments.
             </p>
@@ -173,22 +173,22 @@ const About = () => {
       {/* Why choose us */}
       <section className="max-w-6xl mx-auto px-6 md:px-12 py-12 md:py-16">
         <article
-          className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/50 p-6 md:p-10 text-center md:text-left"
+          className="rounded-xl border border-Primarycolor/25 bg-bgcolor2/50 p-4 md:p-6 text-center md:text-left"
           data-aos="fade-up"
         >
-          <h3 className="text-2xl md:text-3xl font-semibold text-textcolor2 mb-5">
+          <h3 className="text-xl md:text-2xl font-semibold text-textcolor2 mb-4">
             Why clients choose Lasglowtech
           </h3>
-          <p className="text-gray-300 leading-relaxed mb-4">
+          <p className="text-gray-300 text-sm leading-relaxed mb-3">
             Clients trust us because we stay practical, transparent, and outcome-focused. We communicate clearly,
             build with intent, and align every deliverable with your business priorities.
           </p>
-          <p className="text-gray-300 leading-relaxed mb-4">
+          <p className="text-gray-300 text-sm leading-relaxed mb-3">
             From the first strategy session through deployment and post-launch support, our focus stays the same:
             deliver quality work that creates lasting value. We don’t over-promise—we scope realistically, keep
             you informed, and iterate based on your feedback so the final product truly fits your needs.
           </p>
-          <p className="text-gray-300 leading-relaxed max-w-3xl">
+          <p className="text-gray-300 text-sm leading-relaxed max-w-3xl">
             Whether you’re launching something new or improving what you have, we’re here as a long-term partner:
             one team that understands both the creative and technical sides of your project and is invested in your
             success.

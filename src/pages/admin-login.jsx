@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash, FaArrowLeft } from "react-icons/fa";
 import { toast } from "react-toastify";
 import instance from "../config/axios.config";
 import { saveAdminSession } from "../utils/adminAuth";
+import { LOGO } from "../components/images";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -37,11 +38,20 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen px-6 py-16 bg-gradient-to-br from-bgcolor2 via-bgcolor to-bgcolor2 text-textcolor2">
+    <div className="min-h-screen px-6 py-12 md:py-16 bg-gradient-to-br from-bgcolor2 via-bgcolor to-bgcolor2 text-textcolor2">
       <div className="max-w-md mx-auto bg-bgcolor2 border border-Primarycolor/30 rounded-2xl p-7 shadow-2xl">
-        <p className="text-xs uppercase tracking-[0.2em] text-Secondarycolor">Lasglowtech</p>
-        <h1 className="text-2xl font-semibold mt-2">Admin Control Center</h1>
-        <p className="text-gray-400 mt-2 mb-6">Sign in to manage blogs and service catalogues.</p>
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-gray-400 hover:text-Secondarycolor transition-colors mb-6 text-sm"
+        >
+          <FaArrowLeft className="w-4 h-4" />
+          Back to Home
+        </Link>
+        <div className="flex flex-col items-center text-center mb-6">
+          <img src={LOGO} alt="Lasglowtech" className="h-14 w-auto object-contain" />
+          <h1 className="text-xl font-semibold mt-4">Admin Control Center</h1>
+          <p className="text-gray-400 mt-1 text-sm">Sign in to manage blogs and service catalogues.</p>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input

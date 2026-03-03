@@ -53,14 +53,14 @@ const Blogcard = () => {
 
   return (
     <div className="space-y-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
         {currentBlogs.map((blog, index) => (
           <article
             key={blog.id}
-            className="group rounded-2xl border border-Primarycolor/20 bg-bgcolor2/40 overflow-hidden hover:border-Primarycolor/40 hover:shadow-xl hover:shadow-Primarycolor/10 transition-all duration-300 flex flex-col"
+            className="group rounded-xl border border-Primarycolor/20 bg-bgcolor2/40 overflow-hidden hover:border-Primarycolor/40 hover:shadow-md hover:shadow-Primarycolor/10 transition-all duration-300 flex flex-col"
           >
             <Link to={`/blog/${blog.slug}`} className="block flex-1 flex flex-col">
-              <div className="relative aspect-[16/10] overflow-hidden bg-bgcolor/50">
+              <div className="relative aspect-[16/10] max-h-44 overflow-hidden bg-bgcolor/50">
                 <img
                   src={
                     blog.coverUrl ||
@@ -68,15 +68,15 @@ const Blogcard = () => {
                   }
                   alt={blog.title}
                   loading="lazy"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover max-h-44 transition-transform duration-300 group-hover:scale-[1.03]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-bgcolor/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
-              <div className="p-5 md:p-6 flex flex-col flex-1">
-                <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
+              <div className="p-4 md:p-5 flex flex-col flex-1">
+                <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1.5">
                   {formatDate(blog.timestamp)}
                 </p>
-                <h3 className="text-lg font-semibold text-textcolor2 line-clamp-2 group-hover:text-Secondarycolor transition-colors leading-snug">
+                <h3 className="text-base font-semibold text-textcolor2 line-clamp-2 group-hover:text-Secondarycolor transition-colors leading-snug">
                   {blog.title}
                 </h3>
                 <p className="text-sm text-gray-400 mt-3 line-clamp-3 leading-relaxed flex-1">
@@ -88,7 +88,7 @@ const Blogcard = () => {
                 </span>
               </div>
             </Link>
-            <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0 flex items-center justify-end border-t border-Primarycolor/10">
+            <div className="px-4 md:px-5 pb-4 md:pb-5 pt-0 flex items-center justify-end border-t border-Primarycolor/10">
               <button
                 type="button"
                 onClick={(e) => {

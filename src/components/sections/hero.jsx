@@ -94,7 +94,7 @@ function FloatingShape({ color, position, scale = 1 }) {
 
 export default function Hero() {
   return (
-    <div className="relative w-full h-full bg-gradient-to-r from-bgcolor2 to-bgcolor2 md:py-16">
+    <div className="relative w-full h-full bg-gradient-to-r from-bgcolor2 to-bgcolor2 py-8 md:py-10">
       {/* 3D Background */}
       <Canvas
         className="absolute inset-0 z-0 pt-6"
@@ -112,19 +112,26 @@ export default function Hero() {
         style={{ backgroundImage: `url(${HeroImage})` }}
       ></div>
 
-      {/* Hero Content */}
-      <section className="relative z-10 md:px-20">
+      {/* Hero Content - tight vertical rhythm like Vercel */}
+      <section className="relative z-10 px-4 md:px-12">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
           className="max-w-4xl mx-auto text-center"
         >
-          <h1 className="text-4xl font-bold px-2 pt-6 md:pt-8 md:text-5xl md:font-semibold text-textcolor2 leading-tight mb-8">
-            Build Digital Products That Grow Your Business <br />
+          <h1 className="text-[40px] font-bold px-2 pt-2 md:pt-4 md:text-[56px] lg:text-[70px] md:font-semibold text-textcolor2 max-w-5xl mx-auto leading-[1.08] mb-8 md:mb-8">
+            Build Digital.{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-Secondarycolor to-Secondarycolor">
               <Typewriter
-                words={["Web & Mobile Delivery", "Design That Converts"]}
+                words={[
+                  "Grow Faster.",
+                  "Web & Mobile.",
+                  "Design That Converts.",
+                  "Apps That Scale.",
+                  "Tutoring & Training.",
+                  "Launch & Scale.",
+                ]}
                 loop={true}
                 cursor
                 cursorStyle="|"
@@ -135,7 +142,7 @@ export default function Hero() {
             </span>
           </h1>
 
-          <p className="text-base md:text-lg text-textcolor2/90 px-4 md:px-0 max-w-lg mx-auto mb-10">
+          <p className="text-base md:text-lg text-textcolor2/90 px-4 md:px-0 max-w-2xl mx-auto mb-6">
             Digital experiences that improve trust, engagement, and conversion.
           </p>
 

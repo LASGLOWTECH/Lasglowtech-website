@@ -99,31 +99,31 @@ const Home = () => {
       <section className="px-6 md:px-12 py-16 md:py-24">
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-3xl mx-auto">
-            <p className="text-sm font-semibold uppercase tracking-widest text-Secondarycolor">
+            <p className="text-xs font-semibold uppercase tracking-widest text-Secondarycolor">
               Why Lasglowtech
             </p>
-            <h2 className="text-3xl md:text-4xl font-bold text-textcolor2 mt-3 leading-tight">
+            <h2 className="text-2xl md:text-3xl font-bold text-textcolor2 mt-3 leading-tight">
               Built for brands that want results
             </h2>
-            <p className="text-gray-400 text-base mt-4 leading-relaxed">
+            <p className="text-gray-400 text-sm mt-3 leading-relaxed">
               We combine product thinking, design excellence, and technical depth to help businesses launch and
               scale with confidence. We also provide <strong className="text-gray-300">tutoring and tech training</strong>, and a <strong className="text-gray-300">service catalogue</strong> with <strong className="text-gray-300">instant checkout</strong> so you can buy fixed-price packages online.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-14">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
             {corePillars.map((item) => {
               const Icon = item.icon;
               return (
                 <article
                   key={item.title}
-                  className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/50 p-6 md:p-7 hover:border-Primarycolor/40 hover:shadow-lg hover:shadow-Primarycolor/5 transition-all duration-200 flex flex-col"
+                  className="rounded-xl border border-Primarycolor/25 bg-bgcolor2/50 p-4 md:p-5 hover:border-Primarycolor/40 hover:shadow-md hover:shadow-Primarycolor/5 transition-all duration-200 flex flex-col"
                 >
-                  <span className="w-12 h-12 rounded-xl border border-Primarycolor/40 bg-Primarycolor/20 text-Secondarycolor flex items-center justify-center">
-                    <Icon className="w-6 h-6" />
+                  <span className="w-10 h-10 rounded-lg border border-Primarycolor/40 bg-Primarycolor/20 text-Secondarycolor flex items-center justify-center">
+                    <Icon className="w-5 h-5" />
                   </span>
-                  <h3 className="text-lg font-semibold text-textcolor2 mt-5">{item.title}</h3>
-                  <p className="text-gray-400 mt-2 text-sm leading-relaxed flex-1">{item.text}</p>
+                  <h3 className="text-base font-semibold text-textcolor2 mt-4">{item.title}</h3>
+                  <p className="text-gray-400 mt-1.5 text-sm leading-relaxed flex-1">{item.text}</p>
                 </article>
               );
             })}
@@ -134,12 +134,12 @@ const Home = () => {
       {/* How We Deliver */}
       <section className="px-6 md:px-12 pb-16 md:pb-24">
         <div className="max-w-6xl mx-auto">
-          <div className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/50 overflow-hidden">
-            <div className="px-6 md:px-10 py-8 border-b border-Primarycolor/20">
-              <p className="text-sm font-semibold uppercase tracking-widest text-Secondarycolor">
+          <div className="rounded-xl border border-Primarycolor/25 bg-bgcolor2/50 overflow-hidden">
+            <div className="px-5 md:px-8 py-6 border-b border-Primarycolor/20">
+              <p className="text-xs font-semibold uppercase tracking-widest text-Secondarycolor">
                 Execution model
               </p>
-              <h2 className="text-2xl md:text-3xl font-bold text-textcolor2 mt-2">
+              <h2 className="text-xl md:text-2xl font-bold text-textcolor2 mt-2">
                 How we deliver
               </h2>
             </div>
@@ -148,13 +148,13 @@ const Home = () => {
               {processFlow.map((item, index) => (
                 <article
                   key={item.step}
-                  className={`p-6 md:p-8 ${
+                  className={`p-4 md:p-6 ${
                     index < processFlow.length - 1 ? "md:border-r border-Primarycolor/20" : ""
                   }`}
                 >
-                  <p className="text-Secondarycolor text-2xl font-bold">{item.step}</p>
-                  <h3 className="text-lg font-semibold text-textcolor2 mt-3">{item.title}</h3>
-                  <p className="text-sm text-gray-400 mt-2 leading-relaxed">{item.text}</p>
+                  <p className="text-Secondarycolor text-xl font-bold">{item.step}</p>
+                  <h3 className="text-base font-semibold text-textcolor2 mt-2">{item.title}</h3>
+                  <p className="text-sm text-gray-400 mt-1.5 leading-relaxed">{item.text}</p>
                 </article>
               ))}
             </div>
@@ -165,30 +165,30 @@ const Home = () => {
       {/* Tutoring & catalogue CTAs for SEO and discovery */}
       <section className="px-6 md:px-12 py-12 md:py-16 border-t border-Primarycolor/20">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-textcolor2 text-center mb-8">
+          <h2 className="text-xl md:text-2xl font-bold text-textcolor2 text-center mb-6">
             More ways to work with us
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Link
               to="/careers"
-              className="rounded-2xl border border-Primarycolor/30 bg-bgcolor2/50 p-6 md:p-8 hover:border-Primarycolor/50 hover:shadow-lg transition-all duration-200 group"
+              className="rounded-xl border border-Primarycolor/30 bg-bgcolor2/50 p-4 md:p-5 hover:border-Primarycolor/50 hover:shadow-md transition-all duration-200 group"
             >
-              <h3 className="text-xl font-semibold text-textcolor2 group-hover:text-Secondarycolor transition-colors">
+              <h3 className="text-base font-semibold text-textcolor2 group-hover:text-Secondarycolor transition-colors">
                 Tutoring & training
               </h3>
-              <p className="text-gray-400 mt-2 text-sm leading-relaxed">
+              <p className="text-gray-400 mt-1.5 text-sm leading-relaxed">
                 Learn with us—structured programmes to upskill your team or start a career in tech. Apply and get access to our LMS and hands-on projects.
               </p>
               <span className="inline-block mt-4 text-Secondarycolor text-sm font-medium">Explore careers & learning →</span>
             </Link>
             <Link
               to="/catalogues"
-              className="rounded-2xl border border-Primarycolor/30 bg-bgcolor2/50 p-6 md:p-8 hover:border-Primarycolor/50 hover:shadow-lg transition-all duration-200 group"
+              className="rounded-xl border border-Primarycolor/30 bg-bgcolor2/50 p-4 md:p-5 hover:border-Primarycolor/50 hover:shadow-md transition-all duration-200 group"
             >
-              <h3 className="text-xl font-semibold text-textcolor2 group-hover:text-Secondarycolor transition-colors">
+              <h3 className="text-base font-semibold text-textcolor2 group-hover:text-Secondarycolor transition-colors">
                 Service catalogue & instant checkout
               </h3>
-              <p className="text-gray-400 mt-2 text-sm leading-relaxed">
+              <p className="text-gray-400 mt-1.5 text-sm leading-relaxed">
                 Choose a fixed-price package, pay online, and get started. No lengthy quotes—browse our catalogue and checkout instantly.
               </p>
               <span className="inline-block mt-4 text-Secondarycolor text-sm font-medium">Browse catalogue →</span>

@@ -13,6 +13,14 @@ export default {
       xl: '1440px'
     },
     extend: {
+      fontFamily: {
+        sans: ['Nunito Sans', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+      },
+      fontSize: {
+        base: ['1rem', { lineHeight: '1.6' }],
+        body: ['1rem', { lineHeight: '1.6' }],
+        muted: ['0.875rem', { lineHeight: '1.5' }],
+      },
       colors: {
         textcolor: '#f7f6f2',
         textcolor2:'#e5e7eb',
