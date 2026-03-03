@@ -417,7 +417,7 @@ const CareersDashboard = () => {
                         <p className="mt-2">
                           <span
                             className={`inline-flex px-3 py-1.5 rounded-full border text-xs font-semibold uppercase tracking-wider ${
-                              statusClass[latest?.status] || "text-gray-400 border-gray-500/40"
+                              statusClass[latest?.status] || "text-muted border-Primarycolor/40"
                             }`}
                           >
                             {latest?.status || "—"}
@@ -478,7 +478,7 @@ const CareersDashboard = () => {
                     <div className="space-y-5">
                       <span
                         className={`inline-flex px-3 py-1.5 rounded-full border text-xs font-medium uppercase tracking-wider ${
-                          statusClass[latest.status] || "text-gray-400 border-gray-500/40"
+                          statusClass[latest.status] || "text-muted border-Primarycolor/40"
                         }`}
                       >
                         {latest.status}
@@ -542,7 +542,7 @@ const CareersDashboard = () => {
                           <p className="font-semibold text-textcolor2">{en.course.title}</p>
                           <span
                             className={`text-xs uppercase px-2.5 py-1 rounded-full border font-medium ${
-                              levelClass[en.course.level] || "text-gray-400 border-gray-500/30"
+                              levelClass[en.course.level] || "text-muted border-Primarycolor/30"
                             }`}
                           >
                             {en.course.level}

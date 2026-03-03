@@ -6,23 +6,17 @@ import instance from "../config/axios.config";
 import { getRoleHomePath, saveSession } from "../utils/auth";
 import { Slide1, Slide2, Slide3 } from "../components/images";
 
-const authSlides = [
-  {
-    image: Slide1,
-    title: "Crafted Digital Experiences",
-    text: "Partner with a team focused on clean design, robust engineering, and measurable business impact.",
-  },
-  {
-    image: Slide2,
-    title: "Secure and Professional Delivery",
-    text: "From strategy to launch, we build solutions that perform reliably and scale with your business.",
-  },
-  {
-    image: Slide3,
-    title: "Creative Services Marketplace",
-    text: "Login to access premium catalogues, personalized checkout flow, and faster project onboarding.",
-  },
+const PLACEHOLDER_IMAGES = [
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+  "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80",
+  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
 ];
+
+const authSlides = [
+  { image: Slide1, title: "Crafted Digital Experiences", text: "Partner with a team focused on clean design, robust engineering, and measurable business impact." },
+  { image: Slide2, title: "Secure and Professional Delivery", text: "From strategy to launch, we build solutions that perform reliably and scale with your business." },
+  { image: Slide3, title: "Creative Services Marketplace", text: "Login to access premium catalogues, personalized checkout flow, and faster project onboarding." },
+].map((slide, i) => ({ ...slide, image: slide.image || PLACEHOLDER_IMAGES[i] }));
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -70,13 +64,13 @@ const LoginPage = () => {
         <div className="p-4 md:p-6 flex flex-col justify-center min-h-0 overflow-auto relative z-10 bg-bgcolor2">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-gray-400 hover:text-Secondarycolor transition-colors mb-3 text-sm"
+please i dont             className="inline-flex items-center gap-2 text-muted hover:text-Secondarycolor transition-colors mb-3 text-sm"
           >
             <FaArrowLeft className="w-4 h-4" />
             Back to Home
           </Link>
           <h1 className="text-xl font-semibold mb-1">Account Login</h1>
-          <p className="text-gray-400 text-sm mb-4">Login to continue with your role-specific dashboard.</p>
+          <p className="text-muted text-sm mb-4">Login to continue with your role-specific dashboard.</p>
 
           <form onSubmit={handleSubmit} className="space-y-3">
             <input
@@ -122,7 +116,7 @@ const LoginPage = () => {
             </Link>
           </div>
 
-          <p className="text-xs text-gray-300 mt-3">
+          <p className="text-xs text-muted mt-3">
             New user?{" "}
             <Link to="/auth/register" state={from ? { from } : undefined} className="text-Secondarycolor hover:underline">
               Create account
@@ -130,18 +124,26 @@ const LoginPage = () => {
           </p>
         </div>
 
-        <aside className="hidden md:block relative min-h-0 flex-1 overflow-hidden z-0">
+        <aside className="hidden md:block relative min-h-[320px] min-w-0 overflow-hidden z-0 bg-Primarycolor/10">
           <div
             className="absolute inset-0 flex transition-transform duration-700 ease-in-out"
             style={{ transform: `translateX(-${slideIndex * 100}%)` }}
           >
-            {authSlides.map((slide) => (
-              <div key={slide.title} className="relative min-w-full flex-shrink-0">
-                <img src={slide.image} alt={slide.title} className="absolute inset-0 h-full w-full object-cover" />
+            {authSlides.map((slide, idx) => (
+              <div key={slide.title} className="relative min-w-full flex-shrink-0 bg-Primarycolor/20">
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = PLACEHOLDER_IMAGES[idx % PLACEHOLDER_IMAGES.length];
+                  }}
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-bgcolor2/95 via-bgcolor2/60 to-bgcolor2/20" />
                 <div className="absolute bottom-0 p-4 md:p-6">
                   <h3 className="text-base md:text-lg font-semibold text-textcolor2">{slide.title}</h3>
-                  <p className="text-xs md:text-sm text-gray-300 mt-1">{slide.text}</p>
+                  <p className="text-xs md:text-sm text-muted mt-1">{slide.text}</p>
                 </div>
               </div>
             ))}

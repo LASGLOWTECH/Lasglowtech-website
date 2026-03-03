@@ -73,13 +73,13 @@ const Blogcard = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-bgcolor/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
               <div className="p-4 md:p-5 flex flex-col flex-1">
-                <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1.5">
+                <p className="text-xs font-medium text-muted uppercase tracking-wider mb-1.5">
                   {formatDate(blog.timestamp)}
                 </p>
                 <h3 className="text-base font-semibold text-textcolor2 line-clamp-2 group-hover:text-Secondarycolor transition-colors leading-snug">
                   {blog.title}
                 </h3>
-                <p className="text-sm text-gray-400 mt-3 line-clamp-3 leading-relaxed flex-1">
+                <p className="text-sm text-muted mt-3 line-clamp-3 leading-relaxed flex-1">
                   {stripHtml(blog.content)}
                 </p>
                 <span className="inline-flex items-center gap-2 mt-4 text-Secondarycolor font-medium text-sm">
@@ -95,7 +95,7 @@ const Blogcard = () => {
                   e.preventDefault();
                   handleShare(blog);
                 }}
-                className="p-2 rounded-lg border border-Primarycolor/20 hover:border-Primarycolor/40 hover:bg-Primarycolor/10 text-gray-400 hover:text-Secondarycolor transition-colors"
+                className="p-2 rounded-lg border border-Primarycolor/20 hover:border-Primarycolor/40 hover:bg-Primarycolor/10 text-muted hover:text-Secondarycolor transition-colors"
                 aria-label="Share article"
               >
                 <IoShareSocialSharp className="w-5 h-5" />
@@ -118,7 +118,7 @@ const Blogcard = () => {
           >
             Previous
           </button>
-          <span className="text-sm font-medium text-gray-400 min-w-[80px] text-center">
+          <span className="text-sm font-medium text-muted min-w-[80px] text-center">
             Page {currentPage} of {totalPages}
           </span>
           <button

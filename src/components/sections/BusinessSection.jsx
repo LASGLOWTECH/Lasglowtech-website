@@ -19,7 +19,7 @@ const StatsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
           <div className="md:col-span-2 flex flex-col justify-center items-start">
             <h2 className="text-2xl md:text-3xl font-semibold mb-2">Ready to Scale Your Brand?</h2>
-            <p className="text-sm md:text-base mb-2 text-gray-400">
+            <p className="text-sm md:text-base mb-2 text-muted">
               We design and deliver tailored digital solutions, from conversion-focused landing pages to full business
               platforms that load fast, look premium, and perform reliably.
             </p>
@@ -47,7 +47,7 @@ const StatsSection = () => {
                     />
                   )}
                 </h3>
-                <p className="mt-2 text-sm md:text-base text-gray-300">{stat.label}</p>
+                <p className="mt-2 text-sm md:text-base text-muted">{stat.label}</p>
               </div>
             ))}
           </div>

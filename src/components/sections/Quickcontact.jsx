@@ -21,7 +21,7 @@ const QuickContact = () => {
   
   {/* <div className="text-center   " data-aos="fade-up">
         <h2 className="text-3xl md:text-4xl  text-textcolor2 font-medium mb-2">Why Choose Lasglowtech</h2>
-        <p className="text-gray-400 max-w-xl mx-auto">
+        <p className="text-muted max-w-xl mx-auto">
           At Lasglowtech we don't  just build websites apps or sleek designs, but build  digital experiences that works and converts
         </p>
       </div> */}
@@ -41,7 +41,7 @@ const QuickContact = () => {
           </div>
           <div className=" flex flex-col  items-start" data-aos="fade-up">
                      <h2 className="text-2xl md:text-4xl font-semibold text-textcolor2 mb-6">Why Choose Lasglowtech?</h2>
-                     <p className="text-base mb-2 text-gray-400  text-left font-medium tracking-tighr">At Lasglowtech we don't  just build web apps or sleek designs, but build  digital experiences that works and converts.
+                     <p className="text-base mb-2 text-muted  text-left font-medium tracking-tighr">At Lasglowtech we don't  just build web apps or sleek designs, but build  digital experiences that works and converts.
                       Looking for a Specific Service? We've got creative solutions tailored to your needs, take a glance at our list of services and contact us . </p>
                    <Link to="/services">
                        <button className="mt-4 px-5 py-3  bg-gradient-to-r from-Primarycolor to-Primarycolor1 hover:from-Secondarycolor hover:to-Secondarycolor shadow-lg text-white font-semibold rounded-full transition-all duration-300">

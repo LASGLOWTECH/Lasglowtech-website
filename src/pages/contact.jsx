@@ -131,7 +131,7 @@ const Contact = () => {
             <p className="text-textcolor2/80 text-sm text-center max-w-xl mx-auto -mt-2 px-4">
               Have a project in mind or need support? We’d love to hear from you.
             </p>
-            <nav aria-label="Breadcrumb" className="my-6 border border-gray-200 p-3 rounded-full text-textcolor2">
+            <nav aria-label="Breadcrumb" className="my-6 border border-Primarycolor/20 p-3 rounded-full text-textcolor2">
               <ol className="text-base text-violet-600 flex flex-wrap items-center justify-center gap-1">
                 <li>
                   <Link to="/" className="hover:underline">

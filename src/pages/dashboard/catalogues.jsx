@@ -436,7 +436,7 @@ const CataloguesAdmin = () => {
                   setImageFile(null);
                   setImagePreview("");
                 }}
-                className="px-6 py-3 rounded-md border border-white/20 text-gray-200"
+                className="px-6 py-3 rounded-md border border-Primarycolor/30 text-textcolor2"
               >
                 Cancel edit
               </button>

@@ -28,7 +28,7 @@ const statusBadgeClass = {
 };
 
 const inputClass =
-  "w-full px-4 py-2.5 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-Primarycolor/50 focus:border-transparent text-sm";
+  "w-full px-4 py-2.5 rounded-xl border border-Primarycolor/30 bg-bgcolor2 text-textcolor2 placeholder-muted focus:outline-none focus:ring-2 focus:ring-Primarycolor/50 focus:border-transparent text-sm";
 const labelClass = "block text-sm font-medium text-gray-400 mb-1.5";
 
 const CareersAdmin = () => {
@@ -338,7 +338,7 @@ const CareersAdmin = () => {
                     </button>
                     <span
                       className={`inline-flex items-center px-3 py-1 rounded-full border text-xs font-medium ${
-                        statusBadgeClass[drafts[app.id]?.status || app.status] || "text-gray-400 border-gray-500/40"
+                        statusBadgeClass[drafts[app.id]?.status || app.status] || "text-muted border-Primarycolor/40"
                       }`}
                     >
                       {drafts[app.id]?.status || app.status}

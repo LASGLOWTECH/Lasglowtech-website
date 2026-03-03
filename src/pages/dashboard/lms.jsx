@@ -474,7 +474,7 @@ const LmsAdmin = () => {
             {courseForm.id && (
               <button
                 type="button"
-                className="px-6 py-3 rounded-md border border-white/20 text-gray-200"
+                className="px-6 py-3 rounded-md border border-Primarycolor/30 text-textcolor2"
                 onClick={() => setCourseForm(defaultCourse)}
               >
                 Cancel edit
@@ -552,7 +552,7 @@ const LmsAdmin = () => {
           />
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-300 mb-2">Module notes (rich content)</label>
-            <div className="rounded-xl overflow-hidden border border-Primarycolor/20 bg-white [&_.ql-container]:min-h-[220px] [&_.ql-editor]:min-h-[200px] [&_.ql-editor]:text-gray-800 [&_.ql-toolbar]:bg-gray-100 [&_.ql-toolbar]:border-gray-200 [&_.ql-container]:border-gray-200">
+            <div className="rounded-xl overflow-hidden border border-Primarycolor/20 bg-white [&_.ql-container]:min-h-[220px] [&_.ql-editor]:min-h-[200px] [&_.ql-editor]:text-gray-800 [&_.ql-toolbar]:bg-gray-100 [&_.ql-toolbar]:border-Primarycolor/20 [&_.ql-container]:border-Primarycolor/20">
               <ReactQuill
                 theme="snow"
                 value={moduleForm.moduleContent}
@@ -592,7 +592,7 @@ const LmsAdmin = () => {
               <button
                 type="button"
                 onClick={() => setModuleForm(defaultModule)}
-                className="ml-3 px-6 py-3 rounded-md border border-white/20 text-gray-200"
+                className="ml-3 px-6 py-3 rounded-md border border-Primarycolor/30 text-textcolor2"
               >
                 Cancel edit
               </button>
@@ -924,7 +924,7 @@ const LmsAdmin = () => {
                 type="button"
                 onClick={() => setIssueCertEnrollment(null)}
                 disabled={!!issuingId}
-                className="flex-1 py-2.5 rounded-md border border-white/20 text-gray-300 text-sm"
+                className="flex-1 py-2.5 rounded-md border border-Primarycolor/30 text-textcolor2 text-sm"
               >
                 Cancel
               </button>

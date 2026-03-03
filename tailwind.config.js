@@ -33,6 +33,7 @@ export default {
         Secondarycolor1: 'var(--color-secondary1)',
         Secondarycolor2: 'var(--color-secondary2)',
         Secondarycolor: 'var(--color-secondary)',
+        muted: 'var(--color-muted)',
         grey: '#b2b2b2',
       }
 

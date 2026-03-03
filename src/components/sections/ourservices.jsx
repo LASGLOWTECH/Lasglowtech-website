@@ -29,7 +29,7 @@ const OurServices = () => {
         Strategy, Design, and Engineering <br></br>Built for Results
         </h2>
         <p className="mt-4 text-textcolor2 text-center md:max-w-xl leading-relaxed">
-          From concept to launch, we deliver practical digital services that strengthen your brand and accelerate growth. We also offer <strong className="text-gray-300">tutoring and tech training</strong>, and a <strong className="text-gray-300">service catalogue</strong> with <strong className="text-gray-300">instant checkout</strong> so you can buy packages online.
+          From concept to launch, we deliver practical digital services that strengthen your brand and accelerate growth. We also offer <strong className="text-textcolor2">tutoring and tech training</strong>, and a <strong className="text-textcolor2">service catalogue</strong> with <strong className="text-textcolor2">instant checkout</strong> so you can buy packages online.
         </p>
       </section>
             
@@ -40,14 +40,14 @@ const OurServices = () => {
     <Link to={`/services/${service.link.split("/").pop()}`} key={index}
   className="block bg-gradient-to-t from-bgcolor to-bgcolor2 border border-Primarycolor/20 py-8 px-4 rounded-lg shadow-md shadow-Primarycolor/30 text-left transition-all duration-300 group hover:-translate-y-1 hover:border-Primarycolor/50"
   data-aos="fade-in"
-><h3 className="text-2xl  text-gray-300  group-hover:text-Secondarycolor font-semibold   mb-4">
+><h3 className="text-2xl  text-textcolor2  group-hover:text-Secondarycolor font-semibold   mb-4">
               {service.title}
             </h3>
 
              <BsArrowUpRightCircleFill
                 className="absolute bottom-2 right-2 fill-Secondarycolor group-hover:fill-textcolor z-10  rounded-full p-1 text-5xl shadow-lg cursor-pointer transition-all duration-300"
               />
-            <p className="text-gray-400 text-sm group-hover:text-textcolor mb-4 line-clamp-3">{service.description}</p>
+            <p className="text-muted text-sm group-hover:text-textcolor mb-4 line-clamp-3">{service.description}</p>
 
             <div className="relative">
               <img

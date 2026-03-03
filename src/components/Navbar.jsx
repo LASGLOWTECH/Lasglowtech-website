@@ -90,7 +90,7 @@ export default function Navbar() {
           )}
           {authed && (
             <>
-              <span className="text-white text-xs md:text-sm">Hi, {user?.username || "Client"}</span>
+              <span className="text-textcolor2 text-xs md:text-sm">Welcome, {user?.username || "Client"}</span>
               <div className="relative">
                 <button
                   onClick={() => setShowAccountMenu((prev) => !prev)}

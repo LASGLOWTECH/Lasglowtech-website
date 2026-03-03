@@ -55,7 +55,7 @@ const Subscription = () => {
                 <h2 className="text-3xl sm:text-3xl lg:text-4xl font-semibold text-textcolor2 tracking-tight">
                     Quick Contact
                 </h2>
-                <p className="mt-4 text-base sm:text-base text-gray-300 md:max-w-3xl py-2">
+                <p className="mt-4 text-base sm:text-base text-muted md:max-w-3xl py-2">
                     Get the latest news from us, tips, and trends straight to your inbox. Feel free to ask questions here.
                 </p>
 

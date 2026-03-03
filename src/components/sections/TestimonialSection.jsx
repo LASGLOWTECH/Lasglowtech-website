@@ -37,7 +37,7 @@ const TestimonialSection = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-textcolor2">
             What our clients say
           </h2>
-          <p className="mt-2 text-gray-400 max-w-xl mx-auto text-sm md:text-base">
+          <p className="mt-2 text-muted max-w-xl mx-auto text-sm md:text-base">
             Real feedback from brands and teams we’ve worked with.
           </p>
         </div>
@@ -86,7 +86,7 @@ const TestimonialSection = () => {
 
                     <div className="lg:col-span-8 flex flex-col justify-center">
                       <RiDoubleQuotesL className="text-4xl md:text-5xl text-Secondarycolor/40 mb-4" aria-hidden />
-                      <blockquote className="text-gray-400 text-base md:text-lg leading-relaxed">
+                      <blockquote className="text-muted text-base md:text-lg leading-relaxed">
                         {item.text}
                       </blockquote>
                       <footer className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
@@ -94,7 +94,7 @@ const TestimonialSection = () => {
                           <cite className="not-italic font-semibold text-textcolor2 text-lg">
                             {item.name}
                           </cite>
-                          <p className="text-sm text-gray-500">{item.role}</p>
+                          <p className="text-sm text-muted">{item.role}</p>
                         </div>
                         <div className="flex items-center gap-3">
                           <button
@@ -104,7 +104,7 @@ const TestimonialSection = () => {
                           >
                             <FaArrowLeft className="w-4 h-4" />
                           </button>
-                          <span className="text-sm text-gray-500 tabular-nums min-w-[3ch] text-center">
+                          <span className="text-sm text-muted tabular-nums min-w-[3ch] text-center">
                             {currentIndex + 1} / {totalSlides}
                           </span>
                           <button
@@ -125,7 +125,7 @@ const TestimonialSection = () => {
         </div>
 
         <div
-          className="absolute bottom-4 left-0 right-0 text-center text-[5rem] md:text-[8rem] font-bold text-gray-300/5 select-none pointer-events-none leading-none hidden md:block"
+          className="absolute bottom-4 left-0 right-0 text-center text-[5rem] md:text-[8rem] font-bold text-Primarycolor/5 select-none pointer-events-none leading-none hidden md:block"
           aria-hidden
         >
           Testimonials

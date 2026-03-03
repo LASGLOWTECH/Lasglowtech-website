@@ -24,7 +24,7 @@ const SingleService = () => {
                 </h1>
 
                 {/* Breadcrumb */}
-                <div className="mt-5 border border-gray-200 p-3 rounded-full text-textcolor2">
+                <div className="mt-5 border border-Primarycolor/20 p-3 rounded-full text-textcolor2">
                     <p className="text-base text-violet-600 cursor-pointer">
                         <Link to="/" className="hover:underline">
                             Home

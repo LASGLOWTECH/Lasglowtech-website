@@ -6,6 +6,12 @@ import instance from "../config/axios.config";
 import { getRoleHomePath, saveSession } from "../utils/auth";
 import { Land1, Land2, Land3 } from "../components/images";
 
+const PLACEHOLDER_IMAGES = [
+  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
+  "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80",
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+];
+
 const registerSlides = [
   {
     image: Land1,
@@ -22,11 +28,11 @@ const registerSlides = [
     title: "Simple Onboarding",
     text: "Register once, compare services, and pay securely when you are ready to start your project.",
   },
-];
+].map((slide, i) => ({ ...slide, image: slide.image || PLACEHOLDER_IMAGES[i] }));
 
 const inputClass =
   "w-full px-4 py-3 rounded-xl border border-Primarycolor/30 bg-bgcolor/80 text-textcolor2 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-Primarycolor/50 focus:border-Primarycolor/50 transition-colors";
-const labelClass = "block text-sm font-medium text-gray-300 mb-1.5";
+const labelClass = "block text-sm font-medium text-muted mb-1.5";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -77,21 +83,21 @@ const RegisterPage = () => {
         <div className="p-4 md:p-6 flex flex-col justify-center min-h-0 overflow-auto">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-gray-400 hover:text-Secondarycolor transition-colors mb-3 text-sm"
+            className="inline-flex items-center gap-2 text-muted hover:text-Secondarycolor transition-colors mb-3 text-sm"
           >
             <FaArrowLeft className="w-4 h-4" />
             Back to Home
           </Link>
           <div className="mb-4">
             <h1 className="text-xl md:text-2xl font-bold text-textcolor2">Create account</h1>
-            <p className="text-gray-400 mt-0.5 text-xs md:text-sm">
+            <p className="text-muted mt-0.5 text-xs md:text-sm">
               Choose your role—client, learner, or talent.
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
-              <label htmlFor="reg-username" className="block text-xs font-medium text-gray-300 mb-1">
+              <label htmlFor="reg-username" className="block text-xs font-medium text-muted mb-1">
                 Full name
               </label>
               <input
@@ -106,7 +112,7 @@ const RegisterPage = () => {
               />
             </div>
             <div>
-              <label htmlFor="reg-email" className="block text-xs font-medium text-gray-300 mb-1">
+              <label htmlFor="reg-email" className="block text-xs font-medium text-muted mb-1">
                 Email address
               </label>
               <input
@@ -121,7 +127,7 @@ const RegisterPage = () => {
               />
             </div>
             <div>
-              <label htmlFor="reg-role" className="block text-xs font-medium text-gray-300 mb-1">
+              <label htmlFor="reg-role" className="block text-xs font-medium text-muted mb-1">
                 I want to
               </label>
               <select
@@ -138,7 +144,7 @@ const RegisterPage = () => {
               </select>
             </div>
             <div>
-              <label htmlFor="reg-password" className="block text-xs font-medium text-gray-300 mb-1">
+              <label htmlFor="reg-password" className="block text-xs font-medium text-muted mb-1">
                 Password (min 6 characters)
               </label>
               <div className="relative">
@@ -156,7 +162,7 @@ const RegisterPage = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-Secondarycolor transition-colors p-1"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-muted hover:text-Secondarycolor transition-colors p-1"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? <FaEyeSlash className="w-4 h-4" /> : <FaEye className="w-4 h-4" />}
@@ -172,7 +178,7 @@ const RegisterPage = () => {
             </button>
           </form>
 
-          <p className="text-xs text-gray-400 mt-4">
+          <p className="text-xs text-muted mt-4">
             Already have an account?{" "}
             <Link
               to="/auth/login"
@@ -185,22 +191,26 @@ const RegisterPage = () => {
         </div>
 
         {/* Slides side */}
-        <aside className="hidden lg:block relative min-h-0 flex-1 overflow-hidden bg-bgcolor/50">
+        <aside className="hidden lg:block relative min-h-[320px] min-w-0 overflow-hidden bg-Primarycolor/10">
           <div
             className="absolute inset-0 flex transition-transform duration-700 ease-in-out"
             style={{ transform: `translateX(-${slideIndex * 100}%)` }}
           >
-            {registerSlides.map((slide) => (
-              <div key={slide.title} className="relative min-w-full flex-shrink-0">
+            {registerSlides.map((slide, idx) => (
+              <div key={slide.title} className="relative min-w-full flex-shrink-0 bg-Primarycolor/20">
                 <img
                   src={slide.image}
-                  alt=""
+                  alt={slide.title}
                   className="absolute inset-0 w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = PLACEHOLDER_IMAGES[idx % PLACEHOLDER_IMAGES.length];
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-bgcolor/95 via-bgcolor/50 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
                   <h3 className="text-base md:text-lg font-semibold text-textcolor2">{slide.title}</h3>
-                  <p className="text-xs md:text-sm text-gray-400 mt-1">{slide.text}</p>
+                  <p className="text-xs md:text-sm text-muted mt-1">{slide.text}</p>
                 </div>
               </div>
             ))}
@@ -225,3 +235,4 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+

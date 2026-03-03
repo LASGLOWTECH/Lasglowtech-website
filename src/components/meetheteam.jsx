@@ -50,14 +50,14 @@ const cardVariants = {
 
 const MeetTheTeam = () => {
     return (
-        <section className="bg-gradient-to-r from-bgcolor2 to-bgcolor2 text-white py-16 px-6 md:px-12">
+        <section className="bg-gradient-to-r from-bgcolor2 to-bgcolor2 text-textcolor2 py-16 px-6 md:px-12">
 
             <div className="max-w-6xl mx-auto">
             <div className="pb-12 md:pb-16 text-center">
                 <h2 className="text-3xl md:text-4xl font-bold text-textcolor2">
                     Meet the Team
                 </h2>
-                <p className="py-4 text-gray-300 mx-auto max-w-2xl leading-relaxed text-base">
+                <p className="py-4 text-muted mx-auto max-w-2xl leading-relaxed text-base">
                     Meet the creative and innovative minds. Our team is dedicated to delivering exceptional results and pushing the boundaries of what's possible.
                 </p>
             </div>
@@ -83,7 +83,7 @@ const MeetTheTeam = () => {
                         </div>
 
                         {/* Text Card */}
-                        <div className="w-[300px] bg-bgcolor border flex  flex-col items-center justify-center border-Primarycolor md:mt-6 mt-[-50px] rounded-2xl p-6 relative">
+                        <div className="w-[300px] bg-bgcolor flex flex-col items-center justify-center border border-Primarycolor/40 md:mt-6 mt-[-50px] rounded-2xl p-6 relative">
                             <h3 className="text-xl font-semibold leading-tight">
                                 {member.name}
                             </h3>

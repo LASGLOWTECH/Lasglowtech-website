@@ -142,11 +142,11 @@ export default function Hero() {
             </span>
           </h1>
 
-          <p className="text-base md:text-lg text-textcolor2/90 px-4 md:px-0 max-w-2xl mx-auto mb-6">
+          <p className="text-base md:text-lg text-textcolor2/90 px-4 md:px-0 max-w-2xl mx-auto mt-3 mb-6">
             Digital experiences that improve trust, engagement, and conversion.
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-3">
+          <div className="flex flex-wrap items-center mb-4 justify-center gap-3">
             <Link
               to="/catalogues"
               className="inline-block px-8 py-3 bg-gradient-to-r from-Primarycolor to-Primarycolor1 hover:from-Secondarycolor hover:to-Secondarycolor shadow-lg text-white font-semibold rounded-full transition-all duration-300"

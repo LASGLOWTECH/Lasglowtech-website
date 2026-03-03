@@ -164,7 +164,7 @@ const PortfolioTabs = () => {
       : portfolioData[activeTab] || [];
 
   return (
-    <div className=" text-white px-6 md:px-20 mx-auto mt-6 py-20">
+    <div className="text-textcolor2 px-6 md:px-20 mx-auto mt-6 py-20">
       {/* Tabs */}
       <div className="flex flex-wrap justify-center mb-10 gap-4">
         {tabs.map((tab) => (
@@ -173,8 +173,8 @@ const PortfolioTabs = () => {
             onClick={() => setActiveTab(tab)}
             className={`px-8 py-3 border text-sm md:text-lg rounded-2xl shadow-md transition-all duration-300 ${
               activeTab === tab
-                ? 'bg-gradient-to-r from-Primarycolor to-Primarycolor2  text-white border-Primarycolor1 hover:bg-Secondarycolor'
-                : 'text-textcolor border-Primarycolor hover:bg-Secondarycolor hover:text-white'
+                ? 'bg-gradient-to-r from-Primarycolor to-Primarycolor2 text-white border-Primarycolor1 hover:bg-Secondarycolor'
+                : 'text-textcolor border-Primarycolor/40 hover:bg-Secondarycolor hover:text-white'
             }`}
           >
             {tab}
@@ -200,7 +200,7 @@ const PortfolioTabs = () => {
             />
           ))
         ) : (
-          <p className="text-center col-span-full text-gray-300 text-lg">
+          <p className="text-center col-span-full text-muted text-lg">
             No projects in this category.
           </p>
         )}

@@ -58,12 +58,12 @@ const CoreValues = () => {
               className="hover:shadow-lg transition duration-300 rounded-xl p-4 text-left shadow-md shadow-Primarycolor2"
             >
               <div className="flex bg-Primarycolor items-center justify-center p-4 h-16 w-16 rounded-full">
-                <span className="text-white">{value.icon}</span>
+                <span className="text-textcolor2">{value.icon}</span>
               </div>
               <h3 className="text-xl pt-8 font-semibold text-textcolor mb-2">
                 {value.title}
               </h3>
-              <p className="text-gray-400">{value.description}</p>
+              <p className="text-muted">{value.description}</p>
             </motion.div>
           ))}
         </div>

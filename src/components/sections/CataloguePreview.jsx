@@ -38,8 +38,8 @@ const CataloguePreview = () => {
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-Secondarycolor">Marketplace</p>
             <h2 className="text-xl md:text-2xl font-semibold text-textcolor2 mt-2">Browse Premium Service Catalogues</h2>
-            <p className="text-gray-400 text-sm max-w-2xl mt-2">
-              Pick a service package, pay online, and get started fast. Our catalogue supports <strong className="text-gray-300">instant checkout</strong>—no lengthy quotes needed. You can also explore our <strong className="text-gray-300">tutoring and training</strong> programmes for your team or career growth.
+            <p className="text-muted text-sm max-w-2xl mt-2">
+              Pick a service package, pay online, and get started fast. Our catalogue supports <strong className="text-textcolor2">instant checkout</strong>—no lengthy quotes needed. You can also explore our <strong className="text-textcolor2">tutoring and training</strong> programmes for your team or career growth.
             </p>
           </div>
         </div>
@@ -59,7 +59,7 @@ const CataloguePreview = () => {
                 />
                 <div className="p-3">
                   <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="text-[10px] uppercase tracking-wider px-2 py-1 rounded-full border border-Primarycolor/40 text-gray-300">
+                    <span className="text-[10px] uppercase tracking-wider px-2 py-1 rounded-full border border-Primarycolor/40 text-muted">
                       {item.packageTier || "standard"}
                     </span>
                     {item.isPopular && (
@@ -69,11 +69,11 @@ const CataloguePreview = () => {
                     )}
                   </div>
                   <h3 className="text-base font-semibold text-textcolor2">{item.title}</h3>
-                  <p className="text-sm text-gray-400 mt-1">{item.summary}</p>
+                  <p className="text-sm text-muted mt-1">{item.summary}</p>
                   {!!item.features?.length && (
                     <ul className="mt-3 space-y-1">
                       {item.features.slice(0, 2).map((feature) => (
-                        <li key={feature} className="text-xs text-gray-300">
+                        <li key={feature} className="text-xs text-muted">
                           • {feature}
                         </li>
                       ))}
@@ -87,7 +87,7 @@ const CataloguePreview = () => {
             </Link>
           ))}
           {!items.length && (
-            <div className="col-span-full rounded-xl border border-white/10 p-6 text-gray-400">
+            <div className="col-span-full rounded-xl border border-Primarycolor/20 p-6 text-muted">
               Catalogue preview will appear after admin creates and publishes catalogue items.
             </div>
           )}

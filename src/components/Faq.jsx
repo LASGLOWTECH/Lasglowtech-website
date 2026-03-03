@@ -12,7 +12,7 @@ const FaqSection = () => {
   return (
     <section className="py-12 px-4 md:px-12 bg-gray-50">
       <h2 className="text-3xl font-bold text-center mb-4">Frequently Asked Questions</h2>
-      <p className="text-center text-gray-500 mb-8 max-w-xl mx-auto">
+      <p className="text-center text-muted mb-8 max-w-xl mx-auto">
         Find quick solutions to common queries. If you need more information, feel free to reach out to us directly!
       </p>
 
@@ -26,7 +26,7 @@ const FaqSection = () => {
                 const isActive = activeIndex === globalIndex;
 
                 return (
-                  <div key={globalIndex} className="border-b border-gray-300 py-3">
+                  <div key={globalIndex} className="border-b border-Primarycolor/20 py-3">
                     <button
   onClick={() => toggleFAQ(globalIndex)}
   className="w-full flex justify-between items-center text-left font-medium text-base text-gray-700 hover:bg-Primarycolor hover:text-textcolor2 transition-colors duration-200 p-2 rounded-md"
@@ -35,7 +35,7 @@ const FaqSection = () => {
   {isActive ? <FaMinus className="text-purple-600" /> : <FaPlus className="text-Primarycolor hover:text-textcolor2 " />}
 </button>
                     {isActive && (
-                      <p className="mt-2 text-sm text-gray-600">
+                      <p className="mt-2 text-sm text-muted">
                         {faq.answer}
                       </p>
                     )}

@@ -70,7 +70,7 @@ const Create = () => {
   };
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#0f172c] p-6">
+    <div className="rounded-2xl border border-Primarycolor/20 bg-bgcolor2 p-6">
       <div>
         <h1 className="text-2xl px-2 font-bold text-white mb-4">Create New Blog</h1>
 
