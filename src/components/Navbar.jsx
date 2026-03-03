@@ -2,13 +2,21 @@ import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai";
+import { FaSun, FaMoon } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { LOGO } from "./images";
 import { clearSession, getUser, isAuthenticated } from "../utils/auth";
+import { useTheme, applyThemeToDom } from "../context/ThemeContext";
 
 export default function Navbar() {
   const [show, setShow] = useState(false);
   const [showAccountMenu, setShowAccountMenu] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const handleThemeToggle = () => {
+    const next = theme === "dark" ? "light" : "dark";
+    applyThemeToDom(next);
+    setTheme(next);
+  };
   const authed = isAuthenticated();
   const user = getUser();
   const role = user?.role || "client";
@@ -26,12 +34,12 @@ export default function Navbar() {
 
   const desktopNavClass = ({ isActive }) =>
     `px-2.5 font-medium tracking-wide text-sm transition-all duration-300 ${
-      isActive ? "text-Secondarycolor" : "text-white hover:text-Secondarycolor"
+      isActive ? "text-Secondarycolor" : "text-textcolor2 hover:text-Secondarycolor"
     }`;
 
   const mobileNavClass = ({ isActive }) =>
     `py-3 font-medium tracking-wide text-base transition-all duration-200 ${
-      isActive ? "text-Secondarycolor" : "text-ash2 hover:text-Secondarycolor"
+      isActive ? "text-Secondarycolor" : "text-textcolor2 hover:text-Secondarycolor"
     }`;
 
   return (
@@ -52,13 +60,22 @@ export default function Navbar() {
         </div>
 
         <div className="hidden md:flex items-center gap-2.5 relative">
+          <button
+            type="button"
+            onClick={handleThemeToggle}
+            className="p-2 rounded-full text-textcolor2 hover:text-Secondarycolor2 hover:bg-Primarycolor/10 transition-colors"
+            title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {theme === "dark" ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
+          </button>
           {!authed && (
             <>
               <NavLink
                 to="/auth/login"
                 className={({ isActive }) =>
                   `text-sm font-medium transition-all duration-300 ${
-                    isActive ? "text-Secondarycolor" : "text-white hover:text-Secondarycolor"
+                    isActive ? "text-Secondarycolor" : "text-textcolor2 hover:text-Secondarycolor"
                   }`
                 }
               >
@@ -77,7 +94,7 @@ export default function Navbar() {
               <div className="relative">
                 <button
                   onClick={() => setShowAccountMenu((prev) => !prev)}
-                  className="px-4 py-2 text-sm border border-Primarycolor text-white rounded-full hover:bg-Primarycolor transition-all duration-300"
+                  className="px-4 py-2 text-sm border border-Primarycolor text-textcolor2 rounded-full hover:bg-Primarycolor transition-all duration-300"
                 >
                   My Account
                 </button>
@@ -87,7 +104,7 @@ export default function Navbar() {
                       <Link
                         to="/client/dashboard"
                         onClick={() => setShowAccountMenu(false)}
-                        className="block px-4 py-3 text-sm text-white hover:bg-Primarycolor/20 transition-all"
+                        className="block px-4 py-3 text-sm text-textcolor2 hover:bg-Primarycolor/20 transition-all"
                       >
                         Client Dashboard
                       </Link>
@@ -96,7 +113,7 @@ export default function Navbar() {
                       <Link
                         to="/careers/dashboard"
                         onClick={() => setShowAccountMenu(false)}
-                        className="block px-4 py-3 text-sm text-white hover:bg-Primarycolor/20 transition-all"
+                        className="block px-4 py-3 text-sm text-textcolor2 hover:bg-Primarycolor/20 transition-all"
                       >
                         Learner Dashboard
                       </Link>
@@ -109,7 +126,7 @@ export default function Navbar() {
                   clearSession();
                   window.location.href = "/";
                 }}
-                className="px-4 py-2 text-sm border border-Primarycolor text-white rounded-full hover:bg-Primarycolor transition-all duration-300"
+                className="px-4 py-2 text-sm border border-Primarycolor text-textcolor2 rounded-full hover:bg-Primarycolor transition-all duration-300"
               >
                 Logout
               </button>
@@ -118,20 +135,28 @@ export default function Navbar() {
         </div>
 
         {!show && (
-          <div className="flex items-center md:hidden">
-            <RxHamburgerMenu className="text-white w-7 h-7" onClick={() => setShow(true)} />
+          <div className="flex items-center gap-2 md:hidden">
+            <button
+              type="button"
+              onClick={handleThemeToggle}
+              className="p-2 rounded-full text-textcolor2 hover:text-Secondarycolor2"
+              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {theme === "dark" ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
+            </button>
+            <RxHamburgerMenu className="text-textcolor2 w-7 h-7" onClick={() => setShow(true)} />
           </div>
         )}
         {show && (
           <div className="flex items-center md:hidden">
-            <AiOutlineClose className="text-white w-7 h-7" onClick={() => setShow(false)} />
+            <AiOutlineClose className="text-textcolor2 w-7 h-7" onClick={() => setShow(false)} />
           </div>
         )}
       </div>
 
       {show && (
         <motion.div
-          className="md:hidden flex flex-col pt-16 px-6 fixed top-0 left-0 w-64 bg-textcolor h-screen z-50 shadow-lg"
+          className="md:hidden flex flex-col pt-16 px-6 fixed top-0 left-0 w-64 bg-bgcolor2 border-r border-Primarycolor/20 h-screen z-50 shadow-lg"
           initial={{ x: "-100%" }}
           animate={{ x: "0%" }}
           exit={{ x: "-100%" }}
@@ -176,7 +201,7 @@ export default function Navbar() {
                   clearSession();
                   window.location.href = "/";
                 }}
-                className="w-full text-left text-ash2 py-3 font-medium transition-all duration-300 hover:text-Secondarycolor"
+                className="w-full text-left text-textcolor2 py-3 font-medium transition-all duration-300 hover:text-Secondarycolor"
               >
                 Logout
               </button>

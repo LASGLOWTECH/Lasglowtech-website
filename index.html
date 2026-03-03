@@ -3,6 +3,18 @@
 
 <head>
   <meta charset="UTF-8" />
+  <script>
+    (function() {
+      var s = localStorage.getItem('lasglowtech-theme');
+      var theme = 'dark';
+      if (s === 'light' || s === 'dark') theme = s;
+      else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) theme = 'light';
+      var root = document.documentElement;
+      root.setAttribute('data-theme', theme);
+      if (theme === 'dark') root.classList.add('dark');
+      else root.classList.remove('dark');
+    })();
+  </script>
   <link rel="icon" type="public" href="/favicon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lasglowtech | Web Development, Tutoring, Service Catalogue & Instant Checkout Nigeria</title>

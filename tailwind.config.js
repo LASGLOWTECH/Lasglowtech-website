@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: "class",
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -22,22 +23,17 @@ export default {
         muted: ['0.875rem', { lineHeight: '1.5' }],
       },
       colors: {
-        textcolor: '#f7f6f2',
-        textcolor2:'#e5e7eb',
-        Primarycolor: '#31185e',
-        bgcolor2:"#120b1f",
-        bgcolor:"#130719",
-        Primarycolor1: '#1a0e3f',
-        Primarycolor2:'#1E0D3D',
-       Secondarycolor1 :'#ced4da',
-      Secondarycolor2:'#F1AB1E',
-      Secondarycolor: '#ed6e00',
+        textcolor: 'var(--color-text)',
+        textcolor2: 'var(--color-text2)',
+        Primarycolor: 'var(--color-primary)',
+        bgcolor2: 'var(--color-bg2)',
+        bgcolor: 'var(--color-bg)',
+        Primarycolor1: 'var(--color-primary1)',
+        Primarycolor2: 'var(--color-primary2)',
+        Secondarycolor1: 'var(--color-secondary1)',
+        Secondarycolor2: 'var(--color-secondary2)',
+        Secondarycolor: 'var(--color-secondary)',
         grey: '#b2b2b2',
-       
-        grey: '#fafafa',
-       
-
-
       }
 
 

@@ -6,8 +6,11 @@ import {
   FaFacebookF,
   FaInstagram,
   FaLinkedinIn,
+  FaSun,
+  FaMoon,
 } from "react-icons/fa";
 import { BsTwitter } from "react-icons/bs";
+import { useTheme, applyThemeToDom } from "../context/ThemeContext";
 
 const currentYear = new Date().getFullYear();
 
@@ -30,6 +33,12 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const { theme, setTheme } = useTheme();
+  const handleThemeToggle = () => {
+    const next = theme === "dark" ? "light" : "dark";
+    applyThemeToDom(next);
+    setTheme(next);
+  };
   return (
     <footer className="bg-bgcolor2 border-t border-Primarycolor/20 text-textcolor2">
       <div className="max-w-6xl mx-auto px-6 md:px-12 py-12 md:py-16">
@@ -44,7 +53,7 @@ export default function Footer() {
                 <li key={to}>
                   <Link
                     to={to}
-                    className="text-gray-400 hover:text-Secondarycolor transition-colors text-sm"
+                    className="text-textcolor2/80 hover:text-Secondarycolor transition-colors text-sm"
                   >
                     {label}
                   </Link>
@@ -60,17 +69,17 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/catalogues" className="text-gray-400 hover:text-Secondarycolor transition-colors text-sm">
+                <Link to="/catalogues" className="text-textcolor2/80 hover:text-Secondarycolor transition-colors text-sm">
                   Service catalogue & checkout
                 </Link>
               </li>
               <li>
-                <Link to="/careers" className="text-gray-400 hover:text-Secondarycolor transition-colors text-sm">
+                <Link to="/careers" className="text-textcolor2/80 hover:text-Secondarycolor transition-colors text-sm">
                   Tutoring & training
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-gray-400 hover:text-Secondarycolor transition-colors text-sm">
+                <Link to="/contact" className="text-textcolor2/80 hover:text-Secondarycolor transition-colors text-sm">
                   Get in touch
                 </Link>
               </li>
@@ -82,7 +91,7 @@ export default function Footer() {
             <h3 className="text-sm font-semibold uppercase tracking-widest text-Secondarycolor mb-4">
               Lasglowtech
             </h3>
-            <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
+            <p className="text-textcolor2/80 text-sm leading-relaxed max-w-xs">
               We build digital products, offer tutoring and training, and a service catalogue with instant checkout—so you can grow with clarity and confidence.
             </p>
           </div>
@@ -99,7 +108,7 @@ export default function Footer() {
                 </span>
                 <a
                   href="mailto:lasglowtech@gmail.com"
-                  className="text-gray-400 hover:text-Secondarycolor transition-colors text-sm break-all"
+                  className="text-textcolor2/80 hover:text-Secondarycolor transition-colors text-sm break-all"
                 >
                   lasglowtech@gmail.com
                 </a>
@@ -110,7 +119,7 @@ export default function Footer() {
                 </span>
                 <a
                   href="tel:+2349031821590"
-                  className="text-gray-400 hover:text-Secondarycolor transition-colors text-sm"
+                  className="text-textcolor2/80 hover:text-Secondarycolor transition-colors text-sm"
                 >
                   +234 903 182 1590
                 </a>
@@ -119,7 +128,7 @@ export default function Footer() {
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-Primarycolor/20 text-Secondarycolor">
                   <FaMapMarkerAlt className="text-sm" />
                 </span>
-                <span className="text-gray-400 text-sm">Gwarinpa, FCT Abuja</span>
+                <span className="text-textcolor2/80 text-sm">Gwarinpa, FCT Abuja</span>
               </li>
             </ul>
           </div>
@@ -127,17 +136,26 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-Primarycolor/20 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-gray-500 text-sm">
+          <p className="text-textcolor2/80 text-sm">
             © {currentYear} Lasglowtech. All rights reserved.
           </p>
           <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={handleThemeToggle}
+              className="flex h-9 w-9 items-center justify-center rounded-lg bg-Primarycolor/15 text-textcolor2 hover:bg-Primarycolor/30 hover:text-Secondarycolor transition-colors"
+              title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {theme === "dark" ? <FaSun className="w-4 h-4" /> : <FaMoon className="w-4 h-4" />}
+            </button>
             {socialLinks.map(({ href, icon: Icon, label }) => (
               <a
                 key={label}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-Primarycolor/15 text-gray-400 hover:bg-Primarycolor/30 hover:text-Secondarycolor transition-colors"
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-Primarycolor/15 text-textcolor2/80 hover:bg-Primarycolor/30 hover:text-Secondarycolor transition-colors"
                 aria-label={label}
               >
                 <Icon className="w-4 h-4" />
