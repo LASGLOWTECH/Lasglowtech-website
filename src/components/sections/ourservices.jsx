@@ -29,7 +29,7 @@ const OurServices = () => {
         Strategy, Design, and Engineering <br></br>Built for Results
         </h2>
         <p className="mt-4 text-textcolor2 text-center md:max-w-xl leading-relaxed">
-          From concept to launch, we deliver practical digital services that strengthen your brand and accelerate growth. We also offer <strong className="text-textcolor2">tutoring and tech training</strong>, and a <strong className="text-textcolor2">service catalogue</strong> with <strong className="text-textcolor2">instant checkout</strong> so you can buy packages online.
+        A Digital Infrastructure Platform for Businesses and Tech Talent.
         </p>
       </section>
             

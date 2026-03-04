@@ -92,7 +92,7 @@ export default function Footer() {
               Lasglowtech
             </h3>
             <p className="text-textcolor2/80 text-sm leading-relaxed max-w-xs">
-              We build digital products, offer tutoring and training, and a service catalogue with instant checkout—so you can grow with clarity and confidence.
+            We create digital solutions, provide training and tutoring, and offer ready-to-go service packages so you can grow with confidence and ease.
             </p>
           </div>
 

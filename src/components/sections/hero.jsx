@@ -125,11 +125,11 @@ export default function Hero() {
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-Secondarycolor to-Secondarycolor">
               <Typewriter
                 words={[
+                  "Launch Your Business.",
                   "Platforms That Scale.",
-  "Launch Your Business.",
-  "Learn In-Demand Skills.",
-  "Build Real Opportunities.",
-  "Turn Ideas Into Systems.",
+                  "Learn In-Demand Skills.",
+                  "Build Real Opportunities.",
+                  "Turn Ideas Into Systems.",
                 ]}
                 loop={true}
                 cursor

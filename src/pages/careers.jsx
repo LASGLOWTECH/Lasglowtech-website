@@ -9,10 +9,12 @@ import {
   FaUserCircle,
   FaArrowRight,
   FaGraduationCap,
+  FaChevronLeft,
 } from "react-icons/fa";
 import instance from "../config/axios.config";
 import SEO from "../utils/seo";
 import { getToken, getUser } from "../utils/auth";
+import { LOGO } from "../components/images";
 
 const defaultForm = {
   fullName: "",
@@ -118,11 +120,24 @@ const Careers = () => {
 
   return (
     <div className="min-h-screen bg-bgcolor text-textcolor2">
+      {/* Minimal Academy header (no main site nav) */}
+      <header className="sticky top-0 z-50 border-b border-Primarycolor/20 bg-bgcolor2/95 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
+          <Link to="/careers" className="flex items-center gap-2 text-textcolor2 hover:text-Secondarycolor transition-colors">
+            <img src={LOGO} width={32} height={32} alt="Lasglowtech" className="rounded" />
+            <span className="font-semibold text-sm">Lasglowtech Academy</span>
+          </Link>
+          <Link to="/careers" className="text-sm text-muted hover:text-Secondarycolor flex items-center gap-1">
+            <FaChevronLeft className="w-3.5 h-3.5" />
+            Back to courses
+          </Link>
+        </div>
+      </header>
       <SEO
         title="Tutoring & Training | Learn Tech Skills with Lasglowtech Nigeria"
         description="Apply for Lasglowtech tutoring and training programmes—web development, mobile apps, UI/UX, design. Structured learning, LMS access, and hands-on projects. Start your tech career or upskill your team."
         keywords="Lasglowtech tutoring, tech training Nigeria, learn web development, learn UI UX, IT training, career in tech, Lasglowtech careers, service catalogue, instant checkout"
-        url="https://www.lasglowtech.com.ng/careers"
+        url="https://www.lasglowtech.com.ng/careers/apply"
         schema={{
           "@context": "https://schema.org",
           "@type": "EducationalOccupationalProgram",

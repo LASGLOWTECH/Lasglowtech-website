@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import { FaShoppingCart, FaTimes } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { FaShoppingCart, FaTimes, FaBoxOpen, FaArrowRight, FaChevronLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import instance from "../config/axios.config";
 import { addToCart, readCart, removeFromCart } from "../utils/cart";
 import SEO from "../utils/seo";
+import { LOGO } from "../components/images";
 
 const formatNaira = (amount) =>
   new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN" }).format(Number(amount || 0));
@@ -129,78 +131,121 @@ const Catalogues = () => {
   };
 
   return (
-    <div className="min-h-screen px-4 md:px-12 lg:px-20 py-10 md:py-14 bg-gradient-to-b from-bgcolor2 via-bgcolor2 to-bgcolor text-textcolor2">
+    <div className="min-h-screen bg-bgcolor text-textcolor2">
       <SEO
         title="Service Catalogue | Buy Digital Services Online with Instant Checkout | Lasglowtech"
         description="Browse Lasglowtech service packages—web, mobile, design—and checkout instantly online. Fixed-price packages, secure payment, no lengthy quotes. Nigeria's digital service catalogue."
         keywords="Lasglowtech catalogue, buy services online Nigeria, instant checkout, service packages, web development package, digital agency Nigeria"
         url="https://www.lasglowtech.com.ng/catalogues"
       />
-      <section className="max-w-7xl mx-auto mb-8 md:mb-10">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div className="max-w-2xl">
-            <p className="text-[0.875rem] tracking-[0.15em] text-Secondarycolor uppercase font-semibold">Client Marketplace</p>
-            <h1 className="text-xl md:text-2xl font-bold mt-3 text-textcolor2">Service Catalogues</h1>
-            <p className="text-gray-400 text-[0.875rem] mt-3 leading-relaxed">
-              Pick a package, pay online, and get started. <strong className="text-gray-300">Instant checkout</strong>—no lengthy quotes. Browse options, open any item for details, then Buy Now or Add to Cart.
-            </p>
-          </div>
-          <Link
-            to="/cart"
-            className="inline-flex items-center gap-2.5 rounded-full border border-Primarycolor/40 px-4 py-2.5 hover:bg-Primarycolor/20 transition text-[0.875rem] font-medium"
-            aria-label="Open cart"
-          >
-            <span className="relative">
-              <FaShoppingCart className="w-4 h-4" />
-              {cartItems.length > 0 && (
-                <span className="absolute -top-2.5 -right-2.5 h-4 min-w-[18px] px-1 rounded-full bg-Secondarycolor text-bgcolor2 text-[0.75rem] font-semibold flex items-center justify-center">
-                  {cartItems.length}
-                </span>
-              )}
-            </span>
-            Cart
+
+      {/* Catalogue nav bar – sticky, back to site + cart */}
+      <header className="sticky top-0 z-50 border-b border-Primarycolor/20 bg-bgcolor2/95 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">
+          <Link to="/" className="flex items-center gap-2 text-textcolor2 hover:text-Secondarycolor transition-colors">
+            <img src={LOGO} width={32} height={32} alt="Lasglowtech" className="rounded" />
+            <span className="font-semibold text-sm">Lasglowtech</span>
           </Link>
+          <div className="flex items-center gap-4">
+            <Link to="/" className="text-sm text-gray-400 hover:text-Secondarycolor flex items-center gap-1">
+              <FaChevronLeft className="w-3.5 h-3.5" />
+              Back to main site
+            </Link>
+            <Link
+              to="/cart"
+              className="inline-flex items-center gap-2 text-sm text-textcolor2 hover:text-Secondarycolor transition-colors font-medium"
+              aria-label="Open cart"
+            >
+              <span className="relative">
+                <FaShoppingCart className="w-4 h-4" />
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-2 -right-2 h-4 min-w-[18px] px-1 rounded-full bg-Secondarycolor text-white text-[0.7rem] font-semibold flex items-center justify-center">
+                    {cartItems.length}
+                  </span>
+                )}
+              </span>
+              Cart
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero – SoftVenix-style: tagline, “Grow Now With” + accent, description, two CTAs (no avatars) */}
+      <section className="relative border-b border-Primarycolor/20 bg-bgcolor overflow-hidden py-16 sm:py-20 md:py-24 flex items-center justify-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <p className="text-sm font-semibold tracking-[0.2em] text-gray-500 uppercase mb-6">
+            Client Marketplace
+          </p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-textcolor2 tracking-tight leading-[1.1]">
+            <span className="block">Instant Access to</span>
+            <span className="block mt-1 text-Secondarycolor">Our Services</span>
+          </h1>
+          <p className="mt-6 text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
+          Select the package that fits your needs, checkout in seconds, and watch your project take off. Simple, fast, and hassle-free.
+          </p>
+          <div className="mt-10 flex flex-wrap gap-4 justify-center">
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <a
+                href="#catalogue-grid"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-Secondarycolor text-white font-semibold hover:opacity-95 transition-opacity"
+              >
+                Explore Packages
+                <FaArrowRight className="w-4 h-4" />
+              </a>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <Link
+                to="/cart"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border-2 border-Secondarycolor/60 text-Secondarycolor font-semibold hover:bg-Secondarycolor/10 transition-colors"
+              >
+                <FaShoppingCart className="w-4 h-4" />
+                View Cart
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {loading && <p className="text-center text-gray-400 text-[0.875rem] py-8">Loading catalogues...</p>}
+      {/* Main content – full width: search, filter, grid */}
+      <div id="catalogue-grid" className="max-w-6xl mx-auto px-6 md:px-12 py-10 scroll-mt-4">
+        {loading && <p className="text-center text-gray-400 text-sm py-8">Loading catalogues...</p>}
 
-      {!loading && (
-        <div className="max-w-7xl mx-auto">
-          {items.length > 0 && (
-            <div className="flex flex-col sm:flex-row gap-3 mb-6">
-              <div className="relative flex-1">
-                <input
-                  type="text"
-                  value={searchQuery}
+        {!loading && (
+          <>
+            {items.length > 0 && (
+              <div className="flex flex-col sm:flex-row gap-3 mb-6">
+                <div className="relative flex-1">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => {
+                      setSearchQuery(e.target.value);
+                      setCurrentPage(1);
+                    }}
+                    placeholder="Search by title, summary, or description…"
+                    className="w-full pl-4 pr-10 py-2.5 rounded-lg border border-Primarycolor/25 bg-bgcolor/80 text-textcolor2 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-Primarycolor/40 focus:border-transparent"
+                  />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none text-sm" aria-hidden>
+                    ⌕
+                  </span>
+                </div>
+                <select
+                  value={categoryFilter}
                   onChange={(e) => {
-                    setSearchQuery(e.target.value);
+                    setCategoryFilter(e.target.value);
                     setCurrentPage(1);
                   }}
-                  placeholder="Search by title, summary, or description…"
-                  className="w-full pl-4 pr-10 py-2.5 rounded-lg border border-Primarycolor/25 bg-bgcolor/80 text-textcolor2 text-[0.875rem] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-Primarycolor/40 focus:border-transparent"
-                />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none text-sm" aria-hidden>
-                  ⌕
-                </span>
+                  className="px-4 py-2.5 rounded-lg border border-Primarycolor/25 bg-bgcolor/80 text-textcolor2 text-sm focus:outline-none focus:ring-2 focus:ring-Primarycolor/40 min-w-[180px]"
+                >
+                  {CATEGORY_OPTIONS.map((opt) => (
+                    <option key={opt.value || "all"} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
               </div>
-              <select
-                value={categoryFilter}
-                onChange={(e) => {
-                  setCategoryFilter(e.target.value);
-                  setCurrentPage(1);
-                }}
-                className="px-4 py-2.5 rounded-lg border border-Primarycolor/25 bg-bgcolor/80 text-textcolor2 text-[0.875rem] focus:outline-none focus:ring-2 focus:ring-Primarycolor/40 min-w-[180px]"
-              >
-                {CATEGORY_OPTIONS.map((opt) => (
-                  <option key={opt.value || "all"} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+            )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
             {pagedItems.map((item, index) => (
               <article
                 key={item.id}
@@ -280,52 +325,53 @@ const Catalogues = () => {
               </article>
             ))}
             {!filteredItems.length && (
-              <p className="text-gray-400 text-center col-span-full py-12 text-[0.875rem]">
+              <p className="text-gray-400 text-center col-span-full py-12 text-sm">
                 {items.length ? "No items match your search or filter." : "No catalogue items yet."}
               </p>
             )}
-          </div>
-
-          {filteredItems.length > PAGE_SIZE && (
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-              <button
-                type="button"
-                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
-                className="px-3 py-2 rounded-lg border border-Primarycolor/30 text-[0.875rem] disabled:opacity-50 hover:bg-Primarycolor/15 transition"
-              >
-                Prev
-              </button>
-              {Array.from({ length: totalPages }).map((_, idx) => {
-                const page = idx + 1;
-                const active = page === currentPage;
-                return (
-                  <button
-                    key={page}
-                    type="button"
-                    onClick={() => setCurrentPage(page)}
-                    className={`min-w-[34px] px-2.5 py-2 rounded-lg text-[0.875rem] border transition ${
-                      active
-                        ? "border-Secondarycolor bg-Secondarycolor/20 text-Secondarycolor font-semibold"
-                        : "border-Primarycolor/30 hover:bg-Primarycolor/15"
-                    }`}
-                  >
-                    {page}
-                  </button>
-                );
-              })}
-              <button
-                type="button"
-                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                disabled={currentPage === totalPages}
-                className="px-3 py-2 rounded-lg border border-Primarycolor/30 text-[0.875rem] disabled:opacity-50 hover:bg-Primarycolor/15 transition"
-              >
-                Next
-              </button>
             </div>
-          )}
-        </div>
-      )}
+
+            {filteredItems.length > PAGE_SIZE && (
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="px-3 py-2 rounded-lg border border-Primarycolor/30 text-sm disabled:opacity-50 hover:bg-Primarycolor/15 transition"
+                >
+                  Prev
+                </button>
+                {Array.from({ length: totalPages }).map((_, idx) => {
+                  const page = idx + 1;
+                  const active = page === currentPage;
+                  return (
+                    <button
+                      key={page}
+                      type="button"
+                      onClick={() => setCurrentPage(page)}
+                      className={`min-w-[34px] px-2.5 py-2 rounded-lg text-sm border transition ${
+                        active
+                          ? "border-Secondarycolor bg-Secondarycolor/20 text-Secondarycolor font-semibold"
+                          : "border-Primarycolor/30 hover:bg-Primarycolor/15"
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  );
+                })}
+                <button
+                  type="button"
+                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-2 rounded-lg border border-Primarycolor/30 text-sm disabled:opacity-50 hover:bg-Primarycolor/15 transition"
+                >
+                  Next
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
 
       {selectedItem && (
         <div

@@ -107,8 +107,7 @@ const Home = () => {
             </h2>
             <p className="text-gray-400 text-sm mt-3 leading-relaxed">
               We combine product thinking, design excellence, and technical depth to help businesses launch and
-              scale with confidence. We also provide <strong className="text-gray-300">tutoring and tech training</strong>, and a <strong className="text-gray-300">service catalogue</strong> with <strong className="text-gray-300">instant checkout</strong> so you can buy fixed-price packages online.
-            </p>
+              scale with confidence. We also provide <strong className="text-gray-300">tutoring and tech training</strong> </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
@@ -177,7 +176,7 @@ const Home = () => {
                 Tutoring & training
               </h3>
               <p className="text-gray-400 mt-1.5 text-sm leading-relaxed">
-                Learn with us—structured programmes to upskill your team or start a career in tech. Apply and get access to our LMS and hands-on projects.
+                Learn with us structured programmes to upskill your team or start a career in tech. Apply and get access to our LMS and hands-on projects.
               </p>
               <span className="inline-block mt-4 text-Secondarycolor text-sm font-medium">Explore careers & learning →</span>
             </Link>

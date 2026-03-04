@@ -34,6 +34,7 @@ const defaultModule = {
   courseId: "",
   title: "",
   moduleOrder: 1,
+  weekNum: null,
   durationMinutes: 20,
   resourceUrl: "",
   slideUrl: "",
@@ -63,6 +64,7 @@ const LmsAdmin = () => {
   });
   const [certBgUploading, setCertBgUploading] = useState(false);
   const [certLogoUploading, setCertLogoUploading] = useState(false);
+  const [resourcePdfUploading, setResourcePdfUploading] = useState(false);
   const [certificateSettings, setCertificateSettings] = useState({
     defaultMessage: "",
     defaultSignatureLabel: "Authorized Signatory",
@@ -173,6 +175,7 @@ const LmsAdmin = () => {
       courseId: String(module.course_id || ""),
       title: module.title || "",
       moduleOrder: Number(module.module_order || 1),
+      weekNum: module.week_num != null ? Number(module.week_num) : null,
       durationMinutes: Number(module.duration_minutes || 20),
       resourceUrl: module.resource_url || "",
       slideUrl: module.slide_url || "",
@@ -181,6 +184,7 @@ const LmsAdmin = () => {
       referenceLinksText: (module.reference_links || []).join("\n"),
       isPreview: Boolean(module.is_preview),
     });
+    document.getElementById("lms-modules")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const deleteModule = async (module) => {
@@ -289,6 +293,35 @@ const LmsAdmin = () => {
     }
   };
 
+  const uploadModuleResourcePdf = async (e) => {
+    const file = e?.target?.files?.[0];
+    if (!file) return;
+    if (!/\.pdf$/i.test(file.name) && file.type !== "application/pdf") {
+      toast.error("Please select a PDF file.");
+      return;
+    }
+    setResourcePdfUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await instance.post("/admin/upload/module-resource", formData, {
+        headers: { ...headers, "Content-Type": undefined },
+      });
+      const url = res.data?.url;
+      if (url) {
+        setModuleForm((p) => ({ ...p, resourceUrl: url }));
+        toast.success("Course note PDF uploaded. Save the module to keep it.");
+      } else {
+        toast.error("Upload succeeded but no URL returned.");
+      }
+    } catch (err) {
+      toast.error(err.response?.data?.error || "PDF upload failed.");
+    } finally {
+      setResourcePdfUploading(false);
+      e.target.value = "";
+    }
+  };
+
   const saveCertificateSettings = async (e) => {
     e?.preventDefault?.();
     setCertSettingsSaving(true);
@@ -344,11 +377,6 @@ const LmsAdmin = () => {
     }
   };
 
-  const scrollToSection = (id) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
   const lmsNav = [
     { id: "lms-create-course", label: "Create course" },
     { id: "lms-modules", label: "Add module" },
@@ -356,40 +384,33 @@ const LmsAdmin = () => {
     { id: "lms-enrollments", label: "Enrollments" },
     { id: "lms-courses-list", label: "Courses list" },
   ];
+  const [activeLmsView, setActiveLmsView] = useState("lms-create-course");
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
       <aside className="lg:w-52 flex-shrink-0">
-        <nav className="hidden lg:block sticky top-24 rounded-xl border border-Primarycolor/20 bg-bgcolor2/60 p-3 space-y-1">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-2 py-1.5">Jump to</p>
+        <nav className="sticky top-24 rounded-xl border border-Primarycolor/20 bg-bgcolor2/60 p-3 space-y-1">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-2 py-1.5">LMS</p>
           {lmsNav.map((item) => (
             <button
               key={item.id}
               type="button"
-              onClick={() => scrollToSection(item.id)}
-              className="w-full text-left px-3 py-2 rounded-lg text-sm text-gray-300 hover:bg-Primarycolor/20 hover:text-textcolor2 transition-colors"
+              onClick={() => setActiveLmsView(item.id)}
+              className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                activeLmsView === item.id
+                  ? "bg-Primarycolor/30 text-Secondarycolor font-medium"
+                  : "text-gray-300 hover:bg-Primarycolor/20 hover:text-textcolor2"
+              }`}
             >
               {item.label}
             </button>
           ))}
         </nav>
-        <div className="lg:hidden mb-4 flex flex-wrap gap-2">
-          <select
-            defaultValue=""
-            onChange={(e) => { const v = e.target.value; if (v) scrollToSection(v); e.target.value = ""; }}
-            className="text-sm rounded-lg border border-Primarycolor/30 bg-bgcolor2/80 text-textcolor2 px-3 py-2"
-            aria-label="Jump to section"
-          >
-            <option value="">Jump to section…</option>
-            {lmsNav.map((item) => (
-              <option key={item.id} value={item.id}>{item.label}</option>
-            ))}
-          </select>
-        </div>
       </aside>
 
-      <main className="flex-1 min-w-0 space-y-8">
-      <section id="lms-create-course" className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden scroll-mt-6">
+      <main className="flex-1 min-w-0">
+      {activeLmsView === "lms-create-course" && (
+      <section id="lms-create-course" className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden">
         <div className="px-6 py-5 border-b border-Primarycolor/20 bg-bgcolor/30">
           <h2 className="text-xl font-semibold text-textcolor2">LMS manager</h2>
           <p className="text-sm text-gray-500 mt-0.5">Create learning courses and structured modules.</p>
@@ -484,11 +505,19 @@ const LmsAdmin = () => {
         </form>
         </div>
       </section>
+      )}
 
-      <section id="lms-modules" className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden scroll-mt-6">
+      {activeLmsView === "lms-modules" && (
+      <section id="lms-modules" className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden">
         <div className="px-6 py-5 border-b border-Primarycolor/20 bg-bgcolor/30">
-          <h3 className="text-xl font-semibold text-textcolor2">Add module</h3>
-          <p className="text-sm text-gray-500 mt-0.5">Create or edit course modules with notes and resources.</p>
+          <h3 className="text-xl font-semibold text-textcolor2">
+            {moduleForm.id ? "Edit module" : "Add module"}
+          </h3>
+          <p className="text-sm text-gray-500 mt-0.5">
+            {moduleForm.id
+              ? `Updating "${moduleForm.title}". Change fields and click Update Module, or Cancel to add a new one.`
+              : "Create or edit course modules with notes and resources. You can update or delete any module from the list below."}
+          </p>
         </div>
         <div className="p-6">
         <form onSubmit={saveModule} className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -525,6 +554,17 @@ const LmsAdmin = () => {
             placeholder="Order"
             className="p-3 rounded-md bg-[#f6f5fa] text-black"
           />
+          <div>
+            <label className="block text-xs text-gray-400 mb-1">Week (optional)</label>
+            <input
+              type="number"
+              min={1}
+              value={moduleForm.weekNum ?? ""}
+              onChange={(e) => setModuleForm((p) => ({ ...p, weekNum: e.target.value === "" ? null : e.target.value }))}
+              placeholder="e.g. 1 for Week 1"
+              className="w-full p-3 rounded-md bg-[#f6f5fa] text-black"
+            />
+          </div>
           <input
             type="number"
             value={moduleForm.durationMinutes}
@@ -532,12 +572,28 @@ const LmsAdmin = () => {
             placeholder="Duration (minutes)"
             className="p-3 rounded-md bg-[#f6f5fa] text-black"
           />
-          <input
-            value={moduleForm.resourceUrl}
-            onChange={(e) => setModuleForm((p) => ({ ...p, resourceUrl: e.target.value }))}
-            placeholder="General resource URL (optional)"
-            className="md:col-span-2 p-3 rounded-md bg-[#f6f5fa] text-black"
-          />
+          <div className="md:col-span-2 space-y-2">
+            <p className="text-sm font-medium text-gray-300">Course note PDF or resource URL</p>
+            <div className="flex flex-wrap gap-2 items-center">
+              <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-Primarycolor/50 text-textcolor2 text-sm cursor-pointer hover:bg-Primarycolor/10 transition-colors">
+                <input
+                  type="file"
+                  accept=".pdf,application/pdf"
+                  onChange={uploadModuleResourcePdf}
+                  disabled={resourcePdfUploading}
+                  className="sr-only"
+                />
+                {resourcePdfUploading ? "Uploading…" : "Upload PDF"}
+              </label>
+              <span className="text-xs text-gray-500">or paste URL below. PDFs show in the learner viewer.</span>
+            </div>
+            <input
+              value={moduleForm.resourceUrl}
+              onChange={(e) => setModuleForm((p) => ({ ...p, resourceUrl: e.target.value }))}
+              placeholder="Resource URL (e.g. /uploads/files/xxx.pdf or full URL)"
+              className="w-full p-3 rounded-md bg-[#f6f5fa] text-black"
+            />
+          </div>
           <input
             value={moduleForm.slideUrl}
             onChange={(e) => setModuleForm((p) => ({ ...p, slideUrl: e.target.value }))}
@@ -603,7 +659,7 @@ const LmsAdmin = () => {
         <div className="mt-6 rounded-xl border border-Primarycolor/20 bg-bgcolor/50 p-5">
           <h4 className="text-lg font-semibold text-textcolor2">Module library</h4>
           <p className="text-sm text-gray-500 mt-0.5">
-            Select a course above to view, edit, or delete existing modules.
+            Select a course to list its modules. You can update or delete any module—click Edit to change it or Delete to remove it (with confirmation).
           </p>
           {!selectedModuleCourseId && <p className="text-sm text-gray-400">Select a course to manage modules.</p>}
           {!!selectedModuleCourseId && !courseModules.length && (
@@ -619,6 +675,7 @@ const LmsAdmin = () => {
                         {module.module_order}. {module.title}
                       </p>
                       <p className="text-xs text-gray-400 mt-1">
+                        {module.week_num != null ? `Week ${module.week_num} • ` : ""}
                         {module.duration_minutes} mins
                         {module.slide_url ? " • Slide" : ""}
                         {module.video_url ? " • Video" : ""}
@@ -629,14 +686,16 @@ const LmsAdmin = () => {
                       <button
                         type="button"
                         onClick={() => editModule(module)}
-                        className="px-3 py-1.5 rounded-md border border-Primarycolor/50 text-textcolor2 text-xs"
+                        className="px-3 py-2 rounded-md border border-Primarycolor/50 text-textcolor2 text-sm font-medium hover:bg-Primarycolor/20 transition-colors"
+                        title="Update this module"
                       >
-                        Edit
+                        Update
                       </button>
                       <button
                         type="button"
                         onClick={() => deleteModule(module)}
-                        className="px-3 py-1.5 rounded-md border border-red-400/50 text-red-300 text-xs"
+                        className="px-3 py-2 rounded-md border border-red-400/50 text-red-300 text-sm font-medium hover:bg-red-500/20 transition-colors"
+                        title="Delete this module (progress for this module will be removed)"
                       >
                         Delete
                       </button>
@@ -649,12 +708,14 @@ const LmsAdmin = () => {
         </div>
         </div>
       </section>
+      )}
 
-      <section id="lms-certificate" className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden scroll-mt-6">
+      {activeLmsView === "lms-certificate" && (
+      <section id="lms-certificate" className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden">
         <div className="px-6 py-5 border-b border-Primarycolor/20 bg-bgcolor/30">
-          <h3 className="text-xl font-semibold text-textcolor2">Certificate design & defaults</h3>
+          <h3 className="text-xl font-semibold text-textcolor2">Custom certificate design & defaults</h3>
           <p className="text-sm text-gray-500 mt-0.5">
-            Upload logo and background, and set default text used when issuing certificates.
+            Upload your own logo and custom background image for certificates. Name, course, date and code are overlaid. Set default text used when issuing.
           </p>
         </div>
         <div className="p-6 space-y-6">
@@ -674,7 +735,7 @@ const LmsAdmin = () => {
               <p className="text-xs text-gray-500 mt-1">PNG/JPEG. Shown on certificates (replaces site logo if set).</p>
             </div>
             <div>
-              <p className="text-sm font-medium text-textcolor2 mb-2">Certificate background</p>
+              <p className="text-sm font-medium text-textcolor2 mb-2">Certificate background (custom design)</p>
               <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-Primarycolor/50 text-textcolor2 text-sm cursor-pointer hover:bg-Primarycolor/10 transition-colors">
                 <input
                   type="file"
@@ -683,9 +744,9 @@ const LmsAdmin = () => {
                   disabled={certBgUploading}
                   className="sr-only"
                 />
-                {certBgUploading ? "Uploading…" : "Upload custom design"}
+                {certBgUploading ? "Uploading…" : "Upload custom background"}
               </label>
-              <p className="text-xs text-gray-500 mt-1">Landscape image; name, course, date and code are overlaid.</p>
+              <p className="text-xs text-gray-500 mt-1">Upload your full certificate design (PNG/JPEG). Learner name, course, date and code are overlaid.</p>
             </div>
           </div>
 
@@ -724,8 +785,10 @@ const LmsAdmin = () => {
           </div>
         </div>
       </section>
+      )}
 
-      <section id="lms-enrollments" className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden scroll-mt-6">
+      {activeLmsView === "lms-enrollments" && (
+      <section id="lms-enrollments" className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden">
         <div className="px-6 py-5 border-b border-Primarycolor/20 bg-bgcolor/30">
           <h3 className="text-xl font-semibold text-textcolor2">Enrollments & certificates</h3>
           <p className="text-sm text-gray-500 mt-0.5">View enrollments and issue or preview certificates.</p>
@@ -810,8 +873,10 @@ const LmsAdmin = () => {
           )}
         </div>
       </section>
+      )}
 
-      <section id="lms-courses-list" className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden scroll-mt-6">
+      {activeLmsView === "lms-courses-list" && (
+      <section id="lms-courses-list" className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/40 overflow-hidden">
         <div className="px-6 py-5 border-b border-Primarycolor/20 bg-bgcolor/30">
           <h3 className="text-xl font-semibold text-textcolor2">Courses</h3>
           <p className="text-sm text-gray-500 mt-0.5">All LMS courses and their modules.</p>
@@ -834,7 +899,7 @@ const LmsAdmin = () => {
                   <div className="flex gap-2">
                     <button
                       type="button"
-                      onClick={() =>
+                      onClick={() => {
                         setCourseForm({
                           id: course.id,
                           title: course.title || "",
@@ -846,8 +911,9 @@ const LmsAdmin = () => {
                           isFeatured: Boolean(course.isFeatured),
                           isPublished: Boolean(course.isPublished),
                           issueCertificateOnCompletion: course.issueCertificateOnCompletion !== false,
-                        })
-                      }
+                        });
+                        setActiveLmsView("lms-create-course");
+                      }}
                       className="px-4 py-2 rounded-md border border-Primarycolor/60 text-textcolor2"
                     >
                       Edit
@@ -868,6 +934,7 @@ const LmsAdmin = () => {
         )}
         </div>
       </section>
+      )}
 
       {issueCertEnrollment && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60" onClick={() => !issuingId && setIssueCertEnrollment(null)}>

@@ -35,6 +35,8 @@ import AdminProtectedRoute from "./components/AdminProtectedRoute";
 import CataloguesAdmin from "./pages/dashboard/catalogues";
 import ContactsAdmin from "./pages/dashboard/contacts";
 import Careers from "./pages/careers";
+import CareersAcademy from "./pages/careers-academy";
+import CareerCourseDetail from "./pages/career-course-detail";
 import CareersAdmin from "./pages/dashboard/careers";
 import CareersDashboard from "./pages/careers-dashboard";
 import OrdersAdmin from "./pages/dashboard/orders";
@@ -65,10 +67,12 @@ function App() {
     return <SiteLoader />;
   }
 
-  // Hide Navbar and Footer on auth, bio, dashboard, admin login
+  // Hide Navbar and Footer on auth, bio, dashboard, admin login, careers (academy), catalogues
   const hideLayout =
     location.pathname === "/bio" ||
+    location.pathname === "/catalogues" ||
     location.pathname.startsWith("/dashboard") ||
+    location.pathname.startsWith("/careers") ||
     location.pathname === "/admin/login" ||
     location.pathname === "/auth/login" ||
     location.pathname === "/auth/register" ||
@@ -84,8 +88,10 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/careers" element={<CareersAcademy />} />
+        <Route path="/careers/courses/:slug" element={<CareerCourseDetail />} />
         <Route
-          path="/careers"
+          path="/careers/apply"
           element={
             <ProtectedRoute allowedRoles={["learner", "student", "talent"]}>
               <Careers />

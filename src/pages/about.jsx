@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { FaCheckCircle, FaCircle } from "react-icons/fa";
 import { Aboutimg2, Contactimg } from "../components/images";
 
-// About section image: use Aboutimg2 for your own asset, or this Unsplash placeholder (creative team/workspace)
+// About section image: tech workspace / developers / digital agency – use Aboutimg2 for your own asset
 const ABOUT_SECTION_IMAGE =
-  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80";
+  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80";
 import Subscription from "../components/sections/subscription";
 import MeetTheTeam from "../components/meetheteam";
 import CoreValues from "../components/sections/corevalues";
@@ -92,7 +92,7 @@ const About = () => {
           <div className="rounded-xl overflow-hidden border border-Primarycolor/20 shadow-md" data-aos="fade-right">
             <img
               src={ABOUT_SECTION_IMAGE}
-              alt="Lasglowtech team and workspace"
+              alt="Lasglowtech team – tech workspace and digital product development"
               className="w-full h-52 md:h-64 object-cover max-h-80"
             />
           </div>

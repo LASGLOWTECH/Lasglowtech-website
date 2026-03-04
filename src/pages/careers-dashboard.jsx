@@ -11,12 +11,17 @@ import {
   FaGraduationCap,
   FaChevronLeft,
   FaChevronRight,
+  FaChevronDown,
+  FaChevronUp,
   FaCheckCircle,
+  FaCircle,
   FaDownload,
   FaExternalLinkAlt,
   FaPlay,
   FaList,
   FaStickyNote,
+  FaPrint,
+  FaArrowRight,
 } from "react-icons/fa";
 import { jsPDF } from "jspdf";
 import instance from "../config/axios.config";
@@ -90,6 +95,13 @@ const resolveAssetUrl = (url = "") => {
   return `${instance.defaults.baseURL}/${url}`;
 };
 
+/** True if URL looks like a PDF (admin-uploaded course note document). */
+const isPdfResource = (url = "") => {
+  if (!url || typeof url !== "string") return false;
+  const u = url.trim().toLowerCase();
+  return u.endsWith(".pdf") || u.includes(".pdf?");
+};
+
 /** Extract YouTube video ID for embed. Supports watch?v=, youtu.be/, embed/ */
 const getYouTubeVideoId = (url = "") => {
   if (!url || typeof url !== "string") return null;
@@ -102,6 +114,8 @@ const getYouTubeVideoId = (url = "") => {
   if (embedMatch) return embedMatch[1];
   return null;
 };
+
+const MODULES_PER_WEEK = 4;
 
 const SIDEBAR_SECTIONS = [
   { id: "overview", label: "Overview", icon: FaChartLine },
@@ -123,6 +137,9 @@ const CareersDashboard = () => {
   const [selectedModuleId, setSelectedModuleId] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [moduleSidebarOpen, setModuleSidebarOpen] = useState(true);
+  const [expandedWeeks, setExpandedWeeks] = useState(() => new Set([1]));
+  const [moduleSearch, setModuleSearch] = useState("");
+  const [mobileModulesTab, setMobileModulesTab] = useState("content"); // "content" | "modules"
   const [activeSection, setActiveSection] = useState("overview");
   const [modulesLoading, setModulesLoading] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -219,6 +236,14 @@ const CareersDashboard = () => {
     loadModules();
   }, [selectedEnrollmentId, token]);
 
+  useEffect(() => {
+    if (!selectedModuleId || !modules.length) return;
+    const mod = modules.find((m) => String(m.id) === String(selectedModuleId));
+    if (!mod) return;
+    const weekNum = mod.week != null ? Number(mod.week) : Math.ceil(Number(mod.moduleOrder) / MODULES_PER_WEEK) || 1;
+    setExpandedWeeks((prev) => (prev.has(weekNum) ? prev : new Set([...prev, weekNum])));
+  }, [selectedModuleId, modules]);
+
   const toggleModuleComplete = async (module) => {
     if (!selectedEnrollmentId) return;
     try {
@@ -245,6 +270,39 @@ const CareersDashboard = () => {
 
   const enrolledIds = new Set(enrollments.map((e) => e.course.id));
   const selectedModule = modules.find((m) => String(m.id) === String(selectedModuleId)) || null;
+
+  const modulesByWeek = useMemo(() => {
+    const groups = {};
+    modules.forEach((m) => {
+      const order = Number(m.moduleOrder) || 0;
+      const weekNum = m.week != null ? Number(m.week) : Math.ceil(order / MODULES_PER_WEEK) || 1;
+      if (!groups[weekNum]) groups[weekNum] = [];
+      groups[weekNum].push(m);
+    });
+    return Object.entries(groups)
+      .map(([week, mods]) => ({ week: Number(week), modules: mods.sort((a, b) => (a.moduleOrder || 0) - (b.moduleOrder || 0)) }))
+      .sort((a, b) => a.week - b.week);
+  }, [modules]);
+
+  const filteredModulesByWeek = useMemo(() => {
+    const q = (moduleSearch || "").trim().toLowerCase();
+    if (!q) return modulesByWeek;
+    return modulesByWeek
+      .map(({ week, modules: mods }) => ({
+        week,
+        modules: mods.filter((m) => (m.title || "").toLowerCase().includes(q)),
+      }))
+      .filter((g) => g.modules.length > 0);
+  }, [modulesByWeek, moduleSearch]);
+
+  const toggleWeek = (weekNum) => {
+    setExpandedWeeks((prev) => {
+      const next = new Set(prev);
+      if (next.has(weekNum)) next.delete(weekNum);
+      else next.add(weekNum);
+      return next;
+    });
+  };
 
   const handleEnroll = async (courseId) => {
     try {
@@ -307,11 +365,11 @@ const CareersDashboard = () => {
         url="https://www.lasglowtech.com.ng/careers/dashboard"
       />
 
-      {/* Main collapsible sidebar */}
+      {/* Main collapsible sidebar – hidden on mobile; use bottom tabs instead */}
       <aside
         className={`${
           sidebarOpen ? "w-56" : "w-16"
-        } flex-shrink-0 border-r border-Primarycolor/30 bg-bgcolor2/80 transition-all duration-300 ease-in-out flex flex-col`}
+        } hidden md:flex flex-shrink-0 border-r border-Primarycolor/30 bg-bgcolor2/80 transition-all duration-300 ease-in-out flex-col`}
       >
         <div className="p-4 border-b border-Primarycolor/20 flex items-center justify-between">
           {sidebarOpen && (
@@ -344,19 +402,19 @@ const CareersDashboard = () => {
           ))}
         </nav>
         {sidebarOpen && (
-          <div className="p-3 border-t border-Primarycolor/20">
-            <Link
-              to="/careers"
-              className="block text-center text-xs text-Secondarycolor hover:underline"
-            >
-              New Application
+          <div className="p-3 border-t border-Primarycolor/20 space-y-2">
+            <Link to="/careers" className="block text-center text-xs text-Secondarycolor hover:underline">
+              Explore courses
+            </Link>
+            <Link to="/" className="block text-center text-xs text-muted hover:text-Secondarycolor">
+              Main site
             </Link>
           </div>
         )}
       </aside>
 
-      {/* Main content */}
-      <main className="flex-1 overflow-auto">
+      {/* Main content – extra bottom padding on mobile for tab bar */}
+      <main className="flex-1 overflow-auto pb-20 md:pb-0">
         <header className="sticky top-0 z-10 border-b border-Primarycolor/20 bg-bgcolor/95 backdrop-blur-sm px-4 md:px-8 py-4">
           <div className="flex items-center justify-between max-w-6xl mx-auto">
             <div className="flex items-center gap-4">
@@ -372,12 +430,17 @@ const CareersDashboard = () => {
                 <p className="text-xs text-gray-500">Your learning journey and progress</p>
               </div>
             </div>
-            <Link
-              to="/careers"
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-Primarycolor/40 hover:bg-Primarycolor/20 text-sm transition-colors"
-            >
-              New Application
-            </Link>
+            <div className="hidden sm:flex items-center gap-3">
+              <Link to="/" className="text-sm text-muted hover:text-Secondarycolor transition-colors">
+                Main site
+              </Link>
+              <Link
+                to="/careers"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-Primarycolor/40 hover:bg-Primarycolor/20 text-sm transition-colors"
+              >
+                Explore courses
+              </Link>
+            </div>
           </div>
         </header>
 
@@ -597,7 +660,7 @@ const CareersDashboard = () => {
                 </section>
               )}
 
-              {/* Course Modules (LMS) with toggleable module sidebar */}
+              {/* Course Modules (LMS) – hierarchical weeks + mobile bottom tabs */}
               {activeSection === "modules" && (
                 <section className="rounded-2xl border border-Primarycolor/25 bg-bgcolor2/50 overflow-hidden">
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 px-6 py-5 border-b border-Primarycolor/20 bg-bgcolor/30">
@@ -608,9 +671,7 @@ const CareersDashboard = () => {
                     <div className="flex items-center gap-2 flex-wrap">
                       <select
                         value={selectedEnrollmentId}
-                        onChange={(e) => {
-                          setSelectedEnrollmentId(e.target.value);
-                        }}
+                        onChange={(e) => setSelectedEnrollmentId(e.target.value)}
                         className="px-4 py-2.5 rounded-lg bg-bgcolor border border-Primarycolor/30 text-textcolor2 text-sm min-w-[200px] focus:outline-none focus:ring-2 focus:ring-Primarycolor/50"
                         disabled={!enrollments.length}
                       >
@@ -624,7 +685,7 @@ const CareersDashboard = () => {
                       <button
                         type="button"
                         onClick={() => setModuleSidebarOpen((o) => !o)}
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-Primarycolor/40 hover:bg-Primarycolor/20 text-sm transition-colors"
+                        className="hidden md:inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-Primarycolor/40 hover:bg-Primarycolor/20 text-sm transition-colors"
                         disabled={!modules.length}
                         title={moduleSidebarOpen ? "Hide module list" : "Show module list"}
                       >
@@ -634,53 +695,199 @@ const CareersDashboard = () => {
                     </div>
                   </div>
 
-                  {modulesLoading && <p className="text-gray-400 text-sm">Loading modules...</p>}
+                  {modulesLoading && <p className="px-6 text-gray-400 text-sm">Loading modules...</p>}
                   {!modulesLoading && !modules.length && (
-                    <p className="text-gray-400 text-sm">No modules for this course yet, or select an enrolled course.</p>
+                    <p className="px-6 text-gray-400 text-sm">No modules for this course yet, or select an enrolled course.</p>
                   )}
 
                   {!modulesLoading && modules.length > 0 && (
-                    <div className="flex gap-4 mt-4">
-                      {/* Toggleable module sidebar */}
-                      <aside
-                        className={`${
-                          moduleSidebarOpen ? "w-72 flex-shrink-0" : "w-0 overflow-hidden opacity-0"
-                        } transition-all duration-300 ease-in-out`}
-                      >
-                        <div className="rounded-xl border border-Primarycolor/20 bg-bgcolor/50 p-4 sticky top-24">
-                          <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">Modules</p>
-                          <div className="space-y-2 max-h-[calc(100vh-12rem)] overflow-y-auto pr-1 custom-scrollbar">
-                            {modules.map((module) => {
-                              const active = String(module.id) === String(selectedModuleId);
-                              return (
-                                <button
-                                  key={module.id}
-                                  type="button"
-                                  onClick={() => setSelectedModuleId(String(module.id))}
-                                  className={`w-full text-left rounded-lg border p-3 transition-all ${
-                                    active
-                                      ? "border-Secondarycolor/50 bg-Secondarycolor/10 text-Secondarycolor"
-                                      : "border-Primarycolor/20 hover:border-Primarycolor/40 hover:bg-Primarycolor/5"
-                                  }`}
-                                >
-                                  <div className="flex items-center gap-2">
-                                    {module.isCompleted && (
-                                      <FaCheckCircle className="w-4 text-emerald-400 flex-shrink-0" />
+                    <>
+                      {/* Mobile: Content | Modules toggle – single bottom bar is main nav only */}
+                      <div className="md:hidden flex px-4 pb-2 gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setMobileModulesTab("content")}
+                          className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                            mobileModulesTab === "content"
+                              ? "bg-Secondarycolor/15 text-Secondarycolor border border-Secondarycolor/40"
+                              : "bg-bgcolor/50 text-muted border border-Primarycolor/20"
+                          }`}
+                        >
+                          Content
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setMobileModulesTab("modules")}
+                          className={`flex-1 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                            mobileModulesTab === "modules"
+                              ? "bg-Secondarycolor/15 text-Secondarycolor border border-Secondarycolor/40"
+                              : "bg-bgcolor/50 text-muted border border-Primarycolor/20"
+                          }`}
+                        >
+                          Modules
+                        </button>
+                      </div>
+                      <div className="flex flex-col md:flex-row gap-4 mt-4 md:mt-4 pb-20 md:pb-0">
+                        {/* Module sidebar – hidden on mobile when showing content; on mobile use bottom tab to switch */}
+                        <aside
+                          className={`${
+                            moduleSidebarOpen ? "md:w-80 flex-shrink-0" : "md:w-0 md:overflow-hidden md:opacity-0"
+                          } hidden md:block transition-all duration-300 ease-in-out`}
+                        >
+                          <div className="rounded-xl border border-Primarycolor/20 bg-bgcolor/50 p-4 sticky top-24">
+                            {enrollments.find((e) => String(e.enrollmentId) === String(selectedEnrollmentId)) && (
+                              <>
+                                <p className="text-sm font-semibold text-textcolor2 mb-1">
+                                  {enrollments.find((e) => String(e.enrollmentId) === String(selectedEnrollmentId))?.course?.title}
+                                </p>
+                                <div className="w-full h-2 bg-bgcolor2 rounded-full overflow-hidden mb-4">
+                                  <div
+                                    className="h-full bg-gradient-to-r from-Primarycolor to-Secondarycolor rounded-full transition-all"
+                                    style={{
+                                      width: `${(modules.filter((m) => m.isCompleted).length / Math.max(modules.length, 1)) * 100}%`,
+                                    }}
+                                  />
+                                </div>
+                                <p className="text-xs text-muted mb-3">
+                                  {modules.filter((m) => m.isCompleted).length} / {modules.length} complete
+                                </p>
+                              </>
+                            )}
+                            <input
+                              type="text"
+                              placeholder="Search by lesson title"
+                              value={moduleSearch}
+                              onChange={(e) => setModuleSearch(e.target.value)}
+                              className="w-full px-3 py-2 rounded-lg bg-bgcolor border border-Primarycolor/25 text-textcolor2 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-Primarycolor/50 mb-3"
+                            />
+                            <div className="space-y-0 max-h-[calc(100vh-16rem)] overflow-y-auto pr-1 border border-Primarycolor/15 rounded-lg divide-y divide-Primarycolor/15">
+                              {filteredModulesByWeek.map(({ week, modules: weekModules }) => {
+                                const completed = weekModules.filter((m) => m.isCompleted).length;
+                                const total = weekModules.length;
+                                const allDone = completed === total;
+                                const someDone = completed > 0;
+                                const isExpanded = expandedWeeks.has(week);
+                                return (
+                                  <div key={week} className="bg-bgcolor/30">
+                                    <button
+                                      type="button"
+                                      onClick={() => toggleWeek(week)}
+                                      className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-Primarycolor/5 transition-colors"
+                                    >
+                                      {allDone ? (
+                                        <FaCheckCircle className="w-5 h-5 text-blue-500 flex-shrink-0" />
+                                      ) : someDone ? (
+                                        <FaCircle className="w-5 h-5 text-blue-500/80 flex-shrink-0" />
+                                      ) : (
+                                        <FaCircle className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                                      )}
+                                      <span className="font-medium text-textcolor2 flex-1">Week {week}</span>
+                                      <span className="text-xs text-muted tabular-nums">{completed}/{total}</span>
+                                      {isExpanded ? (
+                                        <FaChevronUp className="w-4 h-4 text-muted flex-shrink-0" />
+                                      ) : (
+                                        <FaChevronDown className="w-4 h-4 text-muted flex-shrink-0" />
+                                      )}
+                                    </button>
+                                    {isExpanded && (
+                                      <div className="pl-4 pb-2 border-l-2 border-Primarycolor/20 ml-5 mr-2 space-y-0">
+                                        {weekModules.map((module) => {
+                                          const active = String(module.id) === String(selectedModuleId);
+                                          return (
+                                            <button
+                                              key={module.id}
+                                              type="button"
+                                              onClick={() => {
+                                                setSelectedModuleId(String(module.id));
+                                                setMobileModulesTab("content");
+                                              }}
+                                              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
+                                                active ? "bg-gray-500/20 text-textcolor2" : "hover:bg-Primarycolor/5"
+                                              }`}
+                                            >
+                                              {module.isCompleted ? (
+                                                <FaCheckCircle className="w-4 h-4 text-blue-500 flex-shrink-0" />
+                                              ) : (
+                                                <FaCircle className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                                              )}
+                                              <div className="min-w-0 flex-1">
+                                                <p className="text-sm font-medium truncate">{module.title}</p>
+                                                {module.moduleOrder && (
+                                                  <p className="text-xs text-muted">Module {module.moduleOrder}</p>
+                                                )}
+                                              </div>
+                                            </button>
+                                          );
+                                        })}
+                                      </div>
                                     )}
-                                    <div className="min-w-0">
-                                      <p className="text-xs text-gray-500">Module {module.moduleOrder}</p>
-                                      <p className="text-sm font-medium truncate">{module.title}</p>
-                                    </div>
                                   </div>
-                                </button>
-                              );
-                            })}
+                                );
+                              })}
+                            </div>
                           </div>
-                        </div>
-                      </aside>
+                        </aside>
 
-                      {/* Module content */}
-                      <article className="flex-1 min-w-0 rounded-xl border border-Primarycolor/20 bg-bgcolor/30 p-6">
+                        {/* Mobile: show either list or content based on tab */}
+                        {mobileModulesTab === "modules" && (
+                          <div className="md:hidden w-full rounded-xl border border-Primarycolor/20 bg-bgcolor/50 p-4">
+                            <p className="text-sm font-semibold text-textcolor2 mb-3">Lessons</p>
+                            <input
+                              type="text"
+                              placeholder="Search by lesson title"
+                              value={moduleSearch}
+                              onChange={(e) => setModuleSearch(e.target.value)}
+                              className="w-full px-3 py-2 rounded-lg bg-bgcolor border border-Primarycolor/25 text-textcolor2 text-sm mb-3"
+                            />
+                            <div className="space-y-0 max-h-[60vh] overflow-y-auto border border-Primarycolor/15 rounded-lg divide-y divide-Primarycolor/15">
+                              {filteredModulesByWeek.map(({ week, modules: weekModules }) => {
+                                const isExpanded = expandedWeeks.has(week);
+                                const completed = weekModules.filter((m) => m.isCompleted).length;
+                                const total = weekModules.length;
+                                const allDone = completed === total;
+                                const someDone = completed > 0;
+                                return (
+                                  <div key={week}>
+                                    <button
+                                      type="button"
+                                      onClick={() => toggleWeek(week)}
+                                      className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-Primarycolor/5"
+                                    >
+                                      {allDone ? <FaCheckCircle className="w-5 h-5 text-blue-500" /> : someDone ? <FaCircle className="w-5 h-5 text-blue-500/80" /> : <FaCircle className="w-5 h-5 text-gray-400" />}
+                                      <span className="font-medium flex-1">Week {week}</span>
+                                      <span className="text-xs text-muted">{completed}/{total}</span>
+                                      {isExpanded ? <FaChevronUp className="w-4 h-4" /> : <FaChevronDown className="w-4 h-4" />}
+                                    </button>
+                                    {isExpanded && (
+                                      <div className="pl-4 pb-2 border-l-2 border-Primarycolor/20 ml-5 space-y-0">
+                                        {weekModules.map((module) => {
+                                          const active = String(module.id) === String(selectedModuleId);
+                                          return (
+                                            <button
+                                              key={module.id}
+                                              type="button"
+                                              onClick={() => {
+                                                setSelectedModuleId(String(module.id));
+                                                setMobileModulesTab("content");
+                                              }}
+                                              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left ${active ? "bg-gray-500/20" : "hover:bg-Primarycolor/5"}`}
+                                            >
+                                              {module.isCompleted ? <FaCheckCircle className="w-4 h-4 text-blue-500" /> : <FaCircle className="w-4 h-4 text-gray-400" />}
+                                              <span className="text-sm truncate flex-1">{module.title}</span>
+                                            </button>
+                                          );
+                                        })}
+                                      </div>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Module content – hidden on mobile when Modules tab is active */}
+                        <article className={`flex-1 min-w-0 rounded-xl border border-Primarycolor/20 bg-bgcolor/30 p-6 ${mobileModulesTab === "modules" ? "hidden md:block" : ""}`}>
                         {!selectedModule && (
                           <p className="text-gray-400 text-sm">Select a module from the list to view content.</p>
                         )}
@@ -709,6 +916,44 @@ const CareersDashboard = () => {
                               Estimated duration: {selectedModule.durationMinutes} mins
                             </p>
 
+                            {/* PDF document viewer – admin-uploaded course note (reference-style) */}
+                            {!!selectedModule.resourceUrl && isPdfResource(selectedModule.resourceUrl) && (
+                              <div className="rounded-xl border border-Primarycolor/20 bg-bgcolor2/40 overflow-hidden">
+                                <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-Primarycolor/20 bg-bgcolor/50">
+                                  <span className="text-sm font-semibold text-textcolor2 truncate pr-2">
+                                    {selectedModule.title}
+                                  </span>
+                                  <div className="flex items-center gap-2">
+                                    <a
+                                      href={resolveAssetUrl(selectedModule.resourceUrl)}
+                                      download
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-Primarycolor/30 hover:bg-Primarycolor/20 text-xs font-medium transition-colors"
+                                    >
+                                      <FaDownload className="w-3.5 h-3.5" /> Download
+                                    </a>
+                                    <button
+                                      type="button"
+                                      onClick={() => window.open(resolveAssetUrl(selectedModule.resourceUrl), "_blank")}
+                                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-Primarycolor/30 hover:bg-Primarycolor/20 text-xs font-medium transition-colors"
+                                      title="Open in new tab to print"
+                                    >
+                                      <FaPrint className="w-3.5 h-3.5" /> Print
+                                    </button>
+                                  </div>
+                                </div>
+                                <div className="bg-bgcolor/30 min-h-[420px] flex flex-col">
+                                  <iframe
+                                    src={`${resolveAssetUrl(selectedModule.resourceUrl)}#toolbar=1`}
+                                    title={selectedModule.title}
+                                    className="w-full flex-1 min-h-[420px] rounded-b-xl"
+                                  />
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Course notes – text/HTML (when no PDF or in addition) */}
                             {!!selectedModule.moduleContent && (
                               <div className="rounded-xl border border-Primarycolor/20 bg-bgcolor2/40 overflow-hidden">
                                 <div className="flex items-center justify-between gap-3 px-5 py-3 border-b border-Primarycolor/20 bg-bgcolor/30">
@@ -736,42 +981,13 @@ const CareersDashboard = () => {
                               </div>
                             )}
 
-                            <div className="rounded-xl border border-Primarycolor/20 bg-bgcolor2/40 overflow-hidden">
-                              <div className="flex items-center gap-2 px-5 py-3 border-b border-Primarycolor/20 bg-bgcolor/30">
-                                <FaStickyNote className="w-4 h-4 text-Secondarycolor" />
-                                <span className="text-sm font-semibold text-textcolor2">My notes</span>
-                              </div>
-                              <div className="min-h-[180px] [&_.ql-container]:border-0 [&_.ql-editor]:min-h-[160px] [&_.ql-editor]:text-sm [&_.ql-toolbar]:border-Primarycolor/20 [&_.ql-toolbar]:bg-bgcolor/30 [&_.ql-toolbar_.ql-stroke]:stroke-gray-500 [&_.ql-toolbar_.ql-fill]:fill-gray-500 [&_.ql-toolbar_button]:text-gray-400 [&_.ql-editor]:text-gray-200">
-                                <ReactQuill
-                                  theme="snow"
-                                  value={personalNotes}
-                                  onChange={savePersonalNotes}
-                                  modules={QUILL_MODULES}
-                                  formats={QUILL_FORMATS}
-                                  placeholder="Add your own notes for this module..."
-                                />
-                              </div>
-                            </div>
-
-                            <div className="flex flex-wrap gap-3">
-                              {!!selectedModule.resourceUrl && (
-                                <a
-                                  href={resolveAssetUrl(selectedModule.resourceUrl)}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-Primarycolor/40 hover:bg-Primarycolor/20 text-sm font-medium transition-colors"
-                                >
-                                  <FaExternalLinkAlt /> Resource doc
-                                </a>
-                              )}
-                            </div>
-
+                            {/* Video – watch without leaving site (YouTube iframe) */}
                             {!!selectedModule.videoUrl && (() => {
                               const videoUrl = selectedModule.videoUrl;
                               const ytId = getYouTubeVideoId(videoUrl);
                               return (
                                 <div className="rounded-xl border border-Primarycolor/20 bg-bgcolor2/40 p-4">
-                                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Video</p>
+                                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Video – watch without leaving the site</p>
                                   {ytId ? (
                                     <div className="w-full rounded-lg overflow-hidden bg-black aspect-video">
                                       <iframe
@@ -796,6 +1012,39 @@ const CareersDashboard = () => {
                               );
                             })()}
 
+                            {/* My notes */}
+                            <div className="rounded-xl border border-Primarycolor/20 bg-bgcolor2/40 overflow-hidden">
+                              <div className="flex items-center gap-2 px-5 py-3 border-b border-Primarycolor/20 bg-bgcolor/30">
+                                <FaStickyNote className="w-4 h-4 text-Secondarycolor" />
+                                <span className="text-sm font-semibold text-textcolor2">My notes</span>
+                              </div>
+                              <div className="min-h-[180px] [&_.ql-container]:border-0 [&_.ql-editor]:min-h-[160px] [&_.ql-editor]:text-sm [&_.ql-toolbar]:border-Primarycolor/20 [&_.ql-toolbar]:bg-bgcolor/30 [&_.ql-toolbar_.ql-stroke]:stroke-gray-500 [&_.ql-toolbar_.ql-fill]:fill-gray-500 [&_.ql-toolbar_button]:text-gray-400 [&_.ql-editor]:text-gray-200">
+                                <ReactQuill
+                                  theme="snow"
+                                  value={personalNotes}
+                                  onChange={savePersonalNotes}
+                                  modules={QUILL_MODULES}
+                                  formats={QUILL_FORMATS}
+                                  placeholder="Add your own notes for this module..."
+                                />
+                              </div>
+                            </div>
+
+                            {/* Resource link (when not a PDF – e.g. doc, external) */}
+                            {!!selectedModule.resourceUrl && !isPdfResource(selectedModule.resourceUrl) && (
+                              <div className="flex flex-wrap gap-3">
+                                <a
+                                  href={resolveAssetUrl(selectedModule.resourceUrl)}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-Primarycolor/40 hover:bg-Primarycolor/20 text-sm font-medium transition-colors"
+                                >
+                                  <FaExternalLinkAlt /> Resource doc
+                                </a>
+                              </div>
+                            )}
+
+                            {/* References */}
                             {!!selectedModule.referenceLinks?.length && (
                               <div className="rounded-xl border border-Primarycolor/20 bg-bgcolor2/40 p-4">
                                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">References</p>
@@ -815,10 +1064,41 @@ const CareersDashboard = () => {
                                 </ul>
                               </div>
                             )}
+
+                            {/* Bottom actions – Mark incomplete / Continue */}
+                            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-Primarycolor/20">
+                              <button
+                                type="button"
+                                onClick={() => toggleModuleComplete(selectedModule)}
+                                className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border text-sm font-medium transition-colors ${
+                                  selectedModule.isCompleted
+                                    ? "border-Primarycolor/40 text-muted hover:bg-Primarycolor/10"
+                                    : "border-emerald-400/50 text-emerald-400 bg-emerald-400/10"
+                                }`}
+                              >
+                                <FaCheckCircle className="w-4" />
+                                {selectedModule.isCompleted ? "Mark incomplete" : "Mark complete"}
+                              </button>
+                              {(() => {
+                                const idx = modules.findIndex((m) => String(m.id) === String(selectedModuleId));
+                                const nextModule = idx >= 0 && idx < modules.length - 1 ? modules[idx + 1] : null;
+                                return nextModule ? (
+                                  <button
+                                    type="button"
+                                    onClick={() => setSelectedModuleId(String(nextModule.id))}
+                                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-Primarycolor text-white hover:bg-Primarycolor/90 text-sm font-medium transition-colors"
+                                  >
+                                    Continue <FaArrowRight className="w-4 h-4" />
+                                  </button>
+                                ) : null;
+                              })()}
+                            </div>
                           </div>
                         )}
                       </article>
+                      {/* Mobile: Content vs Modules toggle inline (main nav is the only bottom bar) */}
                     </div>
+                    </>
                   )}
                 </section>
               )}
@@ -868,6 +1148,30 @@ const CareersDashboard = () => {
           )}
         </div>
       </main>
+
+      {/* Mobile bottom nav – icon tabs for more viewBox (reference style) */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-Primarycolor/20 bg-bgcolor2/95 backdrop-blur-sm py-2 safe-area-pb">
+        {SIDEBAR_SECTIONS.map(({ id, label, icon: Icon }) => {
+          const isActive = activeSection === id;
+          return (
+            <button
+              key={id}
+              type="button"
+              onClick={() => setActiveSection(id)}
+              className={`flex flex-col items-center justify-center gap-1 px-3 py-2.5 rounded-xl min-w-0 flex-1 transition-colors ${
+                isActive
+                  ? "text-Secondarycolor bg-Secondarycolor/10 border border-Secondarycolor/40"
+                  : "text-muted border border-transparent hover:text-textcolor2"
+              }`}
+              aria-label={label}
+              title={label}
+            >
+              <Icon className={`w-6 h-6 flex-shrink-0 ${isActive ? "text-Secondarycolor" : ""}`} />
+              <span className="text-[10px] font-medium truncate max-w-full">{label}</span>
+            </button>
+          );
+        })}
+      </nav>
     </div>
   );
 };
