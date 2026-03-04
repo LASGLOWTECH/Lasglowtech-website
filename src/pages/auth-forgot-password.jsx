@@ -21,7 +21,7 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-bgcolor2 via-bgcolor to-bgcolor2 px-6 py-10 md:py-16 text-textcolor2">
+    <div className="min-h-screen flex items-center justify-center  m-auto bg-gradient-to-br from-bgcolor2 via-bgcolor to-bgcolor2 px-6 py-10 md:py-16 text-textcolor2">
       <div className="max-w-lg mx-auto border border-Primarycolor/30 bg-bgcolor2 rounded-2xl overflow-hidden shadow-xl p-7 md:p-10">
         <h1 className="text-2xl font-semibold mb-2">Forgot Password</h1>
         <p className="text-gray-400 mb-6 text-sm">

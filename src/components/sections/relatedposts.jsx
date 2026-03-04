@@ -49,7 +49,7 @@ const RelatedPosts = ({ currentPostId }) => {
           >
             <img
               src={post.coverUrl || `https://lasglowserver.phoenixstech.com/uploads/images/${post.cover}`}
-              alt={post.title}
+              alt={post.title}b
               className="w-full h-[200px] object-cover"
             />
 

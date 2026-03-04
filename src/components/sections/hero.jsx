@@ -94,7 +94,7 @@ function FloatingShape({ color, position, scale = 1 }) {
 
 export default function Hero() {
   return (
-    <div className="relative w-full h-full bg-gradient-to-r from-bgcolor2 to-bgcolor2 py-8 md:py-10">
+    <div className="relative w-full h-full bg-gradient-to-r from-bgcolor2 to-bgcolor2 py-16 md:py-20">
       {/* 3D Background */}
       <Canvas
         className="absolute inset-0 z-0 pt-6"
@@ -125,12 +125,11 @@ export default function Hero() {
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-Secondarycolor to-Secondarycolor">
               <Typewriter
                 words={[
-                  "Grow Faster.",
-                  "Web & Mobile.",
-                  "Design That Converts.",
-                  "Apps That Scale.",
-                  "Tutoring & Training.",
-                  "Launch & Scale.",
+                  "Platforms That Scale.",
+  "Launch Your Business.",
+  "Learn In-Demand Skills.",
+  "Build Real Opportunities.",
+  "Turn Ideas Into Systems.",
                 ]}
                 loop={true}
                 cursor
@@ -142,8 +141,8 @@ export default function Hero() {
             </span>
           </h1>
 
-          <p className="text-base md:text-lg text-textcolor2/90 px-4 md:px-0 max-w-2xl mx-auto mt-3 mb-6">
-            Digital experiences that improve trust, engagement, and conversion.
+          <p className="text-base md:text-lg text-textcolor2/90 px-4 md:px-0 max-w-2xl mx-auto pt-6 pb-8">
+          We build scalable digital solutions, structured learning systems, and career pathways, all inside one powerful ecosystem.
           </p>
 
           <div className="flex flex-wrap items-center mb-4 justify-center gap-3">
@@ -151,13 +150,13 @@ export default function Hero() {
               to="/catalogues"
               className="inline-block px-8 py-3 bg-gradient-to-r from-Primarycolor to-Primarycolor1 hover:from-Secondarycolor hover:to-Secondarycolor shadow-lg text-white font-semibold rounded-full transition-all duration-300"
             >
-              Browse catalogues & checkout
+            Explore Services & Pricing
             </Link>
             <Link
-              to="/contact"
-              className="inline-block px-8 py-3 border border-Primarycolor text-textcolor2 hover:bg-Primarycolor hover:text-white font-semibold rounded-full transition-all duration-300"
+              to="/careers"
+              className="inline-block px-8 py-3 border border-2 border-Primarycolor text-textcolor2 hover:bg-Primarycolor hover:text-white font-semibold rounded-full transition-all duration-300"
             >
-              Talk to Our Team
+              Start Your Journey
             </Link>
           </div>
         </motion.div>

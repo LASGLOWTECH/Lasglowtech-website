@@ -4,8 +4,8 @@ import { FaEye, FaEyeSlash, FaArrowLeft } from "react-icons/fa";
 import { toast } from "react-toastify";
 import instance from "../config/axios.config";
 import { getRoleHomePath, saveSession } from "../utils/auth";
-import { Slide1, Slide2, Slide3 } from "../components/images";
-
+// import { Slide1, Slide2, Slide3 } from "../components/images";
+import { Land1, Land2, Land3 } from "../components/images";
 const PLACEHOLDER_IMAGES = [
   "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
   "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80",
@@ -13,9 +13,9 @@ const PLACEHOLDER_IMAGES = [
 ];
 
 const authSlides = [
-  { image: Slide1, title: "Crafted Digital Experiences", text: "Partner with a team focused on clean design, robust engineering, and measurable business impact." },
-  { image: Slide2, title: "Secure and Professional Delivery", text: "From strategy to launch, we build solutions that perform reliably and scale with your business." },
-  { image: Slide3, title: "Creative Services Marketplace", text: "Login to access premium catalogues, personalized checkout flow, and faster project onboarding." },
+  { image: Land1, title: "Crafted Digital Experiences", text: "Partner with a team focused on clean design, robust engineering, and measurable business impact." },
+  { image: Land3, title: "Secure and Professional Delivery", text: "From strategy to launch, we build solutions that perform reliably and scale with your business." },
+  { image: Land2, title: "Creative Services Marketplace", text: "Login to access premium catalogues, personalized checkout flow, and faster project onboarding." },
 ].map((slide, i) => ({ ...slide, image: slide.image || PLACEHOLDER_IMAGES[i] }));
 
 const LoginPage = () => {
@@ -79,7 +79,7 @@ please i dont             className="inline-flex items-center gap-2 text-muted h
               value={formData.email}
               onChange={handleChange}
               placeholder="Email address"
-              className="w-full p-2.5 rounded-md bg-[#F6F5FA] text-black text-sm focus:outline-none"
+              className="w-full p-3 rounded-md bg-[#F6F5FA] text-black text-sm focus:outline-none"
               required
             />
             <div className="relative">
@@ -89,7 +89,7 @@ please i dont             className="inline-flex items-center gap-2 text-muted h
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
-                className="w-full p-2.5 pr-12 rounded-md bg-[#F6F5FA] text-black text-sm focus:outline-none"
+                className="w-full p-3 pr-12 rounded-md bg-[#F6F5FA] text-black text-sm focus:outline-none"
                 required
               />
               <button
@@ -109,12 +109,13 @@ please i dont             className="inline-flex items-center gap-2 text-muted h
               {loading ? "Signing in..." : "Login"}
             </button>
           </form>
-
-          <div className="mt-3">
+          
+<div className="mt-3 text-sm flex justify-between items-center">
+<p className="text-xs ">
             <Link to="/auth/forgot-password" className="text-xs text-Secondarycolor hover:underline">
               Forgot password?
             </Link>
-          </div>
+          </p>
 
           <p className="text-xs text-muted mt-3">
             New user?{" "}
@@ -122,45 +123,53 @@ please i dont             className="inline-flex items-center gap-2 text-muted h
               Create account
             </Link>
           </p>
+
+  
+</div>
+
+
+
         </div>
 
         <aside className="hidden md:block relative min-h-[320px] min-w-0 overflow-hidden z-0 bg-Primarycolor/10">
-          <div
-            className="absolute inset-0 flex transition-transform duration-700 ease-in-out"
-            style={{ transform: `translateX(-${slideIndex * 100}%)` }}
-          >
-            {authSlides.map((slide, idx) => (
-              <div key={slide.title} className="relative min-w-full flex-shrink-0 bg-Primarycolor/20">
-                <img
-                  src={slide.image}
-                  alt={slide.title}
-                  className="absolute inset-0 h-full w-full object-cover"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = PLACEHOLDER_IMAGES[idx % PLACEHOLDER_IMAGES.length];
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-bgcolor2/95 via-bgcolor2/60 to-bgcolor2/20" />
-                <div className="absolute bottom-0 p-4 md:p-6">
-                  <h3 className="text-base md:text-lg font-semibold text-textcolor2">{slide.title}</h3>
-                  <p className="text-xs md:text-sm text-muted mt-1">{slide.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="absolute bottom-3 left-4 md:left-6 flex gap-2">
-            {authSlides.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setSlideIndex(index)}
-                className={`h-1.5 rounded-full transition-all ${
-                  slideIndex === index ? "w-6 bg-Secondarycolor" : "w-1.5 bg-white/50"
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
-        </aside>
+  <div
+    className="absolute inset-0 flex transition-transform duration-700 ease-in-out"
+    style={{ transform: `translateX(-${slideIndex * 100}%)` }}
+  >
+    {authSlides.map((slide, idx) => (
+      <div key={slide.title} className="relative min-w-full flex-shrink-0 bg-Primarycolor/20">
+        <img
+          src={slide.image}
+          alt={slide.title}
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = PLACEHOLDER_IMAGES[idx % PLACEHOLDER_IMAGES.length];
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-bgcolor2/90 via-bgcolor2/60 to-bgcolor2/30" />
+        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
+          <h3 className="text-base md:text-lg font-semibold text-textcolor2">{slide.title}</h3>
+          <p className="text-xs md:text-sm text-muted mt-1">{slide.text}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+  <div className="absolute bottom-3 left-4 md:left-6 flex gap-2">
+    {authSlides.map((_, index) => (
+      <button
+        key={index}
+        type="button"
+        onClick={() => setSlideIndex(index)}
+        className={`h-1.5 rounded-full transition-all ${
+          slideIndex === index ? "w-6 bg-Secondarycolor" : "w-1.5 bg-white/40 hover:bg-white/60"
+        }`}
+        aria-label={`Go to slide ${index + 1}`}
+      />
+    ))}
+  </div>
+</aside>
       </div>
     </div>
   );

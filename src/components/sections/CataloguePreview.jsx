@@ -39,7 +39,7 @@ const CataloguePreview = () => {
             <p className="text-xs uppercase tracking-[0.2em] text-Secondarycolor">Marketplace</p>
             <h2 className="text-xl md:text-2xl font-semibold text-textcolor2 mt-2">Browse Premium Service Catalogues</h2>
             <p className="text-muted text-sm max-w-2xl mt-2">
-              Pick a service package, pay online, and get started fast. Our catalogue supports <strong className="text-textcolor2">instant checkout</strong>—no lengthy quotes needed. You can also explore our <strong className="text-textcolor2">tutoring and training</strong> programmes for your team or career growth.
+              Pick a service package, pay online, and get started fast. Our catalogue supports <strong className="text-textcolor2">instant checkout</strong> You can also explore our <strong className="text-textcolor2"> careerg</strong> programmes.
             </p>
           </div>
         </div>
