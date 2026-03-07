@@ -29,10 +29,19 @@ const isLocalhost =
   window.location.hostname === "[::1]" ||
   /^127\.(?:\d{1,3}\.){2}\d{1,3}$/.test(window.location.hostname);
 
-// Production: set VITE_API_URL when building (e.g. your VPS API URL). No longer uses cPanel URL.
+// Production: set VITE_API_URL when building (e.g. https://api.lasglowtech.com.ng).
+// If missing at build time, fall back to same origin so the app still loads (API may need proxy).
+const envApiUrl = import.meta.env.VITE_API_URL;
 export const API_BASE_URL =
-  import.meta.env.VITE_API_URL ||
-  (isLocalhost ? "http://localhost:5000" : "");
+  (typeof envApiUrl === "string" && envApiUrl.trim() !== "" ? envApiUrl.trim() : null) ||
+  (isLocalhost ? "http://localhost:5000" : window.location.origin);
+
+if (!isLocalhost && !envApiUrl) {
+  console.warn(
+    "[Lasglowtech] VITE_API_URL was not set at build time. API requests use:",
+    API_BASE_URL
+  );
+}
 
 const instance = axios.create({
   baseURL: API_BASE_URL,
