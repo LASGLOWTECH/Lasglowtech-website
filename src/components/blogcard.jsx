@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { IoShareSocialSharp } from "react-icons/io5";
 import { PiArrowCircleUpRightFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
-import instance from "../config/axios.config";
+import instance, { API_BASE_URL } from "../config/axios.config";
 
 const stripHtml = (html = "") => html.replace(/<[^>]+>/g, "").trim();
 
@@ -64,7 +64,7 @@ const Blogcard = () => {
                 <img
                   src={
                     blog.coverUrl ||
-                    `https://lasglowserver.phoenixstech.com/uploads/images/${blog.cover}`
+                    `${API_BASE_URL}/uploads/images/${blog.cover}`
                   }
                   alt={blog.title}
                   loading="lazy"

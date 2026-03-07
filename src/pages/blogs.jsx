@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Blogcard from "../components/blogcard";
-import instance from "../config/axios.config";
+import instance, { API_BASE_URL } from "../config/axios.config";
 import SEO from "../utils/seo";
 import useAOS from "../hooks/useAos";
 import Subscription from "../components/sections/subscription";
@@ -95,7 +95,7 @@ const Blogs = () => {
                     src={
                       featured.coverUrl ||
                       (featured.cover
-                        ? `https://lasglowserver.phoenixstech.com/uploads/images/${featured.cover}`
+                        ? `${API_BASE_URL}/uploads/images/${featured.cover}`
                         : "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800")
                     }
                     alt={featured.title}

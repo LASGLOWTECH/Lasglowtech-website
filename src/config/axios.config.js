@@ -29,12 +29,13 @@ const isLocalhost =
   window.location.hostname === "[::1]" ||
   /^127\.(?:\d{1,3}\.){2}\d{1,3}$/.test(window.location.hostname);
 
-const API_URL = isLocalhost
-  ? "http://localhost:5000"
-  : "https://lasglowserver.phoenixstech.com"; // <-- full backend URL
+// Production: set VITE_API_URL when building (e.g. your VPS API URL). No longer uses cPanel URL.
+export const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  (isLocalhost ? "http://localhost:5000" : "");
 
 const instance = axios.create({
-  baseURL: API_URL,
+  baseURL: API_BASE_URL,
   withCredentials: false,
 });
 

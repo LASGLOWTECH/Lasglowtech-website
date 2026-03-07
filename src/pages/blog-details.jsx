@@ -1,6 +1,6 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import instance from "../config/axios.config";
+import instance, { API_BASE_URL } from "../config/axios.config";
 import RelatedPosts from "../components/sections/relatedposts";
 import Subscription from "../components/sections/subscription";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -162,7 +162,7 @@ const BlogDetails = () => {
         {post.cover && (
           <div className="rounded-xl overflow-hidden mb-8 border border-gray-700">
             <img
-              src={post.coverUrl || `https://lasglowserver.phoenixstech.com/uploads/images/${post.cover}`}
+              src={post.coverUrl || `${API_BASE_URL}/uploads/images/${post.cover}`}
               alt={post.title}
               loading="lazy"
               className="w-full max-h-[480px] object-cover"

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import instance from "../../config/axios.config";
+import instance, { API_BASE_URL } from "../../config/axios.config";
 import { PiArrowCircleUpRightFill } from "react-icons/pi";
 
 const RelatedPosts = ({ currentPostId }) => {
@@ -48,7 +48,7 @@ const RelatedPosts = ({ currentPostId }) => {
             className="bg-white rounded-lg shadow hover:shadow-lg transition duration-300 overflow-hidden"
           >
             <img
-              src={post.coverUrl || `https://lasglowserver.phoenixstech.com/uploads/images/${post.cover}`}
+              src={post.coverUrl || `${API_BASE_URL}/uploads/images/${post.cover}`}
               alt={post.title}b
               className="w-full h-[200px] object-cover"
             />
